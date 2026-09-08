@@ -1,0 +1,9 @@
+{% for banner in banners %}
+    <div class="advImage">
+        <a href="{{ banner.url }}" {% if banner.rel %}rel="{{ banner.rel }}"{% endif %} {% if link.target_blank %}target="_blank"{% endif %}>
+            <img src="{{ banner.image.url }}" alt="{{ banner.title }}">
+        </a>
+    </div>
+{% endfor %}
+
+

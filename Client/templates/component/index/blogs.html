@@ -1,0 +1,36 @@
+{% load cache watermark_tags jalali_date %}
+
+{% if posts and section %}
+  {% cache 300 "section_posts" section.slug section.posts_updated_at section.updated_at %}
+    <section id="porject1" class="sectionCard">
+        <header>
+            <div class="headerText">
+                <h2>{{ section.title }}</h2>
+            </div>
+            <div class="headerBorder">
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+        <div class="contentSection">
+            {% for post in posts %}
+            <div class="item">
+                <a href="{% url "Client:post" post.slug %}" class="imgLink" title="{{ post.title }}">
+                    {% render_post_image post 309 206%}
+                </a>
+                <div class="text">
+                    <div class="info">
+                        <a href="{% url "Client:post" post.slug %}" title="{{ post.title }}"><h3 class="title">{{ post.title }}</h3></a>
+                        <p class="summeries">{{ post.summery }}</p>
+                    </div>
+                    <div class="date">{{ post.created_at|jalali:'%Y/%m/%d' }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="pt-5 bottomLinkSection">
+            <a class="more d-block text-center w-100" href="{% url 'Client:section' section.slug %}">مشاهده بیشتر</a>
+        </div>
+    </section>
+  {% endcache %}
+{% endif %}

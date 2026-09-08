@@ -1,0 +1,163 @@
+{% extends "App_layouts/layouts.html" %}
+{% load thumbnail %}
+{% block meta %}
+    <title>اطلاعات سایت</title>
+{% endblock %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages mb-4">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>تنظیمات</h3>
+            {% if not setting %}
+                <a href="{% url 'App_panel:setting-create' %}" class="createLink">ایجاد اطلاعات</a>
+            {% endif %}
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered m-0 mb-3">
+                <tbody>
+                <tr>
+                    <td>
+                        عنوان سایت :
+                        {{ setting.title }}
+                    </td>
+                    <td>
+                        عنوان گوگل :
+                        {{ setting.title_seo }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        نام دامنه :
+                        {{ site.domain }}
+                    </td>
+                    <td>
+                        نام نمایشی :
+                        {{ site.name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        توضیحات گوگل :
+                        {{ setting.description_seo }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        وضعیت :
+                        {% if setting.status == 'active' %}
+                            <a class="btn btn-primary" href="{% url 'App_panel:setting-active' %}">فعال</a>
+                        {% elif setting.status == 'inactive' %}
+                            <a class="btn btn-dark" href="{% url 'App_panel:setting-active' %}">غیرفعال</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        بروزرسانی :
+                        {% if setting.maintenance == 'active' %}
+                            <a class="btn btn-primary" href="{% url 'App_panel:setting-maintenance' %}">فعال</a>
+                        {% elif setting.maintenance == 'inactive' %}
+                            <a class="btn btn-dark" href="{% url 'App_panel:setting-maintenance' %}">غیرفعال</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ایکون سایت :
+                        {% if setting.favicon %}
+                            <img src="{{ setting.favicon.url }}" style="max-width: 150px" decoding="async"/>
+                        {% endif %}
+                    </td>
+                    <td colspan="2">
+                        عکس لوگو :
+                        {% if setting.logo %}
+                            <img class="imageProfile" src="{{ setting.logo.url }}" style="max-width: 150px"
+                                 decoding="async"/>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% if setting %}
+            <a href="{% url "App_panel:setting-update" %}" class="btn btn-primary">ویرایش اطلاعات</a>
+        {% endif %}
+    </div>
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>تنظیمات ایمیل</h3>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered m-0 mb-3">
+                <tbody>
+                <tr>
+                    <td>
+                        نام کاربری :
+                        {{ email.username }}
+                    </td>
+                    <td>
+                        سرور خارجی :
+                        {{ email.host }}
+                    </td>
+                    <td>
+                        پورت smtp :
+                        {{ email.port }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ایمیل ارسال کننده :
+                        {{ email.sender_email }}
+                    </td>
+                    <td>
+                        نام ارسال کننده :
+                        {{ email.sender_name }}
+                    </td>
+                    <td>
+                        فرمت نوشتاری :
+                        {{ email.charset }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        احراز هویت :
+                        {{ email.use_authentication }}
+                    </td>
+                    <td>
+                        خودکار TLS :
+                        {{ email.use_tls }}
+                    </td>
+                    <td>
+                        رمزنگاری :
+                        {{ email.use_ssl }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        وضعیت :
+                        {{ email.status }}
+                    </td>
+                    <td><a href="{% url 'App_panel:setting-email-test-connection' %}" class="btn btn-primary">تست ایمیل</a></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% if setting != null %}
+            <a href="{% url "App_panel:setting-email-update" %}" class="btn btn-primary">ویرایش اطلاعات ایمیل</a>
+        {% endif %}
+    </div>
+{% endblock %}

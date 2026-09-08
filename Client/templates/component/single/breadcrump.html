@@ -1,0 +1,13 @@
+<div class="breadcrumb">
+    {% if home_link %}
+    	<a href="{{ home_link.url }}">{{ home_link.title }}</a>
+    {% else %}
+        <a href="{% url "Client:home" %}">خانه</a>
+    {% endif %}
+    <span class="icon"></span>
+        {% if post.section %}
+        	<a href="{% url 'Client:section' post.section.slug %}">{{ post.section.title }}</a>
+            <span class="icon"></span>
+        {% endif %}
+    <span class="pageName">{{ post.title }}</span>
+</div>

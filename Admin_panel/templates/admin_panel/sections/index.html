@@ -1,0 +1,103 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load pager %}
+{% load permissions %}
+{% block meta %}
+    <title>بخش ها</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>بخش ها</h3>
+            {% if request.user|is_superuser %}
+                <a href="{% url 'Admin_panel:section-create' %}" class="createLink">ساخت بخش جدید</a>
+            {% endif %}
+        </header>
+        <div class="filter-form mb-4">
+            <form class="d-flex align-items-center gap-1 flex-wrap" method="GET"
+                  action="{% url 'Admin_panel:section-query' %}">
+                <div class="d-flex align-items-center gap-1">
+                    {{ filter_form.status.label_tag }}
+                    {{ filter_form.status }}
+                </div>
+                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
+                <a href="{% url 'Admin_panel:section' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+            </form>
+        </div>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">نام</th>
+                <th scope="col">عنوان</th>
+                <th scope="col">نوع</th>
+                <th scope="col">فعال/غیرفعال</th>
+                <th scope="col">تنظیمات</th>
+                </thead>
+                <tbody>
+                {% for section in sections %}
+                    <tr>
+                        <td>{{ section.name }}</td>
+                        <td>{{ section.title }}</td>
+                        <td>
+                            {% if section.type == "post" %}
+                                نوشته
+                            {% elif section.type == "no_post" %}
+                                اطلاعیه بدون نوشته
+                            {% elif section.type == "last_news" %}
+                                آخرین اخبار
+                            {% elif section.type == "most_visited" %}
+                                پربازدید ترین
+                            {% elif section.type == "most_commented" %}
+                                پربحث ترین
+                            {% elif section.type == "adv_text" %}
+                                تبلیغ متنی
+                            {% elif section.type == "adv_image" %}
+                                تبلیغ بنر
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if section.status == 'active' %}
+                                <a class="btn btn-primary"
+                                   href="{% url 'Admin_panel:section-active' section.id %}?next={{ request.get_full_path }}">فعال</a>
+                            {% elif section.status == 'inactive' %}
+                                <a class="btn btn-dark"
+                                   href="{% url 'Admin_panel:section-active' section.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                            {% endif %}
+                        </td>
+                        <td class="d-flex gap-2 align-items-center flex-wrap">
+                            <a href="{% url 'Admin_panel:section-update' section.id %}" class="btn btn-primary">ویرایش
+                                اطلاعات</a>
+                            {% if request.user|is_superuser %}
+                                <form action="{% url 'Admin_panel:section-delete' section.id %}" class="Delete-Form"
+                                      method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">
+                                        حذف
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% include 'admin_layouts/pager.html' with page_obj=page_obj paginator=paginator %}
+    </div>
+{% endblock %}

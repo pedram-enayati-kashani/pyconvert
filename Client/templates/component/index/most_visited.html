@@ -1,0 +1,20 @@
+{% if section and posts %}
+<div class="justLinkcontent">
+    <header>
+        <span>{{ section.title }}</span>
+        <div class="headerBorder">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <ul class="content">
+        {% for post in posts %}
+            <li class="links">
+                <a href="{% url 'Client:post' post.slug %}" title="{{ post }}">
+                    <h4>{{ post }}</h4>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

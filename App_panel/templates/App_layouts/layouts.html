@@ -1,0 +1,28 @@
+{% load static %}
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    {% block meta %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'panel/bootstrap/css/bootstrap.rtl.min.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/styles/fontiran.css' %}">
+    {% include 'App_layouts/variable_styles.html' %}
+    <link rel="stylesheet" href="{% static 'panel/styles/styles.css' %}">
+</head>
+<body>
+    {% render_partial "App_panel.views.Layouts.header" %}
+    <div id="mainContainer" class="row m-0 contentAdmin">
+        {% render_partial "App_panel.views.Layouts.sidebar" %}
+        <div class="col-xl-10 col-lg-9 px-4 my-4">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    {% render_partial "App_panel.views.Layouts.footer" %}
+    <script src="{% static 'panel/js/jquery.js' %}"></script>
+    <script src="{% static 'panel/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'panel/js/scripts.js' %}"></script>
+</body>
+</html>

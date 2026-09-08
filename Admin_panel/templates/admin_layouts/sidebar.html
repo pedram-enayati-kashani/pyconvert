@@ -1,0 +1,68 @@
+{% load permissions i18n %}
+
+<aside class="col-xl-2 col-lg-3 d-flex flex-column">
+    <a href="{% url 'Admin_panel:dashboard' %}" class="{% if 'dashboard' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-house"></i>
+        {% translate "Dashboard" %}
+    </a>
+    <a href="{% url 'Admin_panel:post' %}" class="{% if 'post' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-inbox"></i>
+        {% translate "Posts" %}
+    </a>
+    <a href="{% url 'Admin_panel:category' %}" class="{% if 'category' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-folder-tree"></i>
+        {% translate "Categories" %}
+    </a>
+    <a href="{% url 'Admin_panel:tag' %}" class="{% if 'tag' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-tag"></i>
+        {% translate "Tags" %}
+    </a>
+    {% if request.user|is_admin %}
+    <a href="{% url 'Admin_panel:section' %}" class="{% if 'section' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-th-large"></i>
+        {% translate "Sections" %}
+    </a>
+    {% endif %}
+    {% if request.user|is_admin %}
+    <a href="{% url 'Admin_panel:user' %}" class="{% if 'user' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-user"></i>
+        {% translate "Users" %}
+    </a>
+    {% endif %}
+    <a href="{% url 'Admin_panel:profile' %}" class="{% if 'profile' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-address-card"></i>
+        {% translate "Profile" %}
+    </a>
+    {% if request.user|is_admin %}
+    <a href="{% url 'Admin_panel:page' %}" class="{% if 'page' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-file-pen"></i>
+        {% translate "Pages" %}
+    </a>
+    {% endif %}
+    {% if request.user|is_admin %}
+    <a href="{% url 'Admin_panel:comment' %}" class="{% if 'comment' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-comment"></i>
+        {% translate "Comments" %}
+    </a>
+    {% endif %}
+    <a href="{% url 'Admin_panel:contact' %}" class="{% if 'contact' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-address-book"></i>
+        {% translate "Contact Us" %}
+    </a>
+    {% if request.user|is_admin %}
+    <a href="{% url 'Admin_panel:module' %}" class="{% if 'module' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-puzzle-piece"></i>
+        {% translate "Modules" %}
+    </a>
+    {% endif %}
+    {% if request.user|is_admin %}
+    <a href="{% url 'Admin_panel:setting' %}" class="{% if 'setting' in request.resolver_match.url_name %}active{% endif %}">
+        <i class="fa-solid fa-gear"></i>
+        {% translate "Settings" %}
+    </a>
+    {% endif %}
+    <a href="{% url 'Admin_panel:logout' %}">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        {% translate "Logout" %}
+    </a>
+</aside>

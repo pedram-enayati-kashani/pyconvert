@@ -1,0 +1,93 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load pager permissions i18n %}
+{% block meta %}
+    <title>{% translate "Modules" %}</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>{% translate "Modules" %}</h3>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">{% translate "Title" %}</th>
+                <th scope="col">{% translate "Active/Inactive" %}</th>
+                <th scope="col">{% translate "Settings" %}</th>
+                </thead>
+                <tbody>
+                {% for module in modules %}
+                    <tr>
+                        <td>{{ module.title }}</td>
+                        <td>
+                            {% if module.status == 'active' %}
+                                {% translate "Active" %}
+                            {% elif module.status == 'inactive' %}
+                                {% translate "Inactive" %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if module.status == "active" %}
+                                {% if module.name == "form_builder" %}
+                                    <a href="{% url 'Admin_panel:form-builder' %}" class="btn btn-primary">
+                                        {% translate "Edit module" %}
+                                    </a>
+                                {% elif module.name == "Menu_Builder" %}
+                                    <a href="{% url 'Admin_panel:menu' %}" class="btn btn-primary">
+                                        {% translate "Edit module" %}
+                                    </a>
+                                {% elif module.name == "social_media" %}
+                                    <a href="{% url 'Admin_panel:social-media' %}" class="btn btn-primary">
+                                        {% translate "Edit module" %}
+                                    </a>
+                                {% elif module.name == "adv_text" %}
+                                    <a href="{% url 'Admin_panel:adv-text' %}" class="btn btn-primary">
+                                        {% translate "Edit module" %}
+                                    </a>
+                                {% elif module.name == "adv_image" %}
+                                    <a href="{% url 'Admin_panel:adv-image' %}" class="btn btn-primary">
+                                        {% translate "Edit module" %}
+                                    </a>
+                                {% elif module.name == "redirect_rule" %}
+                                    <a href="{% url 'Admin_panel:redirect' %}" class="btn btn-primary">
+                                        {% translate "Edit module" %}
+                                    </a>
+                                {% elif module.name == "watermark" %}
+                                    <a href="{% url 'Admin_panel:watermark' %}" class="btn btn-primary">
+                                        {% translate "Edit module" %}
+                                    </a>
+                                {% elif module.name == "Real_Estate" %}
+                                    <a href="{% url 'Admin_panel:real-estate' %}" class="btn btn-primary">
+                                        {% translate "Edit module" %}
+                                    </a>
+                                {% elif module.name == "media" %}
+                                    <a href="{% url 'Admin_panel:media' %}" class="btn btn-primary">
+                                        {% translate "Edit module" %}
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

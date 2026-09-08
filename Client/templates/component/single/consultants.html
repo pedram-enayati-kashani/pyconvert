@@ -1,0 +1,18 @@
+{% load thumbnail %}
+<div class="consultants">
+    {% if post.user.avatar %}
+        {% thumbnail post.user.avatar "132x132" quality=95 as im %}
+            <img src="{{ im.url }}" alt="consultant" title="{{ post.user }}" decoding="async" width="132" height="132">
+        {% endthumbnail %}
+    {% else %}
+        <img src="/media/defaults/avatar.jpeg" alt="consultant" title="{{ post.user }}" decoding="async" width="132" height="132">
+    {% endif %}
+    <div class="text">
+        <span class="name">{{ post.user }}</span>
+        <span class="descriptionConsultants">{{ post.user.summery }}</span>
+    </div>
+    <div class="links">
+        <a href="tel:{{ post.user.mobile }}">تماس</a>
+        <a href="mailto:{{ post.user.email }}">ایمیل</a>
+    </div>
+</div>

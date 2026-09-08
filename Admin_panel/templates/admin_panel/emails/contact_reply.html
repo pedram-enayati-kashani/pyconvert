@@ -1,0 +1,42 @@
+{% load site_info %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Tahoma, Arial, sans-serif; background-color: #f4f4f4; padding: 20px; direction: rtl; text-align: right; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; max-width: 600px; margin: 0 auto; }
+        .header { border-bottom: 2px solid #daa520; padding-bottom: 10px; margin-bottom: 20px; }
+        .title { color: #333; font-size: 18px; }
+        .message-box { background-color: #f9f9f9; padding: 15px; border-right: 4px solid #007bff; margin-bottom: 15px; border-radius: 4px; }
+        .reply-box { background-color: #f0fff0; padding: 15px; border-right: 4px solid #28a745; border-radius: 4px; }
+        .footer { margin-top: 20px; font-size: 12px; color: #777; border-top: 1px solid #eee; padding-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container" dir="rtl">
+        <div class="header">
+            <h2 class="title">پاسخ به درخواست تماس شما</h2>
+        </div>
+        <p>کاربر گرامی <strong>{{ contact.full_name }}</strong>، سلام.</p>
+        <p>پاسخی برای پیام شما در وب‌سایت {% site "title" %} ثبت شده است:</p>
+
+        <div class="message-box">
+            <strong>مضوع پیام شما:</strong>
+            <p>{{ contact.title }}</p>
+        </div>
+
+        <div class="reply-box">
+            <strong>برای نمایش پیام و پاسخ آن می توانید با استفاده از لینک زیر پیگیر شوید:</strong>
+            <p>برای نمایش پاسخ خود روی این <a href="{{ link }}">لینک</a>  کلیک کنید.
+            </p>
+
+        </div>
+
+        <div class="footer">
+            <p>این یک ایمیل خودکار است. لطفاً به آن پاسخ ندهید.</p>
+        </div>
+    </div>
+</body>
+</html>

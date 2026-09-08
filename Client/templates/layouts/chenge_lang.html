@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<div id="changeLang" class="flex items-center gap-3">
+    <a href="/fa/"
+       class="language-switcher text-white font-extrabold hover:text-[oklch(77.7%_0.152_181.912)] text-sm {% if request.path|slice:':4' == '/fa/' %}active{% endif %}"
+       data-language="fa">
+        فا
+    </a>
+
+    <a href="/en/"
+       class="language-switcher text-white font-extrabold hover:text-[oklch(77.7%_0.152_181.912)] text-sm {% if request.path|slice:':4' == '/en/' %}active{% endif %}"
+       data-language="en">
+        ENG
+    </a>
+</div>

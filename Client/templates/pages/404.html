@@ -1,0 +1,29 @@
+{% extends "layouts/layouts.html" %}
+{% load site_info %}
+{% block meta %}
+    <meta name="robots" content="noindex, nofollow">
+    <title>{% title "صفحه 404" %}</title>
+{% endblock %}
+{% block content %}
+    <div class="responsiveActive">
+    <div class="container parentsSinglePage">
+        <div class="colRight aboutContact">
+            <header>
+            <div class="headerText">
+                <h1>صفحه 404</h1>
+            </div>
+            <div class="headerBorder">
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+            {# start about content #}
+            <div class="contactAboutContent">صفحه مورد نظر شما یافت نشد</div>
+            {# end about content #}
+        </div>
+        {# start sidebar #}
+        {% include 'component/innerpage/sidebar.html' %}
+        {# end sidebar #}
+    </div>
+    </div>
+{% endblock %}

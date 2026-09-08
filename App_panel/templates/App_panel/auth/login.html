@@ -1,0 +1,49 @@
+{% load static %}
+{% load render_partial %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود</title>
+    <link rel="stylesheet" href="{% static 'panel/bootstrap/css/bootstrap.rtl.min.css' %}">
+    <link rel="stylesheet" href="{% static 'panel/styles/fontiran.css' %}">
+    {% include 'App_layouts/variable_styles.html' %}
+    <link rel="stylesheet" href="{% static 'panel/styles/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <form class="authForm" method="post" action="{% url 'App_panel:login' %}">
+            <h2>ورود به حساب</h2>
+            {% csrf_token %}
+            <div class="formGroup">
+                {{ login_form.username.label_tag }}
+                {{ login_form.username }}
+            </div>
+            <div class="formGroup">
+                {{ login_form.password.label_tag }}
+                {{ login_form.password }}
+                <div id="choseTypeInput">
+                    <span id="eyeSlash"><i class="fa-solid fa-eye-slash"></i></span>
+                    <span  id="eyeSolid"><i class="fa-solid fa-eye"></i></span>
+                </div>
+            </div>
+            <div class="rememberMe form-check">
+                <label>{{ login_form.remember_me.label }}</label>
+                {{ login_form.remember_me }}
+            </div>
+            {% if login_form.non_field_errors %}
+                <ul>
+                    {% for error in login_form.non_field_errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <button type="submit">ورود</button>
+        </form>
+    </div>
+    <script src="{% static 'panel/js/jquery.js' %}"></script>
+    <script src="{% static 'panel/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'panel/js/scripts.js' %}"></script>
+</body>
+</html>

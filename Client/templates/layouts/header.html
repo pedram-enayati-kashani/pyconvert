@@ -1,0 +1,10 @@
+{% load static site_info render_partial %}
+<header id="mainHeader" class="bg-[oklch(38.6%_0.063_188.416)]">
+    <div class="container mx-auto px-4 md:px-0 flex items-center justify-between">
+        <div class="logo">
+            <a title="{% site "title" %}" href="{% url 'Client:home' %}"><img class="max-w-full max-h-[90px] w-auto h-auto object-contain" src="{% site "logo" %}" alt="{% site "title" %}"></a>
+        </div>
+        {% render_partial "Client.views.component.menu" "header" %}
+        {% render_partial "Client.views.component.search_header" %}
+    </div>
+</header>

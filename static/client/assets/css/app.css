@@ -1,0 +1,130 @@
+@import "tailwindcss";
+@source "../../Client/templates/**/*.html";
+@source "../js/**/*.{js,jsx,ts,tsx}";
+
+@theme {
+  --color-off-white: #f8f9fa;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Blue */
+  --color-light-blue: #02d9ff;
+  --color-dark-blue: #0e2a42;
+
+  /* Orange */
+  --color-dark-orange: #faac03;
+  --font-sans: "IRANSansX", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  font-family: var(--font-sans);
+}
+
+.humbergerIcon:hover svg{
+  fill: oklch(91% 0.096 180.426);
+}
+
+#search .searchIcon:hover path{
+  fill: oklch(91% 0.096 180.426);
+}
+
+#search form{
+  height: 0;
+  transition: height 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+#search form.active{
+  display: flex;
+  height: 100%;
+}
+
+#headerNav a.active{
+  color: oklch(91% 0.096 180.426);
+}
+
+#changeLang a.active{
+    color: oklch(91% 0.096 180.426);
+}
+
+/* media query */
+
+@media only screen and (max-width: 1399px){
+
+}
+
+@media only screen and (max-width: 1199px){
+
+}
+
+@media only screen and (max-width: 991px){
+    #headerNav{
+        position: fixed;
+        top: 0;
+        inset-inline-end: 0;
+        width: 100%;
+        height: 0;
+        transition: height 0.5s ease-in-out;
+        overflow: hidden;
+    }
+    #headerNav.active{
+        height: 100%;
+    }
+
+    #headerNav > div{
+        position: absolute;
+        top: 0;
+        inset-inline-end: 0;
+        width: 50%;
+        height: 100%;
+        background: var(--color-off-white);
+    }
+
+    #headerNav > div > ul{
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #headerNav ul a{
+        color: var(--color-dark-blue);
+    }
+
+    #headerNav ul a:hover,
+    #headerNav ul a.active{
+        color: var(--color-dark-orange);
+    }
+
+    #headerNav.active .closeIcon{
+        display: block;
+        padding: 20px;
+        border-bottom: 2px dashed var(--color-dark-blue);
+    }
+
+    #headerNav.active .closeIcon span{
+        cursor: pointer;
+    }
+
+    #headerNav.active .closeIcon span:hover path{
+        fill: var(--color-dark-orange);
+    }
+}
+
+@media only screen and (max-width: 767px){
+
+    .responsiverTable{
+        overflow-x: scroll;
+    }
+
+    .responsiverTable table{
+        min-width: 651px;
+    }
+}
+
+@media only screen and (max-width: 575px){
+
+}
+
+@media only screen and (max-width: 479px){
+
+}

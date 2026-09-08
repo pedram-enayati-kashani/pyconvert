@@ -1,0 +1,35 @@
+{% if links and menu %}
+    <nav id="headerNav" class="bg-[oklch(44.6%_0.043_257.281)]/70 lg:bg-transparent">
+        <div>
+            <div class="hidden closeIcon">
+                <span>
+                    {% include 'svg/close.html'%}
+                </span>
+            </div>
+            <ul class="p-0 m-0 flex items-center gap-4">
+                {% if links %}
+                    {% for link in links %}
+                        <li>
+                            <a href="{{ link.url }}"
+                               {% if link.rel %}rel="{{ link.rel }}"{% endif %}
+                               {% if link.target_blank %}target="_blank"{% endif %}
+                               class="text-white font-bold lg:font-extrabold hover:text-[oklch(91%_0.096_180.426)] text-md lg:text-lg {% if request.path == link.url %}active{% endif %}">{{ link.title }}</a>
+                            {% if link.children.all %}
+                                <ul class="sub-menu">
+                                    {% for sub in link.children.all %}
+                                        <li>
+                                            <a href="{{ sub.url }}"
+                                               {% if sub.rel %}rel="{{ sub.rel }}"{% endif %}
+                                               {% if sub.target_blank %}target="_blank"{% endif %}
+                                               class="{% if request.path == sub.url %}active{% endif %}">{{ sub.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+{% endif %}

@@ -1,0 +1,49 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load i18n %}
+{% block meta %}
+    <title>{% translate "Dashboard" %}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <div class="row">
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="colPart">
+                    <span>{% translate "Top posts" %}:</span>
+                    <ul class="d-flex flex-column gap-1">
+                        <li class="d-flex align-items-center gap-2 justify-content-between">
+                            <span>{% translate "Title" %}</span>
+                            <span>{% translate "View count" %}</span>
+                        </li>
+                        {% for post in top_posts %}
+                            <li class="d-flex align-items-center gap-2 justify-content-between">
+                                <span><a href="{% url 'Admin_panel:post-show' post.id %}">{{ post.title }}</a></span>
+                                <span>{{ post.views_count }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="colPart mb-4">
+                    <span>{% translate "Comments" %}:</span>
+                    <ul class="d-flex flex-column gap-1">
+                        <li class="d-flex align-items-center gap-2 justify-content-between">
+                            <span>{% translate "Number of unseen comments" %}</span>
+                            <span>{{ comment_count }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="colPart">
+                    <span>{% translate "Contact Us" %}:</span>
+                    <ul class="d-flex flex-column gap-1">
+                        <li class="d-flex align-items-center gap-2 justify-content-between">
+                            <span>{% translate "Number of unread messages" %}</span>
+                            <span>{{ contact_count }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

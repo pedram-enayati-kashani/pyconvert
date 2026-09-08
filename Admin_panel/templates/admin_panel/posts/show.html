@@ -1,0 +1,74 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load static permissions media_filter django_vite %}
+{% block meta %}
+    <title>نمایش نوشته ها</title>
+    <link rel="stylesheet" href="{% static 'admin/ckeditor/ckeditor5.css' %}">
+    {% vite_asset 'assets/js/main.jsx' %}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages showPost">
+        <div class="d-flex justify-content-between gap-3 align-items-center flex-wrap">
+            <a href="{% url 'Admin_panel:post-update' post.id %}" class="btn btn-warning">ویرایش اطلاعات</a>
+            {% if request.user|is_admin %}
+                <form action="{% url 'Admin_panel:post-delete' post.id %}" class="Delete-Form" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        حذف
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+        <div class="text-center mb-4">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="image-tumbnail">
+            {% else %}
+                <img src="/media/defaults/demo.png" class="image-tumbnail">
+            {% endif %}
+        </div>
+        <h2 class="mb-4">عنوان: {{ post.title }}</h2>
+        <h3 class="mb-4">عنوان گوگل: {{ post.title_search }}</h3>
+        <p class="mb-4">خلاصه: {{ post.summery }}</p>
+        <p class="mb-4">توضیحات گوگل: {{ post.summery_search }}</p>
+        <div class="mb-4">
+            <p class="mb-1">توضیحات:</p>
+            {{ post.body|render_shortcodes }}
+        </div>
+        {% if post.tags.all %}
+        <div class="tags d-flex align-items-center gap-3 mb-4">
+            <span>برچسب ها:</span>
+            {% for tag in post.tags.all %}
+                {% if not forloop.last %}
+                    <span>
+                        <a href="{% url 'Client:tag' tag.slug %}">{{ tag.title }}</a>
+                        ،
+                    </span>
+                {% else %}
+                    <span>
+                        <a href="{% url 'Client:tag' tag.slug %}">{{ tag.title }}</a>
+                    </span>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if post.categories.all %}
+            <div class="tags d-flex align-items-center gap-3 mb-4">
+                <span>دسته بندی ها:</span>
+                {% for cats in post.categories.all %}
+                    {% if not forloop.last %}
+                        <span>
+                            <a href="{% url 'Client:tag' cats.slug %}">{{ cats.title }}</a>
+                            ،
+                        </span>
+                    {% else %}
+                        <span>
+                            <a href="{% url 'Client:tag' cats.slug %}">{{ cats.title }}</a>
+                        </span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <p class="mb-4">تعداد بازدیدهای تقریبی: {{ post.views_count }}</p>
+        <p class="mb-0">نویسنده: {{ user }}</p>
+    </div>
+{% endblock %}

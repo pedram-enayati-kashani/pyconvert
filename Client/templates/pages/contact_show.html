@@ -1,0 +1,104 @@
+{% extends "layouts/layouts.html" %}
+{% load site_info jalali_date %}
+{% block meta %}
+    <title>تماس باما</title>
+{% endblock %}
+{% block content %}
+    <div class="responsiveActive">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert
+                                  {% if 'success' in message.tags %}alert-success
+                                  {% elif 'warning' in message.tags %}alert-warning
+                                  {% elif 'error' in message.tags %}alert-danger
+                                  {% else %}alert-info{% endif %}
+                                  alert-dismissible fade show"
+                         role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="container aboutContact ContactShowToken">
+            <header>
+                <div class="headerText d-flex align-items-center gap-2 justify-content-between">
+                    <h1>موضوع : {{ contact.title }}</h1>
+                    <div class="d-flex align-items-center gap-2">
+                        وضعیت:
+                        <span class="statusContact">
+                            {% if contact.status == "pending" %}
+                                در انتظار پاسخ
+                            {% elif contact.status == "answered" %}
+                                پاسخ داده شده
+                            {% elif contact.status == "accepted" %}
+                                تایید شده توسط کاربر
+                            {% elif contact.status == "closed" %}
+                                بسته شده
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+                <div class="headerBorder">
+                    <span></span>
+                    <span></span>
+                </div>
+            </header>
+            <div class="contactMessage d-flex flex-column gap-3 mb-4">
+                <div class="nothic">
+                    درصورت ندادن پاسخ این تیکت بعد از 3 روز بسته خواهد شد!!
+                </div>
+                {% for message in contact.ordered_messages %}
+                    {% if message.sender_type == "user" %}
+                        <div class="detailMessage align-self-end">
+                            <div class="userIndo d-flex gap-2 justify-content-between align-items-center">
+                                <span>فرستنده: {{ contact.full_name }}</span>
+                                <span>زمان ساخت: {{ message.created_at|jalali:'%Y/%m/%d' }}</span>
+                            </div>
+                            <div class="message">{{ message.message }}</div>
+                        </div>
+                    {% else %}
+                        {% if message.image %}
+                        <img src="{{ message.image.url }}" width="150px">
+                        {% endif %}
+                        <div class="detailMessage">
+                        <div class="userIndo d-flex gap-2 justify-content-between align-items-center">
+                            <span>فرستنده: ادمین</span>
+                            <span>زمان ساخت: {{ message.created_at|jalali:'%Y/%m/%d' }}</span>
+                        </div>
+                        <div class="message">{{ message.message }}</div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="headerTitleSection">
+                <span>پاسخ خود را در اینجا بنویسید :</span>
+                <div class="headerBorder">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <form action="{% url 'Client:contact-token-reply' contact.token %}" method="post" novalidate>
+                {% csrf_token %}
+                <div class="form-group-display mb-2">
+                    <label for="{{ form.message.id_for_label }}">
+                        {{ form.message.label }}
+                        {% if form.message.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.message }}
+                    {% if form.message.errors %}
+                        <small class="text-danger">
+                            {{ form.message.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <button class="btn btn-success">ثبت</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

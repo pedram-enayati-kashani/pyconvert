@@ -1,0 +1,62 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ساخت رسانه جدید</title>
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ساخت رسانه جدید</h3>
+        </header>
+        <form action="{% url 'Admin_panel:media-create' %}" method="post" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                    {% if form.title.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.title }}
+                <small>{{ form.title.help_text }}</small>
+                {% if form.title.errors %}
+                    <small class="text-danger">
+                        {{ form.title.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.media.id_for_label }}">
+                    {{ form.media.label }}
+                    {% if form.media.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.media }}
+                <small>{{ form.media.help_text }}</small>
+                {% if form.media.errors %}
+                    <small class="text-danger">
+                        {{ form.media.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.status.id_for_label }}">
+                    {{ form.status.label }}
+                    {% if form.status.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ثبت</button>
+            <a href="{% url 'Admin_panel:media' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

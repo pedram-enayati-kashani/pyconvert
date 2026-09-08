@@ -1,0 +1,62 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ساخت منو جدید</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ساخت منو جدید</h3>
+        </header>
+        <form action="{% url 'Admin_panel:menu-create' %}" method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                    {% if form.title.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <small class="text-danger">
+                        {{ form.title.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.name.id_for_label }}">
+                    {{ form.name.label }}
+                    {% if form.name.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.name }}
+                <small>{{ form.name.help_text }}</small>
+                {% if form.name.errors %}
+                    <small class="text-danger">
+                        {{ form.name.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.status.id_for_label }}">
+                    {{ form.status.label }}
+                    {% if form.status.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ثبت</button>
+            <a href="{% url 'Admin_panel:menu' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

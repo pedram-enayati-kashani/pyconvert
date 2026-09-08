@@ -1,0 +1,34 @@
+{% load cache watermark_tags jalali_date %}
+<section id="porject1" class="sectionCard container">
+    <header>
+        <div class="headerText">
+            <h2>مطالب مرتبط</h2>
+        </div>
+        <div class="headerBorder">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <div class="contentSection related-content swiper">
+        <div class="swiper-wrapper">
+            {% for post in related_posts %}
+                <div class="swiper-slide">
+                    <a href="{% url 'Client:post' post.slug %}" class="imgLink" title="{{ post.title }}">
+                        {% render_post_image post 309 206%}
+                    </a>
+                    <div class="text">
+                        <div class="info">
+                            <a href="{% url 'Client:post' post.slug %}" title="{{ post.title }}"><h3 class="title">{{ post.title }}</h3></a>
+                            <p class="summeries">{{ post.summery }}</p>
+                        </div>
+                        <div class="date">{{ post.created_at|jalali:'%Y/%m/%d' }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% if related_posts.count > 1 %}
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        {% endif %}
+    </div>
+</section>

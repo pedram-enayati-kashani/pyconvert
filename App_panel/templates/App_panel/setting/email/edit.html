@@ -1,0 +1,171 @@
+{% extends "App_layouts/layouts.html" %}
+{% block meta %}
+    <title>ویرایش تنظیمات ایمیل</title>
+{% endblock %}
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ویرایش تنظیمات ایمیل</h3>
+        </header>
+        <form action="{% url 'App_panel:setting-email-update' %}" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.username.id_for_label }}">
+                    {{ form.username.label }}
+                    {% if form.username.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <small class="text-danger">
+                        {{ form.username.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.password.id_for_label }}">
+                    {{ form.password.label }}
+                    {% if form.password.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <small class="text-danger">
+                        {{ form.password.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.host.id_for_label }}">
+                    {{ form.host.label }}
+                    {% if form.host.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.host }}
+                {% if form.host.errors %}
+                    <small class="text-danger">
+                        {{ form.host.errors.0 }}
+                    </small>
+                {% endif %}
+                <small>{{ form.host.help_text }}</small>
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.port.id_for_label }}">
+                    {{ form.port.label }}
+                    {% if form.port.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.port }}
+                {% if form.port.errors %}
+                    <small class="text-danger">
+                        {{ form.port.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.sender_email.id_for_label }}">
+                    {{ form.sender_email.label }}
+                    {% if form.sender_email.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.sender_email }}
+                {% if form.sender_email.errors %}
+                    <small class="text-danger">
+                        {{ form.sender_email.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.sender_name.id_for_label }}">
+                    {{ form.sender_name.label }}
+                    {% if form.sender_name.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.sender_name }}
+                {% if form.sender_name.errors %}
+                    <small class="text-danger">
+                        {{ form.sender_name.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.charset.id_for_label }}">
+                    {{ form.charset.label }}
+                    {% if form.charset.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.charset }}
+                {% if form.charset.errors %}
+                    <small class="text-danger">
+                        {{ form.charset.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.use_authentication.id_for_label }}">
+                    {{ form.use_authentication.label }}
+                    {% if form.use_authentication.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.use_authentication }}
+                {% if form.use_authentication.errors %}
+                    <small class="text-danger">
+                        {{ form.use_authentication.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.use_tls.id_for_label }}">
+                    {{ form.use_tls.label }}
+                    {% if form.use_tls.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.use_tls }}
+                {% if form.use_tls.errors %}
+                    <small class="text-danger">
+                        {{ form.use_tls.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.use_ssl.id_for_label }}">
+                    {{ form.use_ssl.label }}
+                    {% if form.use_ssl.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.use_ssl }}
+                {% if form.use_ssl.errors %}
+                    <small class="text-danger">
+                        {{ form.use_ssl.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.status.id_for_label }}">
+                    {{ form.status.label }}
+                    {% if form.status.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ویرایش</button>
+            <a href="{% url 'App_panel:setting' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

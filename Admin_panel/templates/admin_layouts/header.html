@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<header id="mainHeader">
+    <div class="d-flex align-items-center justify-content-between p-3">
+        <div class="d-flex align-items-center gap-4">
+            <span>{% translate "Admin Panel" %}</span>
+            <span>{% blocktranslate with username=request.user.username %}{{ username }} welcome{% endblocktranslate %}</span>
+        </div>
+
+        <a class="headerlink" href="{% url 'Admin_panel:setting' %}">
+            {% translate "Settings" %}
+        </a>
+    </div>
+</header>

@@ -1,0 +1,37 @@
+<div class="social">
+    {% if social_media %}
+    <span>با ما در ارتباط باشید</span>
+    <div class="item">
+        {% if social_media.telegram %}
+        <a href="{{ social_media.telegram.url }}" title="telegram" {% if social_media.telegram.target_blank %}target="_blank"{% endif %}>
+            {% include 'svg/telegram.html'%}
+        </a>
+        {% endif %}
+        {% if social_media.instagram %}
+        <a href="{{ social_media.instagram.url }}" title="instagram" {% if social_media.instagram.target_blank %}target="_blank"{% endif %}>
+            {% include 'svg/instagram.html'%}
+        </a>
+        {% endif %}
+        {% if social_media.whatsapp %}
+        <a href="{{ social_media.whatsapp.url }}" title="whatsapp" {% if social_media.whatsapp.target_blank %}target="_blank"{% endif %}>
+            {% include 'svg/whatsapp.html'%}
+        </a>
+        {% endif %}
+        {% if social_media.eitta %}
+        <a href="{{ social_media.eitta.url }}" title="eitaa" {% if social_media.eitta.target_blank %}target="_blank"{% endif %}>
+            {% include 'svg/eitaa.html'%}
+        </a>
+        {% endif %}
+        {% if social_media.soroush %}
+        <a href="{{ social_media.soroush.url }}" title="soroush" {% if social_media.soroush.target_blank %}target="_blank"{% endif %}>
+            {% include 'svg/soroush.html'%}
+        </a>
+        {% endif %}
+        {% if social_media.bale %}
+        <a href="{{ social_media.bale.url }}" title="bale" {% if social_media.bale.target_blank %}target="_blank"{% endif %}>
+            {% include 'svg/bale.html'%}
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>

@@ -1,0 +1,84 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load pager %}
+{% load permissions %}
+{% block meta %}
+    <title>تماس باما</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>تماس باما</h3>
+{#            <a href="{% url 'Admin_panel:page-create' %}" class="createLink">ساخت صفحات جدید</a>#}
+        </header>
+        <div class="filter-form mb-4">
+            <form class="d-flex align-items-center gap-1 flex-wrap" method="GET"
+                  action="{% url 'Admin_panel:contact-query' %}">
+                <div class="d-flex align-items-center gap-1">
+                    {{ filter_form.status.label_tag }}
+                    {{ filter_form.status }}
+                </div>
+                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
+                <a href="{% url 'Admin_panel:contact' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+            </form>
+        </div>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">عنوان</th>
+                <th scope="col">وضعیت</th>
+                <th scope="col">مشاهده شده/نشده</th>
+                <th scope="col">تعداد پیام ها</th>
+                <th scope="col">تنظیمات</th>
+                </thead>
+                <tbody>
+                {% for contact in contacts %}
+                    <tr>
+                        <td>{{ contact.title }}</td>
+                        <td>
+                            {% if contact.status == 'pending' %}
+                                در انتظار پاسخ
+                            {% elif contact.status == 'answered' %}
+                                پاسخ داده شده
+                            {% elif contact.status == 'accepted' %}
+                                تایید شده توسط کاربر
+                            {% elif contact.status == 'closed' %}
+                                بسته شده
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if contact.saw == 'see' %}
+                                مشاهده شد
+                            {% elif contact.saw == 'not-see' %}
+                                مشاهده نشد
+                            {% endif %}
+                        </td>
+                        <td>{{ contact.messages_count }}</td>
+                        <td>
+                            <a href="{% url 'Admin_panel:contact-show' contact.id %}" class="btn btn-primary">نمایش
+                                اطلاعات</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% include 'admin_layouts/pager.html' with page_obj=page_obj paginator=paginator %}
+    </div>
+{% endblock %}

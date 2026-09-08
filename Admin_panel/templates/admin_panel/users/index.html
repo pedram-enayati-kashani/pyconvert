@@ -1,0 +1,78 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load pager %}
+
+{% block meta %}
+    <title>کاربران</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>کاربران</h3>
+            <a href="{% url 'Admin_panel:user-create' %}" class="createLink">ساخت کاربر جدید</a>
+        </header>
+        <div class="filter-form mb-4">
+            <form class="d-flex align-items-center gap-1 flex-wrap" method="GET"
+                  action="{% url 'Admin_panel:user-query' %}">
+                <div class="d-flex align-items-center gap-1">
+                    {{ filter_form.status.label_tag }}
+                    {{ filter_form.status }}
+                </div>
+                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
+                <a href="{% url 'Admin_panel:user' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+            </form>
+        </div>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">نام کاربری</th>
+                <th scope="col">فعال/غیرفعال</th>
+                <th scope="col">تنظیمات</th>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>
+                            {% if user.is_active %}
+                                <a class="btn btn-primary"
+                                   href="{% url 'Admin_panel:user-active' user.id %}?next={{ request.get_full_path }}">فعال</a>
+                            {% else %}
+                                <a class="btn btn-dark"
+                                   href="{% url 'Admin_panel:user-active' user.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                            {% endif %}
+                        </td>
+                        <td class="d-flex gap-2 align-items-center flex-wrap">
+                            <a href="{% url 'Admin_panel:user-update' user.id %}" class="btn btn-primary">ویرایش
+                                اطلاعات</a>
+                            <form action="{% url 'Admin_panel:user-delete' user.id %}" class="Delete-Form" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    حذف
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% include 'admin_layouts/pager.html' with page_obj=page_obj paginator=paginator %}
+    </div>
+{% endblock %}

@@ -1,0 +1,164 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ویرایش بخش</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div id="editor-config" data-model="sec" data-url="{% url 'ck_editor_5_upload_file' %}"
+         data-id="{{ form.instance.pk|default:'new' }}" style="display: none;"></div>
+    <div id="slug-config" data-model-key="section" data-instance="{{ form.instance.pk|default:'None' }}"
+         data-url="{% url "Admin_panel:get-slug" %}" style="display: none;"></div>
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ساخت بخش جدید</h3>
+        </header>
+        <form action="{% url 'Admin_panel:section-create' %}" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.name.id_for_label }}">
+                    {{ form.name.label }}
+                    {% if form.name.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <small class="text-danger">
+                        {{ form.name.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                    {% if form.title.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <small class="text-danger">
+                        {{ form.title.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.title_seo.id_for_label }}">
+                    {{ form.title_seo.label }}
+                    {% if form.title_seo.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.title_seo }}
+                {% if form.title_seo.errors %}
+                    <small class="text-danger">
+                        {{ form.title_seo.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.description.id_for_label }}">
+                    {{ form.description.label }}
+                    {% if form.description.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <small class="text-danger">
+                        {{ form.description.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.description_seo.id_for_label }}">
+                    {{ form.description_seo.label }}
+                    {% if form.description_seo.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.description_seo }}
+                {% if form.description_seo.errors %}
+                    <small class="text-danger">
+                        {{ form.description_seo.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.image.id_for_label }}">
+                    {{ form.image.label }}
+                    {% if form.image.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <small class="text-danger">
+                        {{ form.image.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.display_number.id_for_label }}">
+                    {{ form.display_number.label }}
+                    {% if form.display_number.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.display_number }}
+                {% if form.display_number.errors %}
+                    <small class="text-danger">
+                        {{ form.display_number.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.type.id_for_label }}">
+                    {{ form.type.label }}
+                    {% if form.type.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.type }}
+                {% if form.type.errors %}
+                    <small class="text-danger">
+                        {{ form.type.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.status.id_for_label }}">
+                    {{ form.status.label }}
+                    {% if form.status.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.slug.id_for_label }}">
+                    {{ form.slug.label }}
+                    {% if form.slug.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.slug }}
+                {% if form.slug.errors %}
+                    <small class="text-danger">
+                        {{ form.slug.errors.0 }}
+                    </small>
+                {% endif %}
+                <small>{{ form.slug.help_text }}</small>
+            </div>
+            <button class="btn btn-success">ثبت</button>
+            <a href="{% url 'Admin_panel:section' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

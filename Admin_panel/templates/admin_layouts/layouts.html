@@ -1,0 +1,31 @@
+{% load static render_partial %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'fa' %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    {% block meta %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'admin/bootstrap/css/bootstrap.rtl.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/fontawesome/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/styles/fontiran.css' %}">
+    {% include 'admin_layouts/variable_styles.html' %}
+    <link rel="stylesheet" href="{% static 'admin/styles/styles.css' %}">
+</head>
+<body>
+    {% render_partial "Admin_panel.views.Layouts.header" %}
+    <div id="mainContainer" class="row m-0 contentAdmin">
+        {% render_partial "Admin_panel.views.Layouts.sidebar" %}
+        <div class="col-xl-10 col-lg-9 px-4 my-4">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    {% render_partial "Admin_panel.views.Layouts.footer" %}
+    <script src="{% static 'admin/js/jquery.js' %}"></script>
+    <script src="{% static 'admin/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'admin/fontawesome/all.min.js' %}"></script>
+    <script src="{% static 'django_ckeditor_5/dist/translations/fa.js' %}"></script>
+    {% block scripts %}{% endblock %}
+    <script src="{% static 'admin/js/scripts.js' %}"></script>
+</body>
+</html>

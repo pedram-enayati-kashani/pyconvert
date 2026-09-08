@@ -1,0 +1,47 @@
+{% extends "App_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ویرایش دسته بندی</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ویرایش دسته بندی</h3>
+        </header>
+        <form action="{% url 'App_panel:group-update' group.id %}" method="post" enctype="multipart/form-data"
+              novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <small class="text-danger">
+                        {{ form.name.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                {{ form.status.label_tag }}
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                {{ form.permissions.label_tag }}
+                {{ form.permissions }}
+                {% if form.permissions.errors %}
+                    <small class="text-danger">
+                        {{ form.permissions.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ویرایش</button>
+            <a href="{% url 'App_panel:group' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

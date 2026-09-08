@@ -1,0 +1,33 @@
+<div class="socialTag">
+    <div class="tag">
+        <span class="titleTag">برچسب :</span>
+        {% if post.tags.all %}
+        <div class="links">
+            {% for tag in post.tags.all %}
+                {% if not forloop.last %}
+                    <span>
+                        <a href="{% url 'Client:tag' tag.slug %}" title="{{ tag.title }}">{{ tag.title }}</a>
+                        ،
+                    </span>
+                {% else %}
+                    <span>
+                        <a href="{% url 'Client:tag' tag.slug %}" title="{{ tag.title }}">{{ tag.title }}</a>
+                    </span>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="social">
+        <a href="https://t.me/share/url?url={{ request.build_absolute_uri|urlencode }}&text={{ post.title|urlencode }}" target="_blank">
+            {% include "svg/telegram.html" %}
+        </a>
+        <a href="https://api.whatsapp.com/send?text={{ post.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}" title="whatsapp" target="_blank">
+            {% include "svg/whatsapp.html" %}
+        </a>
+        <a href="https://x.com/intent/tweet?text={{ post.title|urlencode }}&url={{ request.build_absolute_uri|urlencode }}" title="x" target="_blank" rel="noopener noreferrer">
+            {% include "svg/Twitter-X.html" %}
+        </a>
+
+    </div>
+</div>

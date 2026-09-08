@@ -1,0 +1,148 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>
+        نمایش
+        {% if sell_buy.type == "buyer" %}
+            خریدار
+        {% else %}
+            فروشنده
+        {% endif %}
+    </title>
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>
+                نمایش
+                {% if sell_buy.type == "buyer" %}
+                    خریدار
+                {% else %}
+                    فروشنده
+                {% endif %}
+            </h3>
+        </header>
+        <div class="content-sell-buy row m-0">
+            <div class="col-12 col-md-4 mb-4">
+                <span>نام کامل :</span>
+                <span>{{ sell_buy.fullname }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>شماره موبایل :</span>
+                <span>{{ sell_buy.mobile }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>نوع درخواست :</span>
+                <span>
+                    {% if sell_buy.type == "buyer" %}
+                        خریدار
+                    {% else %}
+                        فروشنده
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>جهت :</span>
+                <span>
+                    {% if sell_buy.direction == "north" %}
+                        شمالی
+                    {% elif sell_buy.direction == "south" %}
+                    جنوبی
+                    {% elif sell_buy.direction == "east" %}
+                        شرقی
+                    {% elif sell_buy.direction == "west" %}
+                        غربی
+                    {% elif sell_buy.direction == "east_west" %}
+                        شرقی - غربی
+                    {% elif sell_buy.direction == "north_east" %}
+                    شمال - شرقی
+                    {% elif sell_buy.direction == "north_west" %}
+                        شمال - غربی
+                    {% elif sell_buy.direction == "south_east" %}
+                        جنوب - شرقی
+                    {% elif sell_buy.direction == "south_west" %}
+                        جنوب - غربی
+                    {% elif sell_buy.direction == "north_south" %}
+                        شمالی - جنوبی
+                    {% elif sell_buy.direction == "two_sided" %}
+                        دو نبش / دو بر
+                    {% elif sell_buy.direction == "three_sided" %}
+                        سه نبش / سه بر
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>تعداد اتاق :</span>
+                <span>{{ sell_buy.room_number }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>طبقه :</span>
+                <span>{{ sell_buy.floor }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>طبقه :</span>
+                <span>{{ sell_buy.floor }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>متراژ :</span>
+                <span>{{ sell_buy.floor_area }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>مبلغ :</span>
+                <span>{{ sell_buy.price }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>وضعیت ملک :</span>
+                <span>
+                    {% if sell_buy.discharge_unit == 'unloading' %}
+                        در حال تخلیه
+                    {% elif sell_buy.discharge_unit == 'discharge' %}
+                       تخلیه شده
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>وضعیت :</span>
+                <span>
+                    {% if sell_buy.status == 'completed' %}
+                        پایان یافته
+                    {% elif sell_buy.status == 'in_progress' %}
+                        در حال پیگیری
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>نوع کاربری :</span>
+                <span>
+                    {% if sell_buy.type_unit == 'residential' %}
+                        مسکونی
+                    {% elif sell_buy.type_unit == 'administrative' %}
+                        اداری
+                    {% elif sell_buy.type_unit == 'commercial' %}
+                        تجاری
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 mb-4">
+                <span class="d-block mb-2">توضیحات :</span>
+                <div>{{ sell_buy.description }}</div>
+            </div>
+            <div class="col-12 mb-4">
+                <span class="d-block mb-2">آدرس :</span>
+                <div>{{ sell_buy.address }}</div>
+            </div>
+           <div class="d-flex align-items-center gap-2">
+               <a href="{% url 'Admin_panel:real-estate-sell-buy' %}" class="btn btn-primary">برگشت</a>
+               <a href="{% url 'Admin_panel:real-estate-sell-buy-update' sell_buy.id %}" class="btn btn-warning">ویرایش</a>
+               <form action="{% url 'Admin_panel:real-estate-sell-buy-delete' sell_buy.id %}" class="Delete-Form"
+                      method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        حذف
+                    </button>
+                </form>
+           </div>
+        </div>
+    </div>
+{% endblock %}

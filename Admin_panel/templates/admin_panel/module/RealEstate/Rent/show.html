@@ -1,0 +1,163 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>
+        نمایش
+        {% if rent.type == "tenant" %}
+            مستأجر
+        {% else %}
+            اجاره دهنده/مالک
+        {% endif %}
+    </title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>
+                نمایش
+                {% if rent.type == "tenant" %}
+                    مستأجر
+                {% else %}
+                    اجاره دهنده/مالک
+                {% endif %}
+            </h3>
+        </header>
+        <div class="content-sell-buy row m-0">
+            <div class="col-12 col-md-4 mb-4">
+                <span>نام کامل :</span>
+                <span>{{ rent.fullname }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>شماره موبایل :</span>
+                <span>{{ rent.mobile }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>نوع درخواست :</span>
+                <span>
+                    {% if rent.type == "tenant" %}
+                        مستأجر
+                    {% else %}
+                        اجاره دهنده/مالک
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>جهت :</span>
+                <span>
+                    {% if rent.direction == "north" %}
+                        شمالی
+                    {% elif rent.direction == "south" %}
+                    جنوبی
+                    {% elif rent.direction == "east" %}
+                        شرقی
+                    {% elif rent.direction == "west" %}
+                        غربی
+                    {% elif rent.direction == "east_west" %}
+                        شرقی - غربی
+                    {% elif rent.direction == "north_east" %}
+                    شمال - شرقی
+                    {% elif rent.direction == "north_west" %}
+                        شمال - غربی
+                    {% elif rent.direction == "south_east" %}
+                        جنوب - شرقی
+                    {% elif rent.direction == "south_west" %}
+                        جنوب - غربی
+                    {% elif rent.direction == "north_south" %}
+                        شمالی - جنوبی
+                    {% elif rent.direction == "two_sided" %}
+                        دو نبش / دو بر
+                    {% elif rent.direction == "three_sided" %}
+                        سه نبش / سه بر
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>تعداد اتاق :</span>
+                <span>{{ rent.room_number }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>طبقه :</span>
+                <span>{{ rent.floor }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>متراژ :</span>
+                <span>{{ rent.floor_area }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>تبدیل دارد :</span>
+                <span>
+                    {% if rent.has_change %}
+                        بله
+                    {% else %}
+                       خیر
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>ودیعه :</span>
+                <span>{{ rent.price }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>حداکثر ودیعه :</span>
+                <span>{{ rent.max_price }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>اجاره ماهانه :</span>
+                <span>{{ rent.price_month }}</span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>وضعیت ملک :</span>
+                <span>
+                    {% if rent.discharge_unit == 'unloading' %}
+                        در حال تخلیه
+                    {% elif rent.discharge_unit == 'discharge' %}
+                       تخلیه شده
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>وضعیت :</span>
+                <span>
+                    {% if rent.status == 'completed' %}
+                        پایان یافته
+                    {% elif rent.status == 'in_progress' %}
+                        در حال پیگیری
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 col-md-4 mb-4">
+                <span>نوع کاربری :</span>
+                <span>
+                    {% if rent.type_unit == 'residential' %}
+                        مسکونی
+                    {% elif rent.type_unit == 'administrative' %}
+                        اداری
+                    {% elif rent.type_unit == 'commercial' %}
+                        تجاری
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-12 mb-4">
+                <span class="d-block mb-2">توضیحات :</span>
+                <div>{{ rent.description }}</div>
+            </div>
+            <div class="col-12 mb-4">
+                <span class="d-block mb-2">آدرس :</span>
+                <div>{{ rent.address }}</div>
+            </div>
+           <div class="d-flex align-items-center gap-2">
+               <a href="{% url 'Admin_panel:real-estate-rent' %}" class="btn btn-primary">برگشت</a>
+               <a href="{% url 'Admin_panel:real-estate-rent-update' rent.id %}" class="btn btn-warning">ویرایش</a>
+               <form action="{% url 'Admin_panel:real-estate-rent-delete' rent.id %}" class="Delete-Form"
+                      method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        حذف
+                    </button>
+                </form>
+           </div>
+        </div>
+    </div>
+{% endblock %}

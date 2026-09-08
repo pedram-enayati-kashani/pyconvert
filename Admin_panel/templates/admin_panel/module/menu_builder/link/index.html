@@ -1,0 +1,86 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load pager %}
+{% load permissions %}
+{% block meta %}
+    <title>لینک های فهرست</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>لینک های فهرست</h3>
+            <a href="{% url 'Admin_panel:menu-link-create' menu_obj.id %}" class="createLink">ساخت لینک جدید</a>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">عنوان</th>
+                <th scope="col">نام</th>
+                <th scope="col">والد</th>
+                <th scope="col">ترتیب نمایش</th>
+                <th scope="col">فعال/غیرفعال</th>
+                <th scope="col">تنظیمات</th>
+                </thead>
+                <tbody>
+                {% for link in links %}
+                    <tr>
+                        <td>{{ link.title }}</td>
+                        <td>{{ link.name }}</td>
+                        <td>{{ link.parent.title }}</td>
+                        <td class="d-flex gap-2 align-items-center justify-content-between">
+                            <span>{{ link.order }}</span>
+                            <div class="d-flex gap-2 align-items-center">
+                                <a href="{% url "Admin_panel:menu-link-to-up" menu_obj.id link.id %}"
+                                   class="btn btn-primary">
+                                    <i class="fa-solid fa-chevron-up"></i>
+                                </a>
+                                <a href="{% url "Admin_panel:menu-link-to-down" menu_obj.id link.id %}"
+                                   class="btn btn-primary">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            {% if link.status == 'active' %}
+                                <a class="btn btn-primary"
+                                   href="{% url 'Admin_panel:menu-link-active' menu_obj.id link.id %}?next={{ request.get_full_path }}">فعال</a>
+                            {% elif link.status == 'inactive' %}
+                                <a class="btn btn-dark"
+                                   href="{% url 'Admin_panel:menu-link-active' menu_obj.id link.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                            {% endif %}
+                        </td>
+                        <td class="d-flex gap-2 align-items-center flex-wrap">
+                            <a href="{% url 'Admin_panel:menu-link-update' menu_obj.id link.id %}"
+                               class="btn btn-primary">ویرایش
+                                اطلاعات</a>
+                            <form action="{% url 'Admin_panel:menu-link-delete' menu_obj.id link.id %}" class="Delete-Form"
+                                  method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    حذف
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

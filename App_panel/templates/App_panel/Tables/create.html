@@ -1,0 +1,26 @@
+{% extends "App_layouts/layouts.html" %}
+{% block meta %}
+    <title>{{ title_page }}</title>
+{% endblock %}
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>{{ title_page }}</h3>
+        </header>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                {{ form.titles.label_tag }}
+                {{ form.titles }}
+                {% if form.titles.errors %}
+                    <small class="text-danger">
+                        {{ form.titles.errors.0 }}
+                    </small>
+                {% endif %}
+                <small class="smallText">{{ form.titles.help_text }}</small>
+            </div>
+            <button class="btn btn-success">ایجاد</button>
+            <a href="{% url 'Admin_panel:profile' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

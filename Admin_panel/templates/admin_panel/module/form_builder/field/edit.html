@@ -1,0 +1,133 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ویرایش فرم</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+            <header class="headerPage">
+                <h3>ویرایش فرم</h3>
+            </header>
+            <form action="{% url "Admin_panel:form-builder-field-update" form_obj.id field_obj.id %}" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+               <div class="form-group-display">
+                    <label for="{{ form.label.id_for_label }}">
+                        {{ form.label.label }}
+                        {% if form.label.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.label }}
+                    {% if form.label.errors %}
+                        <small class="text-danger">
+                            {{ form.label.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.name.id_for_label }}">
+                        {{ form.name.label }}
+                        {% if form.name.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.name }}
+                    <small>{{ form.name.help_text }}</small>
+                    {% if form.name.errors %}
+                        <small class="text-danger">
+                            {{ form.name.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.field_type.id_for_label }}">
+                        {{ form.field_type.label }}
+                        {% if form.field_type.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.field_type }}
+                    {% if form.field_type.errors %}
+                        <small class="text-danger">
+                            {{ form.field_type.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.status.id_for_label }}">
+                        {{ form.status.label }}
+                        {% if form.status.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <small class="text-danger">
+                            {{ form.status.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.required.id_for_label }}">
+                        {{ form.required.label }}
+                        {% if form.required.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.required }}
+                    {% if form.required.errors %}
+                        <small class="text-danger">
+                            {{ form.required.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.prefix.id_for_label }}">
+                        {{ form.prefix.label }}
+                        {% if form.prefix.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.prefix }}
+                    {% if form.prefix.errors %}
+                        <small class="text-danger">
+                            {{ form.prefix.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.suffix.id_for_label }}">
+                        {{ form.suffix.label }}
+                        {% if form.suffix.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.suffix }}
+                    {% if form.suffix.errors %}
+                        <small class="text-danger">
+                            {{ form.suffix.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.options.id_for_label }}">
+                        {{ form.options.label }}
+                        {% if form.options.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.options }}
+                    {% if form.options.errors %}
+                        <small class="text-danger">
+                            {{ form.options.errors.0 }}
+                        </small>
+                    {% endif %}
+                    <small>{{ form.options.help_text }}</small>
+                </div>
+                <button class="btn btn-success">ویرایش</button>
+                <a href="{% url 'Admin_panel:form-builder-field' form_obj.id %}" class="btn btn-danger">انصراف</a>
+            </form>
+        </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% load i18n %}
+
+{% if paginator.num_pages > 1 %}
+    <div class="pager">
+        <ul class="pagination">
+            {# Previous link #}
+            {% if page_obj.has_previous %}
+                {# Use page_obj.previous_page_number to get the previous page number #}
+                <li><a href="?page={{ page_obj.previous_page_number }}">{% translate "Previous" %}</a></li>
+            {% else %}
+                <li class="disabled"><span>{% translate "Previous" %}</span></li>
+            {% endif %}
+
+            {# Display calculated pages #}
+            {% for page_num in visible_page_numbers %}
+                {% if page_num == '...' %}
+                    {# Display ellipsis #}
+                    <li class="disabled"><span>...</span></li>
+                {% elif page_obj.number == page_num %}
+                    {# Current page #}
+                    <li class="active">
+                        <span>{{ page_num }}</span>
+                    </li>
+                {% else %}
+                    {# Other pages #}
+                    <li>
+                        <a href="?page={{ page_num }}">{{ page_num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {# Next link #}
+            {% if page_obj.has_next %}
+                {# Use page_obj.next_page_number to get the next page number #}
+                <li><a href="?page={{ page_obj.next_page_number }}">{% translate "Next" %}</a></li>
+            {% else %}
+                <li class="disabled"><span>{% translate "Next" %}</span></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}
+

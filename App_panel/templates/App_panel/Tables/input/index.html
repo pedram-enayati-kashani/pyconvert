@@ -1,0 +1,43 @@
+{% extends "App_layouts/layouts.html" %}
+{% load thumbnail %}
+{% block meta %}
+    <title>مدل ها</title>
+{% endblock %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center mb-4">
+            <h3>مدل ها</h3>
+        </header>
+        {% for item in models_data %}
+            <div class="tableGroup mb-4">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h3>{{ item.verbose_name }} - {{ item.db_table }}</h3>
+                    <a href="{% url 'App_panel:table-input-detail' item.app_label item.model_name %}" class="createLink">
+                      ورود به صفحه این مدل
+                    </a>
+                </div>
+                <div class="d-flex flex-column gap-3">
+                    {% for field in item.fields %}
+                        <span class="title-15">{{ field.name }} - {{ field.type }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

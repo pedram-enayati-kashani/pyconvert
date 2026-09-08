@@ -1,0 +1,50 @@
+{% load static i18n render_partial %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% translate "Admin Login" %}</title>
+    <link rel="stylesheet" href="{% static 'admin/bootstrap/css/bootstrap.rtl.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/fontawesome/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/styles/fontiran.css' %}">
+    {% include 'admin_layouts/variable_styles.html' %}
+    <link rel="stylesheet" href="{% static 'admin/styles/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <form class="authForm" method="post" action="{% url 'Admin_panel:login' %}">
+            <h2>{% translate "Admin Login" %}</h2>
+            {% csrf_token %}
+            <div class="formGroup">
+                {{ login_form.username.label_tag }}
+                {{ login_form.username }}
+            </div>
+            <div class="formGroup">
+                {{ login_form.password.label_tag }}
+                {{ login_form.password }}
+                <div id="choseTypeInput">
+                    <span id="eyeSlash"><i class="fa-solid fa-eye-slash"></i></span>
+                    <span  id="eyeSolid"><i class="fa-solid fa-eye"></i></span>
+                </div>
+            </div>
+            <div class="rememberMe form-check">
+                <label>{{ login_form.remember_me.label }}</label>
+                {{ login_form.remember_me }}
+            </div>
+            {% if login_form.non_field_errors %}
+                <ul>
+                    {% for error in login_form.non_field_errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <button type="submit">{% translate "Login" %}</button>
+        </form>
+    </div>
+    <script src="{% static 'admin/js/jquery.js' %}"></script>
+    <script src="{% static 'admin/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'admin/fontawesome/all.min.js' %}"></script>
+    <script src="{% static 'admin/js/scripts.js' %}"></script>
+</body>
+</html>

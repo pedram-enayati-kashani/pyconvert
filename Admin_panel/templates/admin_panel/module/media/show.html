@@ -1,0 +1,51 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load django_vite %}
+{% block meta %}
+    {% vite_asset 'assets/js/main.jsx' %}
+    <title>نمایش رسانه - {{ media_object.title }}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>نمایش رسانه: {{ media_object.title }}</h3>
+        </header>
+        <div class="content d-flex justify-content-center mb-4">
+            {% if media_object.media %}
+                {% if media_object.is_video %}
+                    <video class="video-js vjs-default-skin vjs-big-play-centered js-video-player"
+                           controls
+                           preload="auto"
+                           data-setup='{}'>
+                        <source src="{{ media_object.media.url }}" type="{{ media_object.video_mime_type }}">
+                    </video>
+                {% elif media_object.is_music %}
+                    <audio
+                        id="audio-{{ media_object.media_key }}"
+                        class="video-js vjs-default-skin vjs-big-play-centered js-audio-player"
+                        controls
+                        preload="auto">
+                        <source src="{{ media_object.media.url }}" type="{{ media_object.sound_mime_type }}">
+                        <p class="vjs-no-js">
+                            برای پخش این فایل صوتی، لطفاً جاوااسکریپت مرورگر خود را فعال کنید.
+                        </p>
+                    </audio>
+                {% else %}
+                    <img src="{{ media_object.media.url }}" style="width: 100%;max-width: 1000px;">
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+            <a href="{% url 'Admin_panel:media' %}" class="btn btn-primary">بازگشت</a>
+            <a href="{% url 'Admin_panel:media-update' media_object.id %}" class="btn btn-warning">ویرایش
+                اطلاعات</a>
+            <form action="{% url 'Admin_panel:media-delete' media_object.id %}" class="Delete-Form"
+                  method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    حذف
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

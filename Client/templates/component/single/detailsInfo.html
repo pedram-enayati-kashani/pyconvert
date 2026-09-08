@@ -1,0 +1,45 @@
+{% if submission %}
+<div class="detailsInfo">
+    <header class="headerTitleSection">
+        <span>مشخصات :</span>
+        <div class="headerBorder">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <div class="content">
+        <ul class="listDetails">
+            {% for field in submission %}
+                {% if field.order|divisibleby:2 == False %}
+                    <li>
+                        <span class="title">{{ field.field_label }} :</span>
+                        {% if field.prefix %}
+                            <span>{{ field.prefix }}</span>
+                        {% endif %}
+                        <span class="titleName">{{ field.value }}</span>
+                        {% if field.suffix %}
+                            <span>{{ field.suffix }}</span>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <ul class="listDetails">
+            {% for field in submission %}
+                {% if field.order|divisibleby:2 == True %}
+                    <li>
+                        <span class="title">{{ field.field_label }} :</span>
+                        {% if field.prefix %}
+                            <span>{{ field.prefix }}</span>
+                        {% endif %}
+                        <span class="titleName">{{ field.value }}</span>
+                        {% if field.suffix %}
+                            <span>{{ field.suffix }}</span>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}

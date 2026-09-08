@@ -1,0 +1,120 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ساخت تبلیغ جدید</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <div id="config_info" data-url="{% url 'Admin_panel:link-resolve_target' %}"></div>
+        <header class="headerPage">
+            <h3>ساخت تبلیغ جدید</h3>
+        </header>
+        <form action="{% url 'Admin_panel:adv-text-create' %}" method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                    {% if form.title.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <small class="text-danger">
+                        {{ form.title.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.section.id_for_label }}">
+                    {{ form.section.label }}
+                    {% if form.section.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.section }}
+                {% if form.section.errors %}
+                    <small class="text-danger">
+                        {{ form.section.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.url.id_for_label }}">
+                    {{ form.url.label }}
+                    {% if form.url.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.url }}
+                {% if form.url.errors %}
+                    <small class="text-danger">
+                        {{ form.url.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.address_list.id_for_label }}">
+                    {{ form.address_list.label }}
+                    {% if form.address_list.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.address_list }}
+                <small>{{ form.address_list.help_text }}</small>
+                {% if form.address_list.errors %}
+                    <small class="text-danger">
+                        {{ form.address_list.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.rel.id_for_label }}">
+                    {{ form.rel.label }}
+                    {% if form.rel.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.rel }}
+                <small>{{ form.rel.help_text }}</small>
+                {% if form.rel.errors %}
+                    <small class="text-danger">
+                        {{ form.rel.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.target_blank.id_for_label }}">
+                    {{ form.target_blank.label }}
+                    {% if form.target_blank.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.target_blank }}
+                {% if form.target_blank.errors %}
+                    <small class="text-danger">
+                        {{ form.target_blank.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.status.id_for_label }}">
+                    {{ form.status.label }}
+                    {% if form.status.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ثبت</button>
+            <a href="{% url 'Admin_panel:adv-text' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "App_layouts/layouts.html" %}
+{% load thumbnail %}
+{% block meta %}
+    <title>جداول</title>
+{% endblock %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center mb-4">
+            <h3>جداول</h3>
+        </header>
+        <div class="tableGroup mb-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <h3>صفحات</h3>
+                {% if not pages %}
+                    <a href="{% url "App_panel:table-page-create" %}" class="createLink">ایجاد صفحه</a>
+                {% endif %}
+            </div>
+            <div class="d-flex flex-column gap-3">
+                {% for page in pages %}
+                    <span class="title-15">{{ page.title }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tableGroup mb-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <h3>بخش ها</h3>
+                {% if not sections %}
+                    <a href="{% url "App_panel:table-section-create" %}" class="createLink">ایجاد بخش</a>
+                {% else %}
+                    <a href="{% url "App_panel:table-section" %}" class="createLink">ویرایش بخش</a>
+                {% endif %}
+            </div>
+            <div class="d-flex flex-column gap-3">
+                {% for section in sections %}
+                    <span class="title-15">{{ section.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tableGroup mb-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <h3>گروه ها</h3>
+                {% if not groups %}
+                    <a href="{% url "App_panel:table-group-create" %}" class="createLink">ایجاد بخش</a>
+                {% endif %}
+            </div>
+            <div class="d-flex flex-column gap-3">
+                {% for group in groups %}
+                    <span class="title-15">{{ group.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="tableGroup mb-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <h3>ماژول ها</h3>
+                {% if not modules %}
+                    <a href="{% url "App_panel:table-module-create" %}" class="createLink">ایجاد بخش</a>
+                {% endif %}
+            </div>
+            <div class="d-flex flex-column gap-3">
+                {% for module in modules %}
+                    <span class="title-15">{{ module.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="d-flex align-items-center flex-wrap gap-2">
+            <a href="{% url 'App_panel:table-backup-mysql' %}" class="btn btn-primary">دانلود بک‌آپ MySQL</a>
+            <a href="{% url 'App_panel:table-backup-postgres' %}" class="btn btn-primary">دانلود بک‌آپ PostgreSQL</a>
+            <a href="{% url 'App_panel:table-backup-sqlite' %}" class="btn btn-primary">دانلود بک‌آپ SQLite</a>
+            <a href="{% url 'App_panel:table-input-postgres' %}" class="btn btn-primary">ورودی PostgreSQL</a>
+            <a href="{% url 'App_panel:table-input-query' %}" class="btn btn-primary">ورودی کوئری PostgreSQL</a>
+        </div>
+    </div>
+{% endblock %}

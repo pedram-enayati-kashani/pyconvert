@@ -1,0 +1,16 @@
+{% load cache %}
+{% if links and menu %}
+    {% cache 3600 "menu_link" menu.name menu.link_updated_at menu.updated_at %}
+    <nav id="footerNav">
+        <ul class="p-0 m-0">
+                {% if links %}
+                    {% for link in links %}
+                        <li>
+                            <a href="{{ link.url }}" {% if link.rel %}rel="{{ link.rel }}"{% endif %} {% if link.target_blank %}target="_blank"{% endif %} >{{ link.title }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+    </nav>
+    {% endcache %}
+{% endif %}

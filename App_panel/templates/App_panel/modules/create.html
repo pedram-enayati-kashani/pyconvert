@@ -1,0 +1,46 @@
+{% extends "App_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ساخت گروه جدید</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ساخت ماژول</h3>
+        </header>
+        <form action="{% url 'App_panel:module-create' %}" method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                {{ form.title.label_tag }}
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <small class="text-danger">
+                        {{ form.title.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <small class="text-danger">
+                        {{ form.name.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                {{ form.status.label_tag }}
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ثبت</button>
+            <a href="{% url 'App_panel:module' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

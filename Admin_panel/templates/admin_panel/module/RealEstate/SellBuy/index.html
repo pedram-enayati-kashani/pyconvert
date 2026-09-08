@@ -1,0 +1,99 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load pager %}
+{% load permissions %}
+{% block meta %}
+    <title>املاک - خرید و فروش</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>املاک - خرید و فروش</h3>
+        </header>
+        <div class="filter-form mb-4">
+            <form class="d-flex align-items-center gap-1 flex-wrap" method="GET" action="{% url 'Admin_panel:real-estate-sell-buy-query' %}">
+                <div class="d-flex align-items-center gap-1">
+                    {{ filter_form.type.label_tag }}
+                    {{ filter_form.type }}
+                </div>
+                <div class="d-flex align-items-center gap-1">
+                    {{ filter_form.address.label_tag }}
+                    {{ filter_form.address }}
+                </div>
+                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
+                <a href="{% url 'Admin_panel:real-estate-sell-buy' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+            </form>
+        </div>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">آدرس</th>
+                <th scope="col">نوع تقاضا</th>
+                <th scope="col">نام کامل</th>
+                <th scope="col">وضعیت</th>
+                <th scope="col">وضعیت مشاهده</th>
+                <th scope="col">تنظیمات</th>
+                </thead>
+                <tbody>
+                {% for item in sell_buy_list %}
+                    <tr>
+                        <td>{{ item.address|truncatechars:30 }}</td>
+                        <td>
+                            {% if item.type == 'buyer' %}
+                                خریدار
+                            {% elif item.type == 'seller' %}
+                                فروشنده
+                            {% endif %}
+                        </td>
+                        <td>{{ item.fullname}}</td>
+                        <td>
+                            {% if item.status == 'completed' %}
+                                پایان یافته
+                            {% elif item.status == 'in_progress' %}
+                                در حال پیگیری
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.saw == 'see' %}
+                                مشاهده شده
+                            {% elif item.saw == 'not-see' %}
+                                مشاهده نشده
+                            {% endif %}
+                        </td>
+                        <td class="d-flex gap-2 align-items-center flex-wrap">
+                            <a href="{% url 'Admin_panel:real-estate-sell-buy-show' item.id %}" class="btn btn-primary">نمایش
+                                اطلاعات</a>
+                            <a href="{% url 'Admin_panel:real-estate-sell-buy-update' item.id %}" class="btn btn-warning">ویرایش
+                                اطلاعات</a>
+                            <form action="{% url 'Admin_panel:real-estate-sell-buy-delete' item.id %}" class="Delete-Form"
+                                  method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    حذف
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% include 'admin_layouts/pager.html' with page_obj=page_obj paginator=paginator %}
+    </div>
+{% endblock %}

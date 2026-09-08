@@ -1,0 +1,118 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ویرایش کاربر</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ویرایش کاربر</h3>
+        </header>
+        <form action="{% url 'Admin_panel:user-update' userUpdate.id %}" method="post" enctype="multipart/form-data"
+              novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.username.id_for_label }}">
+                    {{ form.username.label }}
+                    {% if form.username.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <small class="text-danger">
+                        {{ form.username.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.email.id_for_label }}">
+                    {{ form.email.label }}
+                    {% if form.email.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <small class="text-danger">
+                        {{ form.email.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.password.id_for_label }}">
+                    {{ form.password.label }}
+                    {% if form.password.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <small class="text-danger">
+                        {{ form.password.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.password_con.id_for_label }}">
+                    {{ form.password_con.label }}
+                    {% if form.password_con.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.password_con }}
+                {% if form.password_con.errors %}
+                    <small class="text-danger">
+                        {{ form.password_con.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.is_active.id_for_label }}">
+                    {{ form.is_active.label }}
+                    {% if form.is_active.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.is_active }}
+                {% if form.is_active.errors %}
+                    <small class="text-danger">
+                        {{ form.is_active.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.is_staff.id_for_label }}">
+                    {{ form.is_staff.label }}
+                    {% if form.is_staff.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.is_staff }}
+                {% if form.is_staff.errors %}
+                    <small class="text-danger">
+                        {{ form.is_staff.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display" id="GroupField">
+                <label for="{{ form.group.id_for_label }}">
+                    {{ form.group.label }}
+                    {% if form.group.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.group }}
+                {% if form.group.errors %}
+                    <small class="text-danger">
+                        {{ form.group.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ویرایش</button>
+            <a href="{% url 'Admin_panel:user' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

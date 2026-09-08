@@ -1,0 +1,6 @@
+{% load render_partial %}
+<div class="colLeft">
+    {% include 'component/single/categories.html' with post=post %}
+    {% render_partial "Client.views.component.adv_banner" "adv-image-post"%}
+    {% render_partial "Client.views.component.adv_text" "adv-text-post"%}
+</div>

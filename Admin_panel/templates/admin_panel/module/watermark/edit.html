@@ -1,0 +1,179 @@
+{% extends "admin_layouts/layouts.html" %}
+{% block meta %}
+    <title>ویرایش واترمارک</title>
+{% endblock %}
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ویرایش واترمارک</h3>
+        </header>
+        <form action="{% url 'Admin_panel:watermark-update' %}" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.image.id_for_label }}">
+                    {{ form.image.label }}
+                    {% if form.image.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {% if watermark.image %}
+                    <img src="{{ watermark.image.url }}" alt="عکس فعلی بخش"
+                         style="max-width:200px; height:auto; margin-bottom:10px;">
+                {% endif %}
+                <input type="file" name="image" class="form-control" accept="image/*" id="id_image">
+                {% if form.image.errors %}
+                    <small class="text-danger">{{ form.image.errors.0 }}</small>
+                {% endif %}
+                <small>{{ form.image.help_text }}</small>
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.width_mode.id_for_label }}">
+                    {{ form.width_mode.label }}
+                    {% if form.width_mode.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.width_mode }}
+                {% if form.width_mode.errors %}
+                    <small class="text-danger">
+                        {{ form.width_mode.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.height_mode.id_for_label }}">
+                    {{ form.height_mode.label }}
+                    {% if form.height_mode.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.height_mode }}
+                {% if form.height_mode.errors %}
+                    <small class="text-danger">
+                        {{ form.height_mode.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.width_percent.id_for_label }}">
+                    {{ form.width_percent.label }}
+                    {% if form.width_percent.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.width_percent }}
+                <small>{{ form.width_percent.help_text }}</small>
+                {% if form.width_percent.errors %}
+                    <small class="text-danger">
+                        {{ form.width_percent.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.height_percent.id_for_label }}">
+                    {{ form.height_percent.label }}
+                    {% if form.height_percent.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.height_percent }}
+                <small>{{ form.height_percent.help_text }}</small>
+                {% if form.height_percent.errors %}
+                    <small class="text-danger">
+                        {{ form.height_percent.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.manual_width.id_for_label }}">
+                    {{ form.manual_width.label }}
+                    {% if form.manual_width.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.manual_width }}
+                <small>{{ form.manual_width.help_text }}</small>
+                {% if form.manual_width.errors %}
+                    <small class="text-danger">
+                        {{ form.manual_width.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.manual_height.id_for_label }}">
+                    {{ form.manual_height.label }}
+                    {% if form.manual_height.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.manual_height }}
+                <small>{{ form.manual_height.help_text }}</small>
+                {% if form.manual_height.errors %}
+                    <small class="text-danger">
+                        {{ form.manual_height.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.position.id_for_label }}">
+                    {{ form.position.label }}
+                    {% if form.position.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.position }}
+                {% if form.position.errors %}
+                    <small class="text-danger">
+                        {{ form.position.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.opacity.id_for_label }}">
+                    {{ form.opacity.label }}
+                    {% if form.opacity.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.opacity }}
+                <small>{{ form.opacity.help_text }}</small>
+                {% if form.opacity.errors %}
+                    <small class="text-danger">
+                        {{ form.opacity.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.padding.id_for_label }}">
+                    {{ form.padding.label }}
+                    {% if form.padding.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.padding }}
+                <small>{{ form.padding.help_text }}</small>
+                {% if form.padding.errors %}
+                    <small class="text-danger">
+                        {{ form.padding.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.status.id_for_label }}">
+                    {{ form.status.label }}
+                    {% if form.status.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ویرایش</button>
+            <a href="{% url 'Admin_panel:watermark' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

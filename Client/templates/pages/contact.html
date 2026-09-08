@@ -1,0 +1,82 @@
+{% extends "layouts/layouts.html" %}
+{% load site_info %}
+{% block meta %}
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="{{ page.description_seo|default:page.body|truncatechars:160 }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{{ page.title_seo|default:page.title|truncatechars:60 }}">
+    <meta property="og:description" content="{{ page.description_seo|default:page.body|truncatechars:160 }}">
+    {% if page.image %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ page.image.url }}">
+    {% endif %}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+        {{ schema|safe }}
+    </script>
+    <title>{% title page.title_seo page.title %}</title>
+{% endblock %}
+{% block content %}
+    <div class="responsiveActive">
+        <div class="container parentsSinglePage">
+            <div class="colRight aboutContact">
+                <header>
+                    <div class="headerText">
+                        <h1>{{ page.title }}</h1>
+                    </div>
+                    <div class="headerBorder">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </header>
+                <!-- start contact content -->
+                <div class="contactAboutContent">{{ page.body|safe }}</div>
+                <!-- end contact content -->
+                <div class="commentForm">
+                    <div class="successFullSend"></div>
+                    <form action="{% url 'Client:contact' %}" id="contactForm" novalidate method="post">
+                        {% csrf_token %}
+                        <div class="colRightForm">
+                            <div class="formGroup">
+                                {{ form.full_name.label_tag }}
+                                {{ form.full_name }}
+                                <small class="text-danger" data-field="full_name"></small>
+                            </div>
+                            <div class="formGroup">
+                                {{ form.title.label_tag }}
+                                {{ form.title }}
+                                <small class="text-danger" data-field="title"></small>
+                            </div>
+                            <div class="formGroup emailInput">
+                                {{ form.email.label_tag }}
+                                {{ form.email }}
+                                <small class="text-danger" data-field="email"></small>
+                            </div>
+                            <div class="formGroup cacheInput">
+                                {{ form.captcha.label_tag }}
+                                <div class="captcha-wrapper d-flex align-items-center gap-2">
+                                    <div class="d-flex flex-row-reverse justify-content-end align-items-center gap-2">
+                                        {{ form.captcha }}
+                                    </div>
+                                    <button type="button" class="js-captcha-refresh">
+                                        {% include 'svg/refresh.html' %}
+                                    </button>
+                                </div>
+                                <small class="text-danger" data-field="captcha"></small>
+                            </div>
+                            <button id="submitContact" type="submit">ارسال</button>
+                        </div>
+                        <div class="formGroup textarea">
+                            {{ form.message.label_tag }}
+                            {{ form.message }}
+                            <small class="text-danger" data-field="message"></small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {# start sidebar #}
+            {% include 'component/innerpage/sidebar.html' %}
+            {# end sidebar #}
+        </div>
+    </div>
+{% endblock %}

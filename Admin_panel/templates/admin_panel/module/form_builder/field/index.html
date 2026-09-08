@@ -1,0 +1,86 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load pager %}
+{% load permissions %}
+{% block meta %}
+    <title>فیلدهای فرم</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>فیلدهای فرم</h3>
+            {% if request.user|is_superuser %}
+                <a href="{% url 'Admin_panel:form-builder-field-create' form_obj.id %}" class="createLink">ساخت فیلد
+                    جدید</a>
+            {% endif %}
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">عنوان</th>
+                <th scope="col">نام</th>
+                <th scope="col">ترتیب نمایش</th>
+                <th scope="col">فعال/غیرفعال</th>
+                <th scope="col">تنظیمات</th>
+                </thead>
+                <tbody>
+                {% for field in fields %}
+                    <tr>
+                        <td>{{ field.label }}</td>
+                        <td>{{ field.name }}</td>
+                        <td class="d-flex gap-2 align-items-center justify-content-between">
+                            <span>{{ field.order }}</span>
+                            <div class="d-flex gap-2 align-items-center">
+                                <a href="{% url "Admin_panel:form-builder-field-to-up" form_obj.id field.id %}"
+                                   class="btn btn-primary">
+                                    <i class="fa-solid fa-chevron-up"></i>
+                                </a>
+                                <a href="{% url "Admin_panel:form-builder-field-to-down" form_obj.id field.id %}"
+                                   class="btn btn-primary">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            {% if field.status == 'active' %}
+                                <a class="btn btn-primary"
+                                   href="{% url 'Admin_panel:form-builder-field-active' form_obj.id field.id %}?next={{ request.get_full_path }}">فعال</a>
+                            {% elif field.status == 'inactive' %}
+                                <a class="btn btn-dark"
+                                   href="{% url 'Admin_panel:form-builder-field-active' form_obj.id field.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                            {% endif %}
+                        </td>
+                        <td class="d-flex gap-2 align-items-center flex-wrap">
+                            <a href="{% url 'Admin_panel:form-builder-field-update' form_obj.id field.id %}"
+                               class="btn btn-primary">ویرایش اطلاعات</a>
+                            <form action="{% url 'Admin_panel:form-builder-field-delete' form_obj.id field.id %}"
+                                  class="Delete-Form" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    حذف
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

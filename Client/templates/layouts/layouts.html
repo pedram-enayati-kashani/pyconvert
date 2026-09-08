@@ -1,0 +1,27 @@
+{% load static render_partial django_vite %}
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_CODE == 'fa' %}rtl{% else %}ltr{% endif %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'client/swiper/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'client/styles/fontiran.css' %}">
+    {% render_partial "Client.views.component.head_mata" %}
+    {% render_partial "Client.views.component.faveicon" %}
+    {% vite_hmr_client %}
+    {% vite_asset 'client/assets/js/main.jsx' %}
+    {% block meta %}{% endblock %}
+</head>
+<body class="bg-off-white">
+    {% render_partial "Client.views.component.header" %}
+    {% block content %}{% endblock %}
+    {% render_partial "Client.views.component.footer" %}
+    <script src="{% static 'client/js/jquery.js' %}"></script>
+    <script src="{% static 'client/swiper/swiper.js' %}"></script>
+    {% block scripts %}{% endblock %}
+    {% render_partial "Client.views.component.footer_script" %}
+    <script src="{% static 'client/js/scripts.js' %}"></script>
+</body>
+</html>
+{% endspaceless %}

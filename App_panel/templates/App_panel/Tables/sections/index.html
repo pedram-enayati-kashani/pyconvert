@@ -1,0 +1,70 @@
+{% extends "App_layouts/layouts.html" %}
+{% load pager %}
+
+{% block meta %}
+    <title>بخش ها</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>بخش ها</h3>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">نام</th>
+                <th scope="col">عنوان</th>
+                <th scope="col">نوع</th>
+                <th scope="col">تنظیمات</th>
+                </thead>
+                <tbody>
+                {% for section in sections %}
+                    <tr>
+                        <td>{{ section.name }}</td>
+                        <td>{{ section.title }}</td>
+                        <td>
+                            {% if section.type == "post" %}
+                                نوشته
+                            {% elif section.type == "no_post" %}
+                                اطلاعیه بدون نوشته
+                            {% elif section.type == "last_news" %}
+                                آخرین اخبار
+                            {% elif section.type == "most_visited" %}
+                                پربازدید ترین
+                            {% elif section.type == "most_commented" %}
+                                پربحث ترین
+                            {% elif section.type == "adv_text" %}
+                                تبلیغ متنی
+                            {% elif section.type == "adv_image" %}
+                                تبلیغ بنر
+                            {% endif %}
+                        </td>
+                        <td class="d-flex gap-2 align-items-center">
+                            <a href="{% url 'App_panel:table-section-update' section.id %}" class="btn btn-primary">ویرایش
+                                اطلاعات</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% include 'admin_layouts/pager.html' with page_obj=page_obj paginator=paginator %}
+    </div>
+{% endblock %}

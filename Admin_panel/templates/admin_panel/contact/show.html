@@ -1,0 +1,117 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load pager permissions jalali_date %}
+{% block meta %}
+    <title>تماس باما</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>تماس باما</h3>
+        </header>
+        <div class="detailsInfo row mb-4">
+            <div class="col-12 mb-3">
+                <span class="d-block mb-2">موضوع:</span>
+                <h5>{{ contact.title }}</h5>
+            </div>
+            <div class="col-6">
+                نام فرستنده: {{ contact.full_name }}
+            </div>
+            <div class="col-6">
+                ایمیل فرستنده: {{ contact.email }}
+            </div>
+            <div class="col-6">
+                وضعیت:
+                {% if contact.status == "pending" %}
+                    در انتظار پاسخ
+                {% elif contact.status == "answered" %}
+                    پاسخ داده شده
+                {% elif contact.status == "accepted" %}
+                    تایید شده توسط کاربر
+                {% elif contact.status == "closed" %}
+                    بسته شده
+                {% endif %}
+            </div>
+        </div>
+        <div class="headerPage mb-4">
+            <h5 class="titleblock">پیام ها</h5>
+        </div>
+        <div class="d-flex flex-column gap-3 mb-4">
+            {% for message in contact.ordered_messages %}
+                {% if message.sender_type == "user" %}
+                <div class="detailMessage align-self-end">
+                    <div class="userIndo d-flex gap-2 justify-content-between align-items-center">
+                        <span>فرستنده: {{ contact.full_name }}</span>
+                        <span>زمان ساخت: {{ message.created_at|jalali:'%Y/%m/%d' }}</span>
+                    </div>
+                    <div class="message">{{ message.message }}</div>
+                </div>
+                {% else %}
+                    {% if message.image %}
+                    <img src="{{ message.image.url }}" width="150px">
+                    {% endif %}
+                    <div class="detailMessage">
+                    <div class="userIndo d-flex gap-2 justify-content-between align-items-center">
+                        <span>فرستنده: {{ contact.full_name }}</span>
+                        <span>زمان ساخت: {{ message.created_at|jalali:'%Y/%m/%d' }}</span>
+                    </div>
+                    <div class="message">{{ message.message }}</div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="headerPage mb-4">
+            <h5 class="titleblock">ارسال پاسخ</h5>
+        </div>
+        <form action="{% url 'Admin_panel:contact-message' contact.id %}" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.message.id_for_label }}">
+                    {{ form.message.label }}
+                    {% if form.message.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.message }}
+                {% if form.message.errors %}
+                    <small class="text-danger">
+                        {{ form.message.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.image.id_for_label }}">
+                    {{ form.image.label }}
+                    {% if form.image.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <small class="text-danger">
+                        {{ form.image.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ثبت</button>
+            <a href="{% url 'Admin_panel:contact' %}" class="btn btn-warning">بازگشت</a>
+        </form>
+    </div>
+{% endblock %}

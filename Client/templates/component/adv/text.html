@@ -1,0 +1,16 @@
+{% if section and texts %}
+<div class="advText">
+    <header>
+        <span>{{ section.title }}</span>
+        <div class="headerBorder">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <div class="links">
+        {% for link in texts %}
+            <a href="{{ link.url }}" {% if link.rel %}rel="{{ link.rel }}"{% endif %} {% if link.target_blank %}target="_blank"{% endif %} title="{{ link.title }}">{{ link.title }}</a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

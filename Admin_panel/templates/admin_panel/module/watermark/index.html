@@ -1,0 +1,100 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load thumbnail watermark_tags %}
+{% block meta %}
+    <title>واترمارک</title>
+{% endblock %}
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>واترمارک</h3>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered m-0 mb-3">
+                <tbody>
+                <tr>
+                    <td>
+                        حالت عرض :
+                        {% if watermark.width_mode == 'auto' %}
+                            اتوماتیک
+                        {% elif watermark.width_mode == 'manual' %}
+                            دستی
+                        {% elif watermark.width_mode == 'self-wh' %}
+                            عرض خود سایت
+                        {% endif %}
+                    </td>
+                    <td>
+                        حالت ارتفاع :
+                        {% if watermark.height_mode == 'auto' %}
+                            اتوماتیک
+                        {% elif watermark.height_mode == 'manual' %}
+                            دستی
+                        {% elif watermark.height_mode == 'self-wh' %}
+                            ارتفاع خود سایت
+                        {% endif %}
+                    </td>
+                    <td>
+                        اندازه اتوماتیک عرض به درصد :
+                        %{{ watermark.width_percent }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        اندازه اتوماتیک ارتفاع به درصد :
+                        %{{ watermark.height_percent }}
+                    </td>
+                    <td>
+                        اندازه دستی عرض :
+                        {{ watermark.manual_width }}
+                    </td>
+                    <td>
+                        اندازه دستی ارتفاع :
+                        {{ watermark.manual_height }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        مکان روی عکس :
+                        {{ watermark.position }}
+                    </td>
+                    <td>
+                        میزان شفافیت :
+                        {{ watermark.opacity }}
+                    </td>
+                    <td>
+                        فاصله از لبه تصویر :
+                        {{ watermark.padding }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="d-block mb-3">عکس واترمارک :</span>
+                        <span class="d-block text-center">
+                                {% if watermark.image %}
+                                    <img src="{{ watermark.image.url }}" style="max-width: 150px" decoding="async"/>
+                                {% endif %}
+                            </span>
+                    </td>
+                    <td>
+                            <span class="d-block mb-3">
+                                نحوه قرار گیری واترمارک روی عکس :
+                            </span>
+                        <span class="d-block text-center">
+                                {% wm_version as wm_v %}
+                            {% thumbnail "defaults/demo-cart-image.jpg" "309x206" format="WEBP" watermark=True wm_version=wm_v quality=95 as im %}
+                                <img src="{{ im.url }}" alt="{{ post.title }}" title="{{ post.title }}" decoding="async"
+                                     width="309" height="206">
+                            {% endthumbnail %}
+                            </span>
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% if watermark != null %}
+            <a href="{% url "Admin_panel:watermark-update" %}" class="btn btn-primary">ویرایش اطلاعات</a>
+        {% else %}
+            <a href="{% url "Admin_panel:watermark-create" %}" class="btn btn-primary">ایجاد</a>
+        {% endif %}
+    </div>
+{% endblock %}

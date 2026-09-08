@@ -1,0 +1,138 @@
+{% load jalali_date static %}
+<div class="commentForm">
+    <header class="headerTitleSection">
+        <span>دیدگاهتان را بنویسید :</span>
+        <div class="headerBorder">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <div class="successFullSend"></div>
+    <form action="{% url 'Client:comment' post.slug %}" id="commentForm" novalidate>
+        {% csrf_token %}
+        <div class="colRightForm">
+            <div class="formGroup">
+                {{ form.fullName.label_tag }}
+                {{ form.fullName }}
+            </div>
+            <div class="formGroup">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <div class="formGroup cacheInput">
+                {{ form.captcha.label_tag }}
+                <div class="captcha-wrapper d-flex align-items-center gap-2">
+                    <div class="d-flex flex-row-reverse justify-content-end align-items-center gap-2">
+                        {{ form.captcha }}
+                    </div>
+                    <button type="button" class="js-captcha-refresh">
+                        {% include 'svg/refresh.html' %}
+                    </button>
+                </div>
+            </div>
+            <button class="submitComment" type="submit">ارسال</button>
+        </div>
+        <div class="formGroup textarea">
+            {{ form.body.label_tag }}
+            {{ form.body }}
+        </div>
+    </form>
+</div>
+
+{% if post.comments.all %}
+<div class="comments">
+    <header class="headerTitleSection">
+        <span>نظرات :</span>
+        <div class="headerBorder">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <div class="items">
+        {% for comment in post.comments.all %}
+            <div class="commentCol">
+                <div class="commentInfo">
+                    <img src="{% static 'client/image/background/avatar.png' %}">
+                    <div class="text w-100">
+                        <div class="header">
+                            <div class="userInfo">
+                                <span class="name">{{ comment.fullName }}</span>
+                                <span class="date">{{ comment.created_at|jalali:"%Y/%m/%d %H:%M" }}</span>
+                            </div>
+                            <button class="answerButton">پاسخ</button>
+                        </div>
+                        <p>{{ comment.body }}</p>
+                    </div>
+                </div>
+                <div class="answerForm">
+                    <div class="successFullSend"></div>
+                    <form action="{% url 'Client:comment' post.slug %}" class="subComment" novalidate>
+                        {% csrf_token %}
+                        <input type="hidden" name="parent_id" value="{{ comment.id }}"/>
+                        <div class="colRightForm">
+                            <div class="formGroup">
+                                {{ sub_form.fullName.label_tag }}
+                                {{ sub_form.fullName }}
+                            </div>
+                            <div class="formGroup">
+                                {{ sub_form.email.label_tag }}
+                                {{ sub_form.email }}
+                            </div>
+                            <div class="buttons">
+                                <button class="send" type="submit">ارسال</button>
+                                <button type="button" class="cancel">انصراف</button>
+                            </div>
+                        </div>
+                        <div class="formGroup textarea">
+                            {{ sub_form.body.label_tag }}
+                            {{ sub_form.body }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="commentCol answer">
+                <div class="commentInfo">
+                    <img src="{% static 'client/image/background/avatar.png' %}">
+                    <div class="text w-100">
+                        <div class="header">
+                            <div class="userInfo">
+                                <span class="name">ادمین</span>
+                            </div>
+                        </div>
+                        <p>{{ comment.response|safe }}</p>
+                    </div>
+                </div>
+            </div>
+            {% for sub_comment in comment.subComments %}
+                <div class="commentCol answer">
+                    <div class="commentInfo">
+                        <img src="{% static 'client/image/background/avatar.png' %}">
+                        <div class="text w-100">
+                            <div class="header">
+                                <div class="userInfo">
+                                    <span class="name">{{ sub_comment.fullName }}</span>
+                                    <span class="date">{{ sub_comment.created_at|jalali:"%Y/%m/%d %H:%M" }}</span>
+                                </div>
+                            </div>
+                            <p>{{ sub_comment.body }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="commentCol answer">
+                    <div class="commentInfo">
+                        <img src="{% static 'client/image/background/avatar.png' %}">
+                        <div class="text w-100">
+                            <div class="header">
+                                <div class="userInfo">
+                                    <span class="name">ادمین</span>
+                                </div>
+                            </div>
+                            <p>{{ sub_comment.response|safe }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

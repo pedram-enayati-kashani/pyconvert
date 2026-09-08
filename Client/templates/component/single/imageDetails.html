@@ -1,0 +1,33 @@
+{% load watermark_tags static %}
+<div class="imageDetails">
+    <div class="{% if post.gallery_items.all %}imageSlider{% endif %} swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                {% render_post_image post 945 630%}
+            </div>
+            {% if post.gallery_items.all %}
+                {% for item in post.gallery_items.all %}
+                    <div class="swiper-slide">
+                        {% render_post_image_gallery post item 945 630%}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% if post.gallery_items.all %}
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        {% endif %}
+    </div>
+    <div class="imageCol">
+        <div class="item">
+            {% render_post_image post 176 118%}
+        </div>
+        {% if post.gallery_items.all %}
+            {% for item in post.gallery_items.all %}
+                <div class="item">
+                    {% render_post_image_gallery post item 176 118%}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

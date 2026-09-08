@@ -1,0 +1,51 @@
+{% extends "admin_layouts/layouts.html" %}
+{% block meta %}
+    <title>تنظیمات</title>
+{% endblock %}
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>تنظیمات سایت</h3>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered m-0 mb-3">
+                <tbody>
+                <tr>
+                    <td>
+                        عنوان سایت :
+                        {{ setting.title }}
+                    </td>
+                    <td>
+                        عنوان گوگل :
+                        {{ setting.title_seo }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        توضیحات گوگل :
+                        {{ setting.description_seo }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        عکس لوگو :
+                        {% if setting.logo %}
+                        <img class="imageProfile" src="{{ setting.logo.url }}" style="max-width: 150px"
+                             decoding="async"/>
+                        {% endif %}
+                    </td>
+                    <td>
+                        ایکون سایت :
+                        {% if setting.logo %}
+                        <img src="{{ setting.favicon.url }}" style="max-width: 150px" decoding="async"/>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% if setting != null %}
+            <a href="{% url "Admin_panel:setting-update" %}" class="btn btn-primary">ویرایش اطلاعات سایت</a>
+        {% endif %}
+    </div>
+{% endblock %}

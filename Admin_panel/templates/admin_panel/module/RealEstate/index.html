@@ -1,0 +1,145 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load pager %}
+{% load permissions %}
+{% block meta %}
+    <title>املاک</title>
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>املاک خرید و فروش</h3>
+            <a href="{% url 'Admin_panel:real-estate-sell-buy' %}" class="createLink">نمایش بیشتر</a>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">آدرس</th>
+                <th scope="col">نوع تقاضا</th>
+                <th scope="col">نام کامل</th>
+                <th scope="col">وضعیت</th>
+                <th scope="col">وضعیت مشاهده</th>
+                <th scope="col">تنظیمات</th>
+                </thead>
+                <tbody>
+                {% for item in sell_buy_list %}
+                    <tr>
+                        <td>{{ item.address|truncatechars:30 }}</td>
+                        <td>
+                            {% if item.type == 'buyer' %}
+                                خریدار
+                            {% elif item.type == 'seller' %}
+                                فروشنده
+                            {% endif %}
+                        </td>
+                        <td>{{ item.fullname}}</td>
+                        <td>
+                            {% if item.status == 'completed' %}
+                                پایان یافته
+                            {% elif item.status == 'in_progress' %}
+                                در حال پیگیری
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.saw == 'see' %}
+                                مشاهده شده
+                            {% elif item.saw == 'not-see' %}
+                                مشاهده نشده
+                            {% endif %}
+                        </td>
+                        <td class="d-flex gap-2 align-items-center flex-wrap">
+                            <a href="{% url 'Admin_panel:real-estate-sell-buy-show' item.id %}" class="btn btn-primary">نمایش
+                                اطلاعات</a>
+                            <a href="{% url 'Admin_panel:real-estate-sell-buy-update' item.id %}" class="btn btn-warning">ویرایش
+                                اطلاعات</a>
+                            <form action="{% url 'Admin_panel:real-estate-sell-buy-delete' item.id %}" class="Delete-Form"
+                                  method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    حذف
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="dashboard-pages mt-4">
+        <header class="headerPage d-flex justify-content-between align-items-center">
+            <h3>املاک رهن و اجاره</h3>
+            <a href="{% url 'Admin_panel:real-estate-rent' %}" class="createLink">نمایش بیشتر</a>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered table-striped m-0 mb-3">
+                <thead>
+                <th scope="col">آدرس</th>
+                <th scope="col">نوع تقاضا</th>
+                <th scope="col">نام کامل</th>
+                <th scope="col">وضعیت</th>
+                <th scope="col">وضعیت مشاهده</th>
+                <th scope="col">تنظیمات</th>
+                </thead>
+                <tbody>
+                {% for item in rent_list %}
+                    <tr>
+                        <td>{{ item.address|truncatechars:30 }}</td>
+                        <td>
+                            {% if item.type == 'tenant' %}
+                                مستأجر
+                            {% elif item.type == 'lessor' %}
+                                اجاره دهنده
+                            {% endif %}
+                        </td>
+                        <td>{{ item.fullname}}</td>
+                        <td>
+                            {% if item.status == 'completed' %}
+                                پایان یافته
+                            {% elif item.status == 'in_progress' %}
+                                در حال پیگیری
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.saw == 'see' %}
+                                مشاهده شده
+                            {% elif item.saw == 'not-see' %}
+                                مشاهده نشده
+                            {% endif %}
+                        </td>
+                        <td class="d-flex gap-2 align-items-center flex-wrap">
+                            <a href="{% url 'Admin_panel:real-estate-rent-show' item.id %}" class="btn btn-primary">نمایش
+                                اطلاعات</a>
+                            <a href="{% url 'Admin_panel:real-estate-rent-update' item.id %}" class="btn btn-warning">ویرایش
+                                اطلاعات</a>
+                            <form action="{% url 'Admin_panel:real-estate-rent-delete' item.id %}" class="Delete-Form"
+                                  method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    حذف
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

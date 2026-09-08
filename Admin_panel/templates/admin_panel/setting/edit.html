@@ -1,0 +1,137 @@
+{% extends "admin_layouts/layouts.html" %}
+{% block meta %}
+    <title>ویرایش تنظیمات سایت</title>
+{% endblock %}
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ویرایش تنظیمات سایت</h3>
+        </header>
+        <form action="{% url 'Admin_panel:setting-update' %}" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                    {% if form.title.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <small class="text-danger">
+                        {{ form.title.errors.0 }}
+                    </small>
+                {% endif %}
+                <small>{{ form.title.help_text }}</small>
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.title_seo.id_for_label }}">
+                    {{ form.title_seo.label }}
+                    {% if form.title_seo.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.title_seo }}
+                {% if form.title_seo.errors %}
+                    <small class="text-danger">
+                        {{ form.title_seo.errors.0 }}
+                    </small>
+                {% endif %}
+                <small>{{ form.title_seo.help_text }}</small>
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.description_seo.id_for_label }}">
+                    {{ form.description_seo.label }}
+                    {% if form.description_seo.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.description_seo }}
+                {% if form.description_seo.errors %}
+                    <small class="text-danger">
+                        {{ form.description_seo.errors.0 }}
+                    </small>
+                {% endif %}
+                <small>{{ form.description_seo.help_text }}</small>
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.logo.id_for_label }}">
+                    {{ form.logo.label }}
+                    {% if form.logo.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {% if setting.logo %}
+                    <img src="{{ setting.logo.url }}" alt="عکس فعلی بخش"
+                         style="max-width:200px; height:auto; margin-bottom:10px;">
+                {% endif %}
+                <input type="file" name="logo" class="form-control" accept="image/*" id="id_logo">
+                {% if form.logo.errors %}
+                    <small class="text-danger">{{ form.logo.errors.0 }}</small>
+                {% endif %}
+                <small>{{ form.logo.help_text }}</small>
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.favicon.id_for_label }}">
+                    {{ form.favicon.label }}
+                    {% if form.favicon.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {% if setting.favicon %}
+                    <img src="{{ setting.favicon.url }}" alt="عکس فعلی بخش"
+                         style="max-width:200px; height:auto; margin-bottom:10px;">
+                {% endif %}
+                <input type="file" name="favicon" class="form-control" accept="image/*" id="id_favicon">
+                {% if form.favicon.errors %}
+                    <small class="text-danger">{{ form.favicon.errors.0 }}</small>
+                {% endif %}
+                <small>{{ form.favicon.help_text }}</small>
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.headMeta.id_for_label }}">
+                    {{ form.headMeta.label }}
+                    {% if form.headMeta.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.headMeta }}
+                {% if form.headMeta.errors %}
+                    <small class="text-danger">
+                        {{ form.headMeta.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.footerScript.id_for_label }}">
+                    {{ form.footerScript.label }}
+                    {% if form.footerScript.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.footerScript }}
+                {% if form.footerScript.errors %}
+                    <small class="text-danger">
+                        {{ form.footerScript.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.robotsText.id_for_label }}">
+                    {{ form.robotsText.label }}
+                    {% if form.robotsText.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.robotsText }}
+                {% if form.robotsText.errors %}
+                    <small class="text-danger">
+                        {{ form.robotsText.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ویرایش</button>
+            <a href="{% url 'Admin_panel:setting' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

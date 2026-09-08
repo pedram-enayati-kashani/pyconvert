@@ -1,0 +1,77 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ویرایش آدرس‌</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+            <header class="headerPage">
+                <h3>ویرایش آدرس‌</h3>
+            </header>
+            <form action="{% url 'Admin_panel:redirect-update' object.id %}" method="post" novalidate>
+                {% csrf_token %}
+                 <div class="form-group-display">
+                    <label for="{{ form.old_url.id_for_label }}">
+                        {{ form.old_url.label }}
+                        {% if form.old_url.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.old_url }}
+                    <small>{{ form.old_url.help_text }}</small>
+                    {% if form.old_url.errors %}
+                        <small class="text-danger">
+                            {{ form.old_url.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.new_url.id_for_label }}">
+                        {{ form.new_url.label }}
+                        {% if form.new_url.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.new_url }}
+                    <small>{{ form.new_url.help_text }}</small>
+                    {% if form.new_url.errors %}
+                        <small class="text-danger">
+                            {{ form.new_url.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.is_permanent.id_for_label }}">
+                        {{ form.is_permanent.label }}
+                        {% if form.is_permanent.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.is_permanent }}
+                    {% if form.is_permanent.errors %}
+                        <small class="text-danger">
+                            {{ form.is_permanent.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.status.id_for_label }}">
+                        {{ form.status.label }}
+                        {% if form.status.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <small class="text-danger">
+                            {{ form.status.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <button class="btn btn-success">ویرایش</button>
+                <a href="{% url 'Admin_panel:redirect' %}" class="btn btn-danger">انصراف</a>
+            </form>
+        </div>
+{% endblock %}

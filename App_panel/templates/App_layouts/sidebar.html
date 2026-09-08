@@ -1,0 +1,17 @@
+<aside class="col-xl-2 col-lg-3 d-flex flex-column">
+    <a href="{% url 'App_panel:dashboard' %}" class="{% if 'dashboard' in request.resolver_match.url_name %}active{% endif %}">
+        داشبورد
+    </a>
+    <a href="{% url 'App_panel:group' %}" class="{% if 'group' in request.resolver_match.url_name %}active{% endif %}">
+        گروه های مجاز
+    </a>
+    <a href="{% url 'App_panel:table' %}" class="{% if 'table' in request.resolver_match.url_name %}active{% endif %}">
+        جداول
+    </a>
+    <a href="{% url 'App_panel:module' %}" class="{% if 'module' in request.resolver_match.url_name %}active{% endif %}">
+        ماژول ها
+    </a>
+    <a href="{% url 'App_panel:setting' %}" class="{% if 'setting' in request.resolver_match.url_name %}active{% endif %}">
+        تنظیمات
+    </a>
+</aside>

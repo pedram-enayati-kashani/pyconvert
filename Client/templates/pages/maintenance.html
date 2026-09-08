@@ -1,0 +1,22 @@
+{% load static site_info render_partial %}
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="{% static 'client/styles/styles.css' %}">
+    <title>{% title "در حال بروز رسانی" %}</title>
+    {% render_partial "Client.views.component.faveicon" %}
+</head>
+<body id="maintenance">
+    <div class="image-wrapper">
+        <div class="img"></div>
+    </div>
+{#    {% thumbnail post.image "309x206" quality=95 as im %}#}
+{#        <img tailwind="{{ im.url }}" alt="{{ post.title }}" title="{{ post.title }}" decoding="async" width="309" height="206">#}
+{#    {% endthumbnail %}#}
+</body>
+</html>
+{% endspaceless %}

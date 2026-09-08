@@ -1,0 +1,21 @@
+{% if post.categories.all %}
+<div class="justLinkcontent">
+    <header>
+        <span>دسته ها</span>
+        <div class="headerBorder">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <ul class="content">
+        {% for category in post.categories.all %}
+            <li class="links">
+                <a href="{% url 'Client:category' category.slug %}" title="{{ category }}">
+                    <h4>{{ category }}</h4>
+                </a>
+            </li>
+
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

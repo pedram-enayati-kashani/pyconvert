@@ -1,0 +1,57 @@
+# -----------------------------
+# Core (Django + runtime)
+# -----------------------------
+Django==5.2.0
+gunicorn==21.2.0
+django-environ==0.11.2
+
+# -----------------------------
+# Database (PostgreSQL)
+# -----------------------------
+psycopg2-binary==2.9.11
+
+# -----------------------------
+# Cache / Redis
+# -----------------------------
+django-redis==5.4.0
+redis==7.2.0
+
+# -----------------------------
+# API
+# -----------------------------
+djangorestframework==3.15.2
+
+# -----------------------------
+# Image Processing & Watermarking
+# -----------------------------
+Pillow==10.4.0
+sorl-thumbnail==12.11.0
+
+# -----------------------------
+# PDF Processing (Extract images & Render)
+# -----------------------------
+PyMuPDF==1.24.10
+
+# -----------------------------
+# Admin / Editor / Assets
+# -----------------------------
+django-ckeditor-5==0.2.19
+django-vite==3.0.2
+
+# -----------------------------
+# Templates / Utilities / HTTP
+# -----------------------------
+django-render-partial==0.4.0
+django-crum==0.7.9
+requests==2.32.3
+
+# -----------------------------
+# Jalali / Date utils
+# -----------------------------
+django-jalali-date==2.0.0
+jdatetime==5.2.0
+
+# -----------------------------
+# Anti-bot / Security
+# -----------------------------
+django-simple-captcha==0.6.0

@@ -1,0 +1,61 @@
+{% extends "layouts/layouts.html" %}
+{% load watermark_tags jalali_date site_info %}
+{% block meta %}
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="{{ tag.description_seo|default:tag.description|truncatechars:160 }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{{ tag.title_seo|default:tag.title|truncatechars:60  }}">
+    <meta property="og:description" content="{{ tag.description_seo|default:tag.description|truncatechars:160 }}">
+    {% if tag.image %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ tag.image.url }}">
+    {% endif %}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+        {{ schema|safe }}
+    </script>
+    <title>{% title tag.title_seo tag.title  %}</title>
+{% endblock %}
+{% block content %}
+<div class="responsiveActive">
+    <div class="container parentsSinglePage inerpage">
+        <section id="porject1" class="sectionCard colRight">
+    <header>
+        <div class="headerText">
+            <h1> برچسب : {{ tag.title }}</h1>
+        </div>
+        <div class="headerBorder">
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    {% if posts %}
+        <div class="contentSection">
+            {% for post in posts %}
+                <div class="item">
+                    <a href="{% url 'Client:post' post.slug %}" class="imgLink" title="">
+                        {% render_post_image post 309 206%}
+                    </a>
+                    <div class="text">
+                        <div class="info">
+                            <a href="{% url 'Client:post' post.slug %}" title="{{ post.title }}"><h3 class="title">{{ post.title }}</h3></a>
+                            <p class="summeries">{{ post.title }}</p>
+                        </div>
+                        <div class="date">{{ post.created_at|jalali:'%Y/%m/%d' }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% include 'layouts/pager.html' with page_obj=page_obj paginator=paginator %}
+    {% else %}
+    <div class="contentSection">
+        مطلبی یافت نشد
+    </div>
+    {% endif %}
+</section>
+        <div class="colLeft">
+            {% include 'component/innerpage/sidebar.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

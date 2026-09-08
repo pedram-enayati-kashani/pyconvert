@@ -1,0 +1,9 @@
+<header id="mainHeader">
+    <div class="d-flex align-items-center justify-content-between p-3">
+        <div class="d-flex align-items-center gap-4">
+            <span>پنل App</span>
+            <span>{{ request.user.username }} خوش اومدی</span>
+        </div>
+        <a class="headerlink" href="{% url "Admin_panel:dashboard" %}">پنل ادمین</a>
+    </div>
+</header>

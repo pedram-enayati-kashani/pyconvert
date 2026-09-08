@@ -1,0 +1,247 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ویرایش رهن و اجاره</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ویرایش رهن و اجاره</h3>
+        </header>
+        <form action="{% url 'Admin_panel:real-estate-rent-update' object.id %}" method="post" novalidate>
+            {% csrf_token %}
+             <div class="form-group-display">
+                <label for="{{ form.fullname.id_for_label }}">
+                    {{ form.fullname.label }}
+                    {% if form.fullname.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.fullname }}
+                {% if form.fullname.errors %}
+                    <small class="text-danger">
+                        {{ form.fullname.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.mobile.id_for_label }}">
+                    {{ form.mobile.label }}
+                    {% if form.mobile.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.mobile }}
+                <small>{{ form.mobile.help_text }}</small>
+                {% if form.mobile.errors %}
+                    <small class="text-danger">
+                        {{ form.mobile.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.type.id_for_label }}">
+                    {{ form.type.label }}
+                    {% if form.type.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.type }}
+                {% if form.type.errors %}
+                    <small class="text-danger">
+                        {{ form.type.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.type_unit.id_for_label }}">
+                    {{ form.type_unit.label }}
+                    {% if form.type_unit.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.type_unit }}
+                {% if form.type_unit.errors %}
+                    <small class="text-danger">
+                        {{ form.type_unit.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.discharge_unit.id_for_label }}">
+                    {{ form.discharge_unit.label }}
+                    {% if form.discharge_unit.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.discharge_unit }}
+                <small>{{ form.discharge_unit.help_text }}</small>
+                {% if form.discharge_unit.errors %}
+                    <small class="text-danger">
+                        {{ form.discharge_unit.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.description.id_for_label }}">
+                    {{ form.description.label }}
+                    {% if form.description.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <small class="text-danger">
+                        {{ form.description.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.has_change.id_for_label }}">
+                    {{ form.has_change.label }}
+                    {% if form.has_change.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.has_change }}
+                {% if form.has_change.errors %}
+                    <small class="text-danger">
+                        {{ form.has_change.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.price.id_for_label }}">
+                    {{ form.price.label }}
+                    {% if form.price.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.price }}
+                {% if form.price.errors %}
+                    <small class="text-danger">
+                        {{ form.price.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.max_price.id_for_label }}">
+                    {{ form.max_price.label }}
+                    {% if form.max_price.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.max_price }}
+                {% if form.max_price.errors %}
+                    <small class="text-danger">
+                        {{ form.max_price.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.price_month.id_for_label }}">
+                    {{ form.price_month.label }}
+                    {% if form.price_month.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.price_month }}
+                {% if form.price_month.errors %}
+                    <small class="text-danger">
+                        {{ form.price_month.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.room_number.id_for_label }}">
+                    {{ form.room_number.label }}
+                    {% if form.room_number.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.room_number }}
+                {% if form.room_number.errors %}
+                    <small class="text-danger">
+                        {{ form.room_number.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.floor.id_for_label }}">
+                    {{ form.floor.label }}
+                    {% if form.floor.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.floor }}
+                <small>{{ form.floor.help_text }}</small>
+                {% if form.floor.errors %}
+                    <small class="text-danger">
+                        {{ form.floor.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.floor_area.id_for_label }}">
+                    {{ form.floor_area.label }}
+                    {% if form.floor_area.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.floor_area }}
+                {% if form.floor_area.errors %}
+                    <small class="text-danger">
+                        {{ form.floor_area.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.direction.id_for_label }}">
+                    {{ form.direction.label }}
+                    {% if form.direction.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.direction }}
+                {% if form.direction.errors %}
+                    <small class="text-danger">
+                        {{ form.direction.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.address.id_for_label }}">
+                    {{ form.address.label }}
+                    {% if form.address.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.address }}
+                {% if form.address.errors %}
+                    <small class="text-danger">
+                        {{ form.address.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.status.id_for_label }}">
+                    {{ form.status.label }}
+                    {% if form.status.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ویرایش</button>
+            <a href="{% url 'Admin_panel:real-estate-rent' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

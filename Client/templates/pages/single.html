@@ -1,0 +1,63 @@
+{% extends "layouts/layouts.html" %}
+{% load static site_info django_vite %}
+{% block meta %}
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="{{ post.summery_search|default:post.summery|truncatechars:160 }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{{ post.title_seo|default:post.title|truncatechars:60 }}">
+    <meta property="og:description" content="{{ post.summery_search|default:post.summery|truncatechars:160 }}">
+    {% if post.image %}
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}">
+    {% endif %}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+        {{ schema|safe }}
+    </script>
+    <link rel="stylesheet" href="{% static 'client/ckeditor/ckeditor5.css' %}">
+    {% vite_asset 'assets/js/main.jsx' %}
+    <title>{% title post.title_seo post.title  %}</title>
+{% endblock %}
+{% block content %}
+    <h1 class="d-none">{{ post.title }}</h1>
+    <div class="responsiveActive">
+    <div class="container parentsSinglePage singlePage">
+        <div class="colRight">
+            <div class="bodyContent">
+                {# start breadcrumb #}
+                {% include 'component/single/breadcrump.html' with post=post home_link=home_link %}
+                {# end breadcrumb #}
+                {# start imageDetails #}
+                {% include 'component/single/imageDetails.html' with post=post %}
+                {# end imageDetails #}
+                <!-- start detailsInfo -->
+                {% include 'component/single/detailsInfo.html' with submission=submission %}
+                <!-- end detailsInfo -->
+                {# start summary #}
+                {% include 'component/single/summary.html' with post=post %}
+                {# end summary #}
+                {# start list #}
+                {% include 'component/single/list.html' %}
+                {# end list #}
+                {# start description #}
+                {% include 'component/single/description.html' with post=post %}
+                {# end description #}
+                {# start socialTag #}
+                {% include 'component/single/socialTag.html' with post=post %}
+                {# end socialTag #}
+            </div>
+            {# start related-content #}
+            {% include 'component/single/related_content.html' with related_posts=related_posts %}
+            {# end related-content #}
+             <div class="bodyContent">
+                {# start comment #}
+                {% include 'component/single/comments.html' with post=post %}
+                {# end comment #}
+             </div>
+        </div>
+        <!-- start sidebar -->
+        {% include 'component/single/sidebar.html' with post=post %}
+        <!-- end sidebar -->
+    </div>
+    </div>
+{% endblock %}

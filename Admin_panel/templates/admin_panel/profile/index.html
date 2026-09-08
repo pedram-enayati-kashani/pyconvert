@@ -1,0 +1,57 @@
+{% extends "admin_layouts/layouts.html" %}
+{% load thumbnail %}
+
+{% block meta %}
+    <title>پروفایل</title>
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>پروفایل</h3>
+        </header>
+        <div class="form-group-display mb-4">
+            {% thumbnail request.user.avatar "120" quality=95 as im %}
+                <img class="imageProfile" src="{{ im.url }}" decoding="async">
+            {% endthumbnail %}
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="form-group-display">
+                    <label>نام کاربری:</label>
+                    <span>{{ request.user.username }}</span>
+                </div>
+                <div class="form-group-display">
+                    <label>نام:</label>
+                    <span>{{ request.user.first_name }}</span>
+                </div>
+                <div class="form-group-display">
+                    <label>نام خانوادگی:</label>
+                    <span>{{ request.user.last_name }}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group-display">
+                    <label>نام نمایشی:</label>
+                    {% if request.user.display_name == 'first_last' %}
+                        <span>{{ request.user.first_name }} {{ request.user.last_name }}</span>
+                    {% elif request.user.display_name == 'last_first' %}
+                        <span>{{ request.user.last_name }} {{ request.user.first_name }}</span>
+                    {% elif request.user.display_name == 'username' %}
+                        <span>{{ request.user.username }}</span>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label>ایمیل:</label>
+                    <span>{{ request.user.email }}</span>
+                </div>
+                <div class="form-group-display">
+                    <label>شماره موبایل:</label>
+                    <span>{{ request.user.mobile }}</span>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'Admin_panel:profile-edit' %}" class="btn btn-primary">ویرایش اطلاعات</a>
+        <a href="{% url 'Admin_panel:reset-password' %}" class="btn btn-warning">تغییر رمز</a>
+    </div>
+{% endblock %}

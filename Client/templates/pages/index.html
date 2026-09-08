@@ -1,0 +1,30 @@
+{% extends "layouts/layouts.html" %}
+{% load render_partial site_info static %}
+{% block meta %}
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="{{ description }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{{ title_seo|default:title|truncatechars:60 }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ logo }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+        {{ schema|safe }}
+    </script>
+    <link rel="stylesheet" href="{% static 'client/ckeditor/ckeditor5.css' %}">
+    <title>{{ title_seo|default:title|truncatechars:60 }}</title>
+{% endblock %}
+{% block content %}
+    <h1 class="hidden">{{ title }}</h1>
+    <div class="responsiveActive">
+        <div class="container parentsSinglePage">
+            <div class="colRight">
+                {% render_partial "Client.views.sections_partial.blogs" %}
+            </div>
+            <div class="colLeft">
+                {% render_partial "Client.views.sections_partial.mostVisited" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

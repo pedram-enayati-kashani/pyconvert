@@ -1,0 +1,134 @@
+{% extends "admin_layouts/layouts.html" %}
+
+{% block meta %}
+    <title>ساخت برچسب جدید</title>
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div id="editor-config" data-model="tag" data-url="{% url 'ck_editor_5_upload_file' %}" data-id="{{ form.instance.pk|default:'new' }}" style="display: none;"></div>
+    <div id="slug-config" data-model-key="tag" data-instance="{{ form.instance.pk|default:'None' }}" data-url="{% url "Admin_panel:get-slug" %}" style="display: none;"></div>
+    <div class="dashboard-pages">
+            <header class="headerPage">
+                <h3>ساخت برچسب جدید</h3>
+            </header>
+            <form action="{% url 'Admin_panel:tag-create' %}" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                                <div class="form-group-display">
+                    <label for="{{ form.fullName.id_for_label }}">
+                        {{ form.fullName.label }}
+                        {% if form.fullName.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.fullName }}
+                    {% if form.fullName.errors %}
+                        <small class="text-danger">
+                            {{ form.fullName.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.email.id_for_label }}">
+                        {{ form.email.label }}
+                        {% if form.email.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <small class="text-danger">
+                            {{ form.email.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.body.id_for_label }}">
+                        {{ form.body.label }}
+                        {% if form.body.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.body }}
+                    {% if form.body.errors %}
+                        <small class="text-danger">
+                            {{ form.body.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.response.id_for_label }}">
+                        {{ form.response.label }}
+                        {% if form.response.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.response }}
+                    {% if form.response.errors %}
+                        <small class="text-danger">
+                            {{ form.response.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.post.id_for_label }}">
+                        {{ form.post.label }}
+                        {% if form.post.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.post }}
+                    {% if form.post.errors %}
+                        <small class="text-danger">
+                            {{ form.post.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.parent.id_for_label }}">
+                        {{ form.parent.label }}
+                        {% if form.parent.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.parent }}
+                    {% if form.parent.errors %}
+                        <small class="text-danger">
+                            {{ form.parent.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.status.id_for_label }}">
+                        {{ form.status.label }}
+                        {% if form.status.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <small class="text-danger">
+                            {{ form.status.errors.0 }}
+                        </small>
+                    {% endif %}
+                </div>
+                <div class="form-group-display">
+                    <label for="{{ form.user.id_for_label }}">
+                        {{ form.user.label }}
+                        {% if form.user.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ form.user }}
+                    {% if form.user.errors %}
+                        <small class="text-danger">
+                            {{ form.user.errors.0 }}
+                        </small>
+                    {% endif %}
+                    <small>{{ form.user.help_text }}</small>
+                </div>
+                <button class="btn btn-success">ثبت</button>
+                <a href="{% url 'Admin_panel:tag' %}" class="btn btn-danger">انصراف</a>
+            </form>
+        </div>
+{% endblock %}
