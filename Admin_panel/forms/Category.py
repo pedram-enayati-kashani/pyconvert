@@ -180,6 +180,26 @@ class CategoryForm(forms.ModelForm):
 
         return slug
 
+    def clean_description(self):
+        description = self.cleaned_data.get('description', '')
+
+        if not description:
+            return description
+        pattern = r'<h[1-6](\s[^>]*)?>(\s|&nbsp;|<br\s*/?>)*</h[1-6]>'
+        max_iterations = 5
+        for _ in range(max_iterations):
+            new_description = re.sub(
+                pattern,
+                '<p></p>',
+                description,
+                flags=re.IGNORECASE
+            )
+            if new_description == description:
+                break
+            description = new_description
+
+        return description
+
     def save(self, commit=True):
         """ذخیره با تنظیم خودکار زبان"""
         instance = super().save(commit=False)

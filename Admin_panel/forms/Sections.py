@@ -1,3 +1,4 @@
+import re
 from django import forms
 from django.core import validators
 from django.utils.html import strip_tags
@@ -131,14 +132,25 @@ class SectionForm(forms.ModelForm):
             self.fields['type'].disabled = True
             self.fields['slug'].disabled = True
 
-    # def clean_description(self):
-    #     description = self.cleaned_data.get('description', '')
-    #     text_only = strip_tags(description).strip()
-    #     if not text_only:
-    #         raise forms.ValidationError('فیلد توضیحات نمی‌تواند خالی باشد.')
-    #     elif text_only == '&nbsp;':
-    #         raise forms.ValidationError('فیلد توضیحات نمی‌تواند خالی باشد.')
-    #     return description
+    def clean_description(self):
+        description = self.cleaned_data.get('description', '')
+
+        if not description:
+            return description
+        pattern = r'<h[1-6](\s[^>]*)?>(\s|&nbsp;|<br\s*/?>)*</h[1-6]>'
+        max_iterations = 5
+        for _ in range(max_iterations):
+            new_description = re.sub(
+                pattern,
+                '<p></p>',
+                description,
+                flags=re.IGNORECASE
+            )
+            if new_description == description:
+                break
+            description = new_description
+
+        return description
 
     def clean_slug(self):
         if self.instance and self.instance.pk:

@@ -1,3 +1,4 @@
+import re
 from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
 from App_panel.models.PostModel import Post, PostGallery
@@ -184,6 +185,20 @@ class PostForm(forms.ModelForm):
             raise forms.ValidationError('فیلد توضیحات نمی‌تواند خالی باشد.')
         elif text_only == '&nbsp;':
             raise forms.ValidationError('فیلد توضیحات نمی‌تواند خالی باشد.')
+
+        pattern = r'<h[1-6](\s[^>]*)?>(\s|&nbsp;|<br\s*/?>)*</h[1-6]>'
+        max_iterations = 5
+        for _ in range(max_iterations):
+            new_description = re.sub(
+                pattern,
+                '<p></p>',
+                description,
+                flags=re.IGNORECASE
+            )
+            if new_description == description:
+                break
+            description = new_description
+
         return description
 
     def clean_slug(self):

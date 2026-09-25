@@ -1,3 +1,4 @@
+import re
 from django import forms
 from django.core import validators
 from django.utils.html import strip_tags
@@ -84,14 +85,25 @@ class PageForm(forms.ModelForm):
         model = Page
         fields = ['title', 'title_seo', 'body', 'description_seo','image','status','slug']
 
-    # def clean_description(self):
-    #     body = self.cleaned_data.get('body', '')
-    #     text_only = strip_tags(body).strip()
-    #     if not text_only:
-    #         raise forms.ValidationError('فیلد توضیحات نمی‌تواند خالی باشد.')
-    #     elif text_only == '&nbsp;':
-    #         raise forms.ValidationError('فیلد توضیحات نمی‌تواند خالی باشد.')
-    #     return body
+    def clean_body(self):
+        body = self.cleaned_data.get('body', '')
+
+        if not body:
+            return body
+        pattern = r'<h[1-6](\s[^>]*)?>(\s|&nbsp;|<br\s*/?>)*</h[1-6]>'
+        max_iterations = 5
+        for _ in range(max_iterations):
+            new_body = re.sub(
+                pattern,
+                '<p></p>',
+                body,
+                flags=re.IGNORECASE
+            )
+            if new_body == body:
+                break
+            body = new_body
+
+        return body
 
     def clean_slug(self):
         slug = self.cleaned_data.get('slug')
