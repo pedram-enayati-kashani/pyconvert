@@ -35,11 +35,11 @@ class Category(models.Model):
     description = models.TextField(verbose_name="توضیحات",blank=True,null=True)
     description_seo = models.TextField(max_length=160,null=True, verbose_name="توضیحات گوگل",blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active',verbose_name="فعال / غیرفعال",db_index=True)
-    slug = models.SlugField(default='',verbose_name="اسلاگ",max_length=255,unique=True,allow_unicode=True,db_index=True,blank=True)
+    slug = models.SlugField(default='',verbose_name="اسلاگ",max_length=255,allow_unicode=True,db_index=True,blank=True)
     parent = models.ForeignKey('self',on_delete=models.SET_NULL,related_name="children",null=True, blank=True,verbose_name="فرزند دسته")
     image = models.ImageField(upload_to=upload_image_categories, verbose_name="عکس",null=True,blank=True)
     is_deleted = models.BooleanField(default=False,db_index=True,verbose_name="حذف شده / نشده")
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa',db_index=True,null=True, blank=True)
+    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa',db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = CategoryManager()
@@ -51,6 +51,13 @@ class Category(models.Model):
     class Meta:
         verbose_name = "دسته بندی"
         verbose_name_plural = "دسته بندی ها"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=['lang', 'slug'],
+                name='unique_category_slug_per_language'
+            )
+        ]
 
     def save(self, *args, **kwargs):
         current_lang = self.lang if self.lang is not None else 'fa'

@@ -1,7 +1,9 @@
 {% extends "admin_layouts/layouts.html" %}
 
+{% load i18n %}}
+
 {% block meta %}
-    <title>ویرایش دسته بندی</title>
+    <title>{% translate "Edit Category" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -10,7 +12,7 @@
 <!--    <div id="slug-config" data-model-key="cat" data-instance="{{ form.instance.pk|default:'None' }}" data-url="{% url "Admin_panel:get-slug" %}" style="display: none;"></div>-->
     <div class="dashboard-pages">
             <header class="headerPage">
-                <h3>ویرایش دسته بندی</h3>
+                <h3>{% translate "Edit Category" %}</h3>
             </header>
             <form action="{% url 'Admin_panel:category-update' category.id %}" method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
@@ -78,7 +80,7 @@
                         {% endif %}
                     </label>
                     {% if category.image %}
-                        <img src="{{ category.image.url }}" alt="عکس فعلی بخش" style="max-width:200px; height:auto; margin-bottom:10px;">
+                        <img src="{{ category.image.url }}" style="max-width:200px; height:auto; margin-bottom:10px;">
                     {% endif %}
                     <input type="file" name="image" id="id_image" class="form-control" accept="image/*">
                     {% if form.image.errors %}
@@ -128,8 +130,8 @@
                     {% endif %}
                     <small>{{ form.slug.help_text }}</small>
                 </div>
-                <button class="btn btn-success">ویرایش</button>
-                <a href="{% url 'Admin_panel:category' %}" class="btn btn-danger">انصراف</a>
+                <button class="btn btn-success">{% translate "Register" %}</button>
+                <a href="{% url 'Admin_panel:category' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
             </form>
         </div>
 {% endblock %}

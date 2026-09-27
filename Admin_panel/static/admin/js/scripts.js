@@ -97,6 +97,162 @@ function getInfoModel(){
         }, 500);
     }
 }
+
+const CKEDITOR_COLOR_CONFIG = [
+
+    /* ---------- سطر ۱: سایه 50 ---------- */
+    { color: '#FFEBEE', label: 'Red 50' },
+    { color: '#F3E5F5', label: 'Purple 50' },
+    { color: '#E8EAF6', label: 'Indigo 50' },
+    { color: '#E3F2FD', label: 'Blue 50' },
+    { color: '#E0F7FA', label: 'Cyan 50' },
+    { color: '#E0F2F1', label: 'Teal 50' },
+    { color: '#F1F8E9', label: 'Light green 50' },
+    { color: '#F9FBE7', label: 'Lime 50' },
+    { color: '#FFF8E1', label: 'Amber 50' },
+    { color: '#FFF3E0', label: 'Orange 50' },
+    { color: '#FAFAFA', label: 'Grey 50' },
+    { color: '#ECEFF1', label: 'Blue grey 50' },
+
+    /* ---------- سطر ۲: سایه 100 ---------- */
+    { color: '#FFCDD2', label: 'Red 100' },
+    { color: '#E1BEE7', label: 'Purple 100' },
+    { color: '#C5CAE9', label: 'Indigo 100' },
+    { color: '#BBDEFB', label: 'Blue 100' },
+    { color: '#B2EBF2', label: 'Cyan 100' },
+    { color: '#B2DFDB', label: 'Teal 100' },
+    { color: '#DCEDC8', label: 'Light green 100' },
+    { color: '#F0F4C3', label: 'Lime 100' },
+    { color: '#FFECB3', label: 'Amber 100' },
+    { color: '#FFE0B2', label: 'Orange 100' },
+    { color: '#F5F5F5', label: 'Grey 100' },
+    { color: '#CFD8DC', label: 'Blue grey 100' },
+
+    /* ---------- سطر ۳: سایه 200 ---------- */
+    { color: '#EF9A9A', label: 'Red 200' },
+    { color: '#CE93D8', label: 'Purple 200' },
+    { color: '#9FA8DA', label: 'Indigo 200' },
+    { color: '#90CAF9', label: 'Blue 200' },
+    { color: '#80DEEA', label: 'Cyan 200' },
+    { color: '#80CBC4', label: 'Teal 200' },
+    { color: '#C5E1A5', label: 'Light green 200' },
+    { color: '#E6EE9C', label: 'Lime 200' },
+    { color: '#FFE082', label: 'Amber 200' },
+    { color: '#FFCC80', label: 'Orange 200' },
+    { color: '#EEEEEE', label: 'Grey 200' },
+    { color: '#B0BEC5', label: 'Blue grey 200' },
+
+    /* ---------- سطر ۴: سایه 300 ---------- */
+    { color: '#E57373', label: 'Red 300' },
+    { color: '#BA68C8', label: 'Purple 300' },
+    { color: '#7986CB', label: 'Indigo 300' },
+    { color: '#64B5F6', label: 'Blue 300' },
+    { color: '#4DD0E1', label: 'Cyan 300' },
+    { color: '#4DB6AC', label: 'Teal 300' },
+    { color: '#AED581', label: 'Light green 300' },
+    { color: '#DCE775', label: 'Lime 300' },
+    { color: '#FFD54F', label: 'Amber 300' },
+    { color: '#FFB74D', label: 'Orange 300' },
+    { color: '#E0E0E0', label: 'Grey 300' },
+    { color: '#90A4AE', label: 'Blue grey 300' },
+
+    /* ---------- سطر ۵: سایه 400 ---------- */
+    { color: '#EF5350', label: 'Red 400' },
+    { color: '#AB47BC', label: 'Purple 400' },
+    { color: '#5C6BC0', label: 'Indigo 400' },
+    { color: '#42A5F5', label: 'Blue 400' },
+    { color: '#26C6DA', label: 'Cyan 400' },
+    { color: '#26A69A', label: 'Teal 400' },
+    { color: '#9CCC65', label: 'Light green 400' },
+    { color: '#D4E157', label: 'Lime 400' },
+    { color: '#FFCA28', label: 'Amber 400' },
+    { color: '#FFA726', label: 'Orange 400' },
+    { color: '#BDBDBD', label: 'Grey 400' },
+    { color: '#78909C', label: 'Blue grey 400' },
+
+    /* ---------- سطر ۶: سایه 500 ---------- */
+    { color: '#F44336', label: 'Red 500' },
+    { color: '#9C27B0', label: 'Purple 500' },
+    { color: '#3F51B5', label: 'Indigo 500' },
+    { color: '#2196F3', label: 'Blue 500' },
+    { color: '#00BCD4', label: 'Cyan 500' },
+    { color: '#009688', label: 'Teal 500' },
+    { color: '#8BC34A', label: 'Light green 500' },
+    { color: '#CDDC39', label: 'Lime 500' },
+    { color: '#FFC107', label: 'Amber 500' },
+    { color: '#FF9800', label: 'Orange 500' },
+    { color: '#9E9E9E', label: 'Grey 500' },
+    { color: '#607D8B', label: 'Blue grey 500' },
+
+    /* ---------- سطر ۷: سایه 600 ---------- */
+    { color: '#E53935', label: 'Red 600' },
+    { color: '#8E24AA', label: 'Purple 600' },
+    { color: '#3949AB', label: 'Indigo 600' },
+    { color: '#1E88E5', label: 'Blue 600' },
+    { color: '#00ACC1', label: 'Cyan 600' },
+    { color: '#00897B', label: 'Teal 600' },
+    { color: '#7CB342', label: 'Light green 600' },
+    { color: '#C0CA33', label: 'Lime 600' },
+    { color: '#FFB300', label: 'Amber 600' },
+    { color: '#FB8C00', label: 'Orange 600' },
+    { color: '#757575', label: 'Grey 600' },
+    { color: '#546E7A', label: 'Blue grey 600' },
+
+    /* ---------- سطر ۸: سایه 700 ---------- */
+    { color: '#D32F2F', label: 'Red 700' },
+    { color: '#7B1FA2', label: 'Purple 700' },
+    { color: '#303F9F', label: 'Indigo 700' },
+    { color: '#1976D2', label: 'Blue 700' },
+    { color: '#0097A7', label: 'Cyan 700' },
+    { color: '#00796B', label: 'Teal 700' },
+    { color: '#689F38', label: 'Light green 700' },
+    { color: '#AFB42B', label: 'Lime 700' },
+    { color: '#FFA000', label: 'Amber 700' },
+    { color: '#F57C00', label: 'Orange 700' },
+    { color: '#616161', label: 'Grey 700' },
+    { color: '#455A64', label: 'Blue grey 700' },
+
+    /* ---------- سطر ۹: سایه 800 ---------- */
+    { color: '#C62828', label: 'Red 800' },
+    { color: '#6A1B9A', label: 'Purple 800' },
+    { color: '#283593', label: 'Indigo 800' },
+    { color: '#1565C0', label: 'Blue 800' },
+    { color: '#00838F', label: 'Cyan 800' },
+    { color: '#00695C', label: 'Teal 800' },
+    { color: '#558B2F', label: 'Light green 800' },
+    { color: '#9E9D24', label: 'Lime 800' },
+    { color: '#FF8F00', label: 'Amber 800' },
+    { color: '#EF6C00', label: 'Orange 800' },
+    { color: '#424242', label: 'Grey 800' },
+    { color: '#37474F', label: 'Blue grey 800' },
+
+    /* ---------- سطر ۱۰: سایه 900 ---------- */
+    { color: '#B71C1C', label: 'Red 900' },
+    { color: '#4A148C', label: 'Purple 900' },
+    { color: '#1A237E', label: 'Indigo 900' },
+    { color: '#0D47A1', label: 'Blue 900' },
+    { color: '#006064', label: 'Cyan 900' },
+    { color: '#004D40', label: 'Teal 900' },
+    { color: '#33691E', label: 'Light green 900' },
+    { color: '#827717', label: 'Lime 900' },
+    { color: '#FF6F00', label: 'Amber 900' },
+    { color: '#E65100', label: 'Orange 900' },
+    { color: '#212121', label: 'Grey 900' },
+    { color: '#263238', label: 'Blue grey 900' },
+
+    /* ---------- سطر ۱۱: رنگ‌های پایه ---------- */
+    { color: '#000000', label: 'Black' },
+    { color: '#FFFFFF', label: 'White' },
+];
+
+function detectEditorLanguage() {
+    const segments = window.location.pathname
+        .split('/')
+        .filter(Boolean);
+    const langSegment = segments.find(seg => seg === 'en' || seg === 'fa');
+    return langSegment || 'fa';
+}
+
 async function reInitializeCKEditor(modelName, objectId, dynamicUrl) {
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     const uploadUrl = dynamicUrl;
@@ -106,6 +262,9 @@ async function reInitializeCKEditor(modelName, objectId, dynamicUrl) {
         if (existingEditor && existingEditor.classList && existingEditor.classList.contains('ck-editor')) {
             existingEditor.remove();
         }
+
+        const editorLang = detectEditorLanguage();
+
         container.style.display = 'block';
         window.ClassicEditor.create(container, {
             licenseKey: 'GPL',
@@ -119,8 +278,8 @@ async function reInitializeCKEditor(modelName, objectId, dynamicUrl) {
             },
 
             language: {
-                ui: 'fa',
-                content: 'fa'
+                ui: editorLang,
+                content: editorLang,
             },
 
             toolbar: {
@@ -176,13 +335,24 @@ async function reInitializeCKEditor(modelName, objectId, dynamicUrl) {
             },
 
             fontColor: {
-                colors: [
-                    { color: '#000000', label: 'Black' },
-                    { color: '#FF0000', label: 'Red' },
-                    { color: '#0000FF', label: 'Blue' },
-                    { color: '#008000', label: 'Green' },
-                    { color: '#FFFF00', label: 'Yellow' }
-                ]
+                colors: CKEDITOR_COLOR_CONFIG,
+                columns: 12,
+                colorPicker: {
+                    format: 'hex',
+                    allowAny: true,
+                },
+                documentColors: 12,
+            },
+
+
+            fontBackgroundColor: {
+                colors: CKEDITOR_COLOR_CONFIG,
+                columns: 12,
+                colorPicker: {
+                    format: 'hex',
+                    allowAny: true,
+                },
+                documentColors: 12,
             },
 
             table: {

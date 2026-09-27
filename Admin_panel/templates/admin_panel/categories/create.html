@@ -128,7 +128,7 @@
                     <small>{{ form.slug.help_text }}</small>
                 </div>
                 <button class="btn btn-success">{% translate "Register" %}</button>
-                <a href="{% url 'Admin_panel:category' %}" class="btn btn-danger">انصراف</a>
+                <a href="{% url 'Admin_panel:category' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
             </form>
         </div>
 {% endblock %}

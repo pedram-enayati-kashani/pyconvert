@@ -2,9 +2,10 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, DeleteView
 from django.views.generic.list import ListView
-from ..forms.Category import CategoryForm
-from ..forms.Filter import FilterForm
-from ..helpers.pager import get_visible_page_numbers
+from django.utils.translation import get_language
+from Admin_panel.forms.Category import CategoryForm
+from Admin_panel.forms.Filter import FilterForm
+from Admin_panel.helpers.pager import get_visible_page_numbers
 from Admin_panel.mixin.auth import AdminRequiredMixin, AdminOrAuthorRequiredMixin
 from App_panel.models import Category
 
@@ -17,7 +18,13 @@ class Index(AdminOrAuthorRequiredMixin, ListView):
     form_class = FilterForm
 
     def get_queryset(self):
-        return super().get_queryset().order_by('-id')
+        queryset = super().get_queryset().order_by('-id')
+        lang = get_language()
+        if lang == 'fa':
+            queryset = queryset.filter(lang='fa')
+        elif lang == 'en':
+            queryset = queryset.filter(lang='en')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,6 +45,7 @@ class Create(AdminOrAuthorRequiredMixin,CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["user"] = self.request.user
+        kwargs["request"] = self.request
         return kwargs
 
 class Update(AdminOrAuthorRequiredMixin, UpdateView):
@@ -49,6 +57,7 @@ class Update(AdminOrAuthorRequiredMixin, UpdateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["user"] = self.request.user
+        kwargs["request"] = self.request
         return kwargs
 
 class Query(AdminOrAuthorRequiredMixin, ListView):
@@ -61,6 +70,13 @@ class Query(AdminOrAuthorRequiredMixin, ListView):
     def get_queryset(self):
         self.form = self.form_class(self.request.GET)
         queryset = super().get_queryset()
+
+        lang = get_language()
+        if lang == 'fa':
+            queryset = queryset.filter(lang='fa')
+        elif lang == 'en':
+            queryset = queryset.filter(lang='en')
+
         if self.form.is_valid():
             status_filter = self.form.cleaned_data.get('status', 'all')
             if status_filter != 'all':

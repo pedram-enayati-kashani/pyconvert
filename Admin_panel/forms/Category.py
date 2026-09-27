@@ -107,40 +107,18 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ['title', 'title_seo', 'description', 'description_seo', 'image', 'parent', 'status', 'slug']
 
-    def __init__(self, *args, user=None, **kwargs):
-        """
-        دریافت زبان از request که توسط middleware تنظیم شده
-        """
-        request = kwargs.pop('request', None)
-        lang = 'fa'
+    def __init__(self, *args, user=None, request=None, **kwargs):
+        self.request = request
 
-        if request:
-            if hasattr(request, 'LANGUAGE_CODE'):
-                lang = request.LANGUAGE_CODE
-                print(f"[DEBUG] Language from request.LANGUAGE_CODE: {lang}")
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
 
-            elif hasattr(request, 'session'):
-                current_lang = translation.get_language()
-                if current_lang:
-                    lang = current_lang
-                    print(f"[DEBUG] Language from translation.get_language(): {lang}")
-            else:
-                path_parts = request.path.split('/')
-                if len(path_parts) > 1 and path_parts[1] in ['en', 'fa']:
-                    lang = path_parts[1]
-                    print(f"[DEBUG] Language from URL path: {lang}")
+        instance = kwargs.get('instance')
 
-        instance = kwargs.get('instance', None)
-        if instance and hasattr(instance, 'lang') and instance.lang:
-            lang = instance.lang
-            print(f"[DEBUG] Language from instance: {lang}")
-
-        # ذخیره زبان در self
-        self.lang = lang
-
-        if 'initial' not in kwargs:
-            kwargs['initial'] = {}
-        kwargs['initial']['lang'] = lang
+        if instance and instance.lang:
+            self.lang = instance.lang
 
         super().__init__(*args, **kwargs)
 
@@ -150,11 +128,15 @@ class CategoryForm(forms.ModelForm):
                 ('pending', _('Pending')),
             ]
 
-        self.fields['parent'].queryset = Category.objects.filter(
+        parent_qs = Category.objects.filter(
             status='published',
             lang=self.lang,
-            is_deleted=False
         )
+
+        if self.instance and self.instance.pk:
+            parent_qs = parent_qs.exclude(pk=self.instance.pk)
+
+        self.fields['parent'].queryset = parent_qs
 
         self.fields['hidden_lang'] = forms.CharField(
             widget=forms.HiddenInput(),
@@ -203,8 +185,6 @@ class CategoryForm(forms.ModelForm):
     def save(self, commit=True):
         """ذخیره با تنظیم خودکار زبان"""
         instance = super().save(commit=False)
-
-        # ✅ تنظیم زبان روی instance
         instance.lang = self.lang
         if commit:
             instance.save()

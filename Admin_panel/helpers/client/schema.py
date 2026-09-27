@@ -230,7 +230,7 @@ def homePageSchema(request,data):
     schema_data = {
         "base_url": f"{request.scheme}://{request.get_host()}",
         "organization_name": get_site_info_value("title"),
-        "logo": f"{request.scheme}://{request.get_host()}{get_site_info_value("logo")}",
+        "logo": f"{request.scheme}://{request.get_host()}/{get_site_info_value('logo').lstrip('/')}",
         "site_title": get_site_info_value("title_seo") or get_site_info_value("title")[:60],
         "page_url": f"{request.scheme}://{request.get_host()}/",
         "page_title": get_site_info_value("title_seo") or get_site_info_value("title")[:60],
@@ -255,7 +255,7 @@ def singlePostSchema(request,post,related_posts):
     schema_data = {
         "base_url": f"{request.scheme}://{request.get_host()}",
         "organization_name": get_site_info_value("title"),
-        "logo": f"{request.scheme}://{request.get_host()}{get_site_info_value("logo")}",
+        "logo": f"{request.scheme}://{request.get_host()}/{get_site_info_value('logo').lstrip('/')}",
         "site_title": get_site_info_value("title_seo"),
 
         "post_url": f"{request.scheme}://{request.get_host()}{post.get_absolute_url()}",
@@ -284,7 +284,7 @@ def post_page_schema(request,page,posts):
     schema_data = {
         "base_url": f"{request.scheme}://{request.get_host()}",
         "organization_name": get_site_info_value("title"),
-        "logo": f"{request.scheme}://{request.get_host()}{get_site_info_value("logo")}",
+        "logo": f"{request.scheme}://{request.get_host()}/{get_site_info_value('logo').lstrip('/')}",
         "site_title": get_site_info_value("title_seo") or get_site_info_value("title")[:60],
 
         "page_url": f"{request.scheme}://{request.get_host()}{page.get_absolute_url()}",
@@ -313,7 +313,7 @@ def page_schema(request,page):
     data = {
         "base_url": f"{request.scheme}://{request.get_host()}",
         "organization_name": get_site_info_value("title"),
-        "logo": f"{request.scheme}://{request.get_host()}{get_site_info_value('logo').lstrip('/')}",
+        "logo": f"{request.scheme}://{request.get_host()}/{get_site_info_value('logo').lstrip('/')}",
         "site_title": get_site_info_value("title_seo") or (get_site_info_value("title") or "")[:60],
 
         "page_url": page_url,
