@@ -2,46 +2,45 @@ import re
 from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
 from django.core.validators import RegexValidator
+from django.utils import translation
+from django.utils.translation import gettext_lazy as _
 from App_panel.models import Tag
 
 
 class TagForm(forms.ModelForm):
     # region Fields
     title = forms.CharField(
-        label='عنوان',
+        label=_("Title"),
         max_length=120,
         error_messages={
-            'required': 'عنوان اجباری می‌باشد',
-            'max_length': 'عنوان نباید بیشتر از 120 کاراکتر باشد',
+            'required': _("Title is required."),
+            'max_length': _("Title cannot be more than %(limit_value)d characters."),
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     title_seo = forms.CharField(
-        label='عنوان گوگل',
+        label=_("Meta title"),
         max_length=60,
         required=False,
         error_messages={
-            'max_length': 'عنوان گوگل نباید بیشتر از 60 کاراکتر باشد',
+            'max_length': _("Meta Title cannot be more than %(limit_value)d characters.")
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     description = forms.CharField(
-        label='توضیحات',
+        label=_("Description"),
         required=False,
-        error_messages={
-            'required': 'توضیحات اجباری می‌باشد',
-        },
         widget=CKEditor5Widget(config_name='default'),
     )
 
     description_seo = forms.CharField(
-        label='توضیحات گوگل',
+        label=_("Meta Description"),
         max_length=160,
         required=False,
         error_messages={
-            'max_length': 'توضیحات گوگل نباید بیشتر از 60 کاراکتر باشد',
+            'max_length': _("Meta Description cannot be more than %(limit_value)d characters."),
         },
         widget=forms.Textarea(attrs={
             'class': 'form-control',
@@ -50,52 +49,75 @@ class TagForm(forms.ModelForm):
     )
 
     image = forms.ImageField(
-        label='عکس',
+        label=_("Image"),
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
 
     status = forms.TypedChoiceField(
         choices=[
-            ('draft', 'پیش نویس'),
-            ('pending', 'در انتظار تایید'),
-            ('published', 'منتشر شده'),
-            ('rejected', 'رد شده'),
+            ('all', _('All')),
+            ('draft', _('Draft')),
+            ('pending', _('Pending')),
+            ('published', _('Published')),
+            ('rejected', _('Rejected')),
         ],
         coerce=str,
         initial='published',
-        label='وضعیت',
+        label=_("Status"),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     slug_validator = RegexValidator(
         regex=r'^[-\w\u0600-\u06FF]+$',
-        message='اسلاگ فقط می‌تواند شامل حروف فارسی، انگلیسی، عدد و خط فاصله باشد.'
+        message=_(
+            "Slug can only contain English and Persian letters, numbers, and hyphens."
+        ),
+        code='invalid_slug'
     )
 
     slug = forms.CharField(
-        label='اسلاگ (URL)',
+        label=_("Slug (URL)"),
         max_length=100,
         required=False,
+        validators=[slug_validator],
         widget=forms.TextInput(attrs={'class': 'form-control'}),
-        help_text="این قسمت به صورت خودکار تولید می شود، اما قابل ویرایش است."
+        help_text=_(
+            "Auto-generated from title. If left empty, uses title value. Duplicates are handled by appending numbers for uniqueness.")
     )
 
     # endregion
+
     class Meta:
         model = Tag
-        fields = ['title', 'title_seo', 'description', 'description_seo','image','status','slug']
+        fields = ['title', 'title_seo', 'description', 'description_seo', 'image', 'status', 'slug']
 
-    def __init__(self, *args, user=None, **kwargs):
+    def __init__(self, *args, user=None, request=None, **kwargs):
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
+
+        instance = kwargs.get('instance')
+
+        if instance and instance.pk and instance.lang:
+            self.lang = instance.lang
+
         super().__init__(*args, **kwargs)
 
         # region  check if user is author or not
-        if user.groups.filter(name="author").exists():
+        if user and user.groups.filter(name="author").exists():
             self.fields['status'].choices = [
-                ('draft', 'پیش نویس'),
-                ('pending', 'در انتظار تایید'),
+                ('draft', _('Draft')),
+                ('pending', _('Pending')),
             ]
         # endregion
+
+        self.fields['hidden_lang'] = forms.CharField(
+            widget=forms.HiddenInput(),
+            initial=self.lang,
+            required=False
+        )
 
     # region clean Fields
     def clean_description(self):
@@ -103,6 +125,7 @@ class TagForm(forms.ModelForm):
 
         if not description:
             return description
+
         pattern = r'<h[1-6](\s[^>]*)?>(\s|&nbsp;|<br\s*/?>)*</h[1-6]>'
         max_iterations = 5
         for _ in range(max_iterations):
@@ -120,12 +143,30 @@ class TagForm(forms.ModelForm):
 
     def clean_slug(self):
         slug = self.cleaned_data.get('slug')
+
         if slug:
-            qs = self._meta.model.objects.filter(slug__iexact=slug)
+            lang = self.lang
+            qs = self._meta.model.objects.filter(slug__iexact=slug, lang=lang)
+
             if self.instance and self.instance.pk:
                 qs = qs.exclude(pk=self.instance.pk)
+
             if qs.exists():
-                raise forms.ValidationError("این اسلاگ قبلاً ثبت شده است.")
+                raise forms.ValidationError(
+                    _("This slug already exists for this language.")
+                )
 
         return slug
+
     # endregion
+
+    def save(self, commit=True):
+        """ذخیره با تنظیم خودکار زبان"""
+        instance = super().save(commit=False)
+        instance.lang = self.lang
+
+        if commit:
+            instance.save()
+            self.save_m2m()
+
+        return instance

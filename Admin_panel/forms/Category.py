@@ -34,9 +34,6 @@ class CategoryForm(forms.ModelForm):
     description = forms.CharField(
         label=_("Description"),
         required=False,
-        error_messages={
-            'required': _("Description is required."),
-        },
         widget=CKEditor5Widget(config_name='default'),
     )
 

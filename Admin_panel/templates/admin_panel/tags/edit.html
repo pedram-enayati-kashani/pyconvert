@@ -1,7 +1,8 @@
 {% extends "admin_layouts/layouts.html" %}
+{% load i18n %}
 
 {% block meta %}
-    <title>ویرایش برچسب</title>
+    <title>{% translate "Update tag" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -11,7 +12,7 @@
     <!--    <div id="slug-config" data-model-key="tag" data-instance="{{ form.instance.pk|default:'None' }}" data-url="{% url "Admin_panel:get-slug" %}" style="display: none;"></div>-->
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ویرایش برچسب</h3>
+            <h3>{% translate "Update tag" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:tag-update' tag.id %}" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
@@ -116,8 +117,8 @@
                 {% endif %}
                 <small>{{ form.slug.help_text }}</small>
             </div>
-            <button class="btn btn-success">ویرایش</button>
-            <a href="{% url 'Admin_panel:tag' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Update" %}</button>
+            <a href="{% url 'Admin_panel:tag' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

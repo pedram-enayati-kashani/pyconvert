@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-24 13:49+0330\n"
+"POT-Creation-Date: 2026-09-28 11:48+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: Admin_panel/forms/Auth.py:7
+msgid "Email/Username"
+msgstr "ایمیل/نام کاربری"
+
+#: Admin_panel/forms/Auth.py:14
+msgid "Password"
+msgstr "رمز عبور"
+
+#: Admin_panel/forms/Auth.py:21
+msgid "Remember Me"
+msgstr "مرا به خاطر بسپار"
+
 #: Admin_panel/forms/Category.py:15 Admin_panel/forms/Filter.py:20
+#: Admin_panel/forms/Tags.py:13
 #: Admin_panel/templates/admin_panel/categories/index.html:43
 #: Admin_panel/templates/admin_panel/dashboard.html:15
 #: Admin_panel/templates/admin_panel/module/index.html:31
@@ -26,98 +39,101 @@ msgstr ""
 msgid "Title"
 msgstr "عنوان"
 
-#: Admin_panel/forms/Category.py:18
+#: Admin_panel/forms/Category.py:18 Admin_panel/forms/Tags.py:16
 msgid "Title is required."
 msgstr "عنوان اجباری می باشد"
 
-#: Admin_panel/forms/Category.py:19
+#: Admin_panel/forms/Category.py:19 Admin_panel/forms/Tags.py:17
 #, python-format
 msgid "Title cannot be more than %(limit_value)d characters."
 msgstr "عنوان نباید بیشتر از %(limit_value)d کاراکتر باشد"
 
-#: Admin_panel/forms/Category.py:25
+#: Admin_panel/forms/Category.py:25 Admin_panel/forms/Tags.py:23
 msgid "Meta title"
 msgstr "عنوان متا"
 
-#: Admin_panel/forms/Category.py:29
+#: Admin_panel/forms/Category.py:29 Admin_panel/forms/Tags.py:27
 #, fuzzy, python-format
 msgid "Meta Title cannot be more than %(limit_value)d characters."
 msgstr "عنوان متا نباید بیشتر از %(limit_value)d کاراکتر باشد"
 
-#: Admin_panel/forms/Category.py:35
+#: Admin_panel/forms/Category.py:35 Admin_panel/forms/Tags.py:33
 msgid "Description"
 msgstr "توضیحات"
 
-#: Admin_panel/forms/Category.py:38
-msgid "Description is required."
-msgstr "توضیحات اجباری می باشد"
-
-#: Admin_panel/forms/Category.py:44
+#: Admin_panel/forms/Category.py:41 Admin_panel/forms/Tags.py:39
 msgid "Meta Description"
 msgstr "توضیحات متا"
 
-#: Admin_panel/forms/Category.py:48 Admin_panel/forms/Category.py:60
+#: Admin_panel/forms/Category.py:45 Admin_panel/forms/Category.py:57
+#: Admin_panel/forms/Tags.py:43
 #, fuzzy, python-format
 #| msgid "Title cannot be more than %(limit_value)d characters."
 msgid "Meta Description cannot be more than %(limit_value)d characters."
 msgstr "عنوان نباید بیشتر از %(limit_value)d کاراکتر باشد"
 
-#: Admin_panel/forms/Category.py:57
+#: Admin_panel/forms/Category.py:54 Admin_panel/forms/Tags.py:52
 msgid "Image"
 msgstr "عکس/تصویر"
 
-#: Admin_panel/forms/Category.py:67
+#: Admin_panel/forms/Category.py:64
 msgid "Parent category"
 msgstr "والد دسته بندی"
 
-#: Admin_panel/forms/Category.py:74 Admin_panel/forms/Filter.py:7
+#: Admin_panel/forms/Category.py:71 Admin_panel/forms/Filter.py:7
+#: Admin_panel/forms/Tags.py:59
 #, fuzzy
 #| msgid "all"
 msgid "All"
 msgstr "همه"
 
-#: Admin_panel/forms/Category.py:75 Admin_panel/forms/Category.py:127
-#: Admin_panel/forms/Filter.py:8
+#: Admin_panel/forms/Category.py:72 Admin_panel/forms/Category.py:124
+#: Admin_panel/forms/Filter.py:8 Admin_panel/forms/Tags.py:60
+#: Admin_panel/forms/Tags.py:111
 #: Admin_panel/templates/admin_panel/categories/index.html:53
 #: Admin_panel/templates/admin_panel/tags/index.html:54
 msgid "Draft"
 msgstr "پیش نویس"
 
-#: Admin_panel/forms/Category.py:76 Admin_panel/forms/Category.py:128
-#: Admin_panel/forms/Filter.py:9
+#: Admin_panel/forms/Category.py:73 Admin_panel/forms/Category.py:125
+#: Admin_panel/forms/Filter.py:9 Admin_panel/forms/Tags.py:61
+#: Admin_panel/forms/Tags.py:112
 #: Admin_panel/templates/admin_panel/categories/index.html:55
 #: Admin_panel/templates/admin_panel/tags/index.html:56
 msgid "Pending"
 msgstr "در انتظار تایید"
 
-#: Admin_panel/forms/Category.py:77 Admin_panel/forms/Filter.py:10
+#: Admin_panel/forms/Category.py:74 Admin_panel/forms/Filter.py:10
+#: Admin_panel/forms/Tags.py:62
 #: Admin_panel/templates/admin_panel/categories/index.html:57
 #: Admin_panel/templates/admin_panel/tags/index.html:58
 msgid "Published"
 msgstr "منتشر شد"
 
-#: Admin_panel/forms/Category.py:78 Admin_panel/forms/Filter.py:11
+#: Admin_panel/forms/Category.py:75 Admin_panel/forms/Filter.py:11
+#: Admin_panel/forms/Tags.py:63
 #: Admin_panel/templates/admin_panel/categories/index.html:59
 #: Admin_panel/templates/admin_panel/tags/index.html:60
 msgid "Rejected"
 msgstr "رد شد"
 
-#: Admin_panel/forms/Category.py:82 Admin_panel/forms/Filter.py:13
+#: Admin_panel/forms/Category.py:79 Admin_panel/forms/Filter.py:13
+#: Admin_panel/forms/Tags.py:67
 #: Admin_panel/templates/admin_panel/categories/index.html:44
 #: Admin_panel/templates/admin_panel/tags/index.html:45
 msgid "Status"
 msgstr "وضعیت"
 
-#: Admin_panel/forms/Category.py:89
+#: Admin_panel/forms/Category.py:86 Admin_panel/forms/Tags.py:74
 msgid ""
 "Slug can only contain English and Persian letters, numbers, and hyphens."
 msgstr "اسلاگ فقط می‌تواند شامل حروف فارسی، انگلیسی، عدد و خط فاصله باشد."
 
-#: Admin_panel/forms/Category.py:95
+#: Admin_panel/forms/Category.py:92 Admin_panel/forms/Tags.py:80
 msgid "Slug (URL)"
 msgstr "اسلاگ (URL)"
 
-#: Admin_panel/forms/Category.py:101
+#: Admin_panel/forms/Category.py:98 Admin_panel/forms/Tags.py:86
 msgid ""
 "Auto-generated from title. If left empty, uses title value. Duplicates are "
 "handled by appending numbers for uniqueness."
@@ -125,7 +141,7 @@ msgstr ""
 "به طور خودکار از عنوان تولید می‌شود. اگر خالی بماند، از مقدار عنوان استفاده "
 "می‌کند. اسلاگ‌های تکراری با اضافه شدن عدد، منحصر به فرد می‌شوند"
 
-#: Admin_panel/forms/Category.py:160
+#: Admin_panel/forms/Category.py:157 Admin_panel/forms/Tags.py:155
 msgid "This slug already exists for this language."
 msgstr "این اسلاگ در حاظر وجود دارد"
 
@@ -271,21 +287,30 @@ msgid "Create a new category"
 msgstr "ساخت دسته بندی جدید"
 
 #: Admin_panel/templates/admin_panel/categories/create.html:130
-#: Admin_panel/templates/admin_panel/categories/edit.html:131
+#: Admin_panel/templates/admin_panel/tags/create.html:118
 msgid "Register"
 msgstr "ثبت"
 
 #: Admin_panel/templates/admin_panel/categories/create.html:131
-#: Admin_panel/templates/admin_panel/categories/edit.html:132
+#: Admin_panel/templates/admin_panel/categories/edit.html:134
+#: Admin_panel/templates/admin_panel/tags/create.html:119
+#: Admin_panel/templates/admin_panel/tags/edit.html:121
 msgid "Cancel"
 msgstr "انصراف"
 
-#: Admin_panel/templates/admin_panel/categories/edit.html:4
-#: Admin_panel/templates/admin_panel/categories/edit.html:13
+#: Admin_panel/templates/admin_panel/categories/edit.html:6
+#: Admin_panel/templates/admin_panel/categories/edit.html:15
 #, fuzzy
 #| msgid "Parent category"
 msgid "Edit Category"
 msgstr "والد دسته بندی"
+
+#: Admin_panel/templates/admin_panel/categories/edit.html:133
+#: Admin_panel/templates/admin_panel/categories/index.html:63
+#: Admin_panel/templates/admin_panel/tags/edit.html:120
+#: Admin_panel/templates/admin_panel/tags/index.html:64
+msgid "Update"
+msgstr "بروزرسانی"
 
 #: Admin_panel/templates/admin_panel/categories/index.html:36
 #: Admin_panel/templates/admin_panel/tags/index.html:37
@@ -296,11 +321,6 @@ msgstr "فیلتر کردن"
 #: Admin_panel/templates/admin_panel/tags/index.html:38
 msgid "Clear filter"
 msgstr "برداشتن فیلتر"
-
-#: Admin_panel/templates/admin_panel/categories/index.html:63
-#: Admin_panel/templates/admin_panel/tags/index.html:64
-msgid "Update"
-msgstr "بروزرسانی"
 
 #: Admin_panel/templates/admin_panel/categories/index.html:69
 #: Admin_panel/templates/admin_panel/tags/index.html:69
@@ -347,9 +367,16 @@ msgstr "غیرفعال"
 msgid "Edit module"
 msgstr "ویرایش ماژول"
 
+#: Admin_panel/templates/admin_panel/tags/create.html:4
+#: Admin_panel/templates/admin_panel/tags/create.html:15
 #: Admin_panel/templates/admin_panel/tags/index.html:28
 msgid "Create a new tag"
 msgstr "ساخت برچسب جدید"
+
+#: Admin_panel/templates/admin_panel/tags/edit.html:5
+#: Admin_panel/templates/admin_panel/tags/edit.html:15
+msgid "Update tag"
+msgstr "ویرایش برچسب"
 
 #: config/settings.py:144
 msgid "فارسی"
@@ -358,3 +385,6 @@ msgstr ""
 #: config/settings.py:145
 msgid "English"
 msgstr ""
+
+#~ msgid "Description is required."
+#~ msgstr "توضیحات اجباری می باشد"
