@@ -67,7 +67,14 @@ function checkIsStaffField(){
 function AskDelete(form) {
     $(form).on('submit', function (e) {
         e.preventDefault();
-        let result = confirm('آیا مطمئن هستید؟');
+        const lang = detectEditorLanguage();
+        let result = "";
+        if (lang == "fa"){
+            result = confirm('آیا مطمئن هستید؟');
+        } else if (lang == "en"){
+            result = confirm('Are you sure?');
+        }
+
         if (result) {
             this.submit();
         }

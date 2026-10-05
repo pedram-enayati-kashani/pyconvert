@@ -1,7 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش بخش</title>
+    <title>{% translate "Create a new section" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -12,7 +12,7 @@
          data-url="{% url "Admin_panel:get-slug" %}" style="display: none;"></div>
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ساخت بخش جدید</h3>
+            <h3>{% translate "Create a new section" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:section-create' %}" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
@@ -157,8 +157,8 @@
                 {% endif %}
                 <small>{{ form.slug.help_text }}</small>
             </div>
-            <button class="btn btn-success">ثبت</button>
-            <a href="{% url 'Admin_panel:section' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Register" %}</button>
+            <a href="{% url 'Admin_panel:section' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

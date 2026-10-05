@@ -1,8 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load pager %}
-{% load permissions %}
+{% load pager permissions i18n %}
 {% block meta %}
-    <title>بخش ها</title>
+    <title>{% translate "Sections" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -24,9 +23,9 @@
     {% endif %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>بخش ها</h3>
+            <h3>{% translate "Sections" %}</h3>
             {% if request.user|is_superuser %}
-                <a href="{% url 'Admin_panel:section-create' %}" class="createLink">ساخت بخش جدید</a>
+                <a href="{% url 'Admin_panel:section-create' %}" class="createLink">{% translate "Create a new section" %}</a>
             {% endif %}
         </header>
         <div class="filter-form mb-4">
@@ -36,18 +35,18 @@
                     {{ filter_form.status.label_tag }}
                     {{ filter_form.status }}
                 </div>
-                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
-                <a href="{% url 'Admin_panel:section' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+                <button type="submit" class="btn btn-primary">{% translate "Filtering" %}</button>
+                <a href="{% url 'Admin_panel:section' %}" class="btn btn-secondary">{% translate "Clear filter" %}</a>
             </form>
         </div>
         <div class="responsiverTable">
             <table class="table table-bordered table-striped m-0 mb-3">
                 <thead>
-                <th scope="col">نام</th>
-                <th scope="col">عنوان</th>
-                <th scope="col">نوع</th>
-                <th scope="col">فعال/غیرفعال</th>
-                <th scope="col">تنظیمات</th>
+                <th scope="col">{% translate "Name" %}</th>
+                <th scope="col">{% translate "Title" %}</th>
+                <th scope="col">{% translate "Type" %}</th>
+                <th scope="col">{% translate "Status" %}</th>
+                <th scope="col">{% translate "Settings" %}</th>
                 </thead>
                 <tbody>
                 {% for section in sections %}
@@ -56,39 +55,38 @@
                         <td>{{ section.title }}</td>
                         <td>
                             {% if section.type == "post" %}
-                                نوشته
+                                {% translate "Post" %}
                             {% elif section.type == "no_post" %}
-                                اطلاعیه بدون نوشته
+                                {% translate "Without post" %}
                             {% elif section.type == "last_news" %}
-                                آخرین اخبار
+                                {% translate "Last posts" %}
                             {% elif section.type == "most_visited" %}
-                                پربازدید ترین
+                                {% translate "Most visited" %}
                             {% elif section.type == "most_commented" %}
-                                پربحث ترین
+                                {% translate "Most commented" %}
                             {% elif section.type == "adv_text" %}
-                                تبلیغ متنی
+                                {% translate "Text advertisement" %}
                             {% elif section.type == "adv_image" %}
-                                تبلیغ بنر
+                                {% translate "Banner advertisement" %}
                             {% endif %}
                         </td>
                         <td>
                             {% if section.status == 'active' %}
                                 <a class="btn btn-primary"
-                                   href="{% url 'Admin_panel:section-active' section.id %}?next={{ request.get_full_path }}">فعال</a>
+                                   href="{% url 'Admin_panel:section-active' section.id %}?next={{ request.get_full_path }}">{% translate "Active" %}</a>
                             {% elif section.status == 'inactive' %}
                                 <a class="btn btn-dark"
-                                   href="{% url 'Admin_panel:section-active' section.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                                   href="{% url 'Admin_panel:section-active' section.id %}?next={{ request.get_full_path }}">{% translate "Inactive" %}</a>
                             {% endif %}
                         </td>
                         <td class="d-flex gap-2 align-items-center flex-wrap">
-                            <a href="{% url 'Admin_panel:section-update' section.id %}" class="btn btn-primary">ویرایش
-                                اطلاعات</a>
+                            <a href="{% url 'Admin_panel:section-update' section.id %}" class="btn btn-primary">{% translate "Update" %}</a>
                             {% if request.user|is_superuser %}
                                 <form action="{% url 'Admin_panel:section-delete' section.id %}" class="Delete-Form"
                                       method="post">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger">
-                                        حذف
+                                        {% translate "Delete" %}
                                     </button>
                                 </form>
                             {% endif %}

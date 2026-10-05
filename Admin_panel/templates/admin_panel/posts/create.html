@@ -1,7 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ساخت نوشته جدید</title>
+    <title>{% translate "Create a new post" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -12,7 +12,7 @@
          data-url="{% url "Admin_panel:get-slug" %}" style="display: none;"></div>
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ساخت نوشته جدید</h3>
+            <h3>{% translate "Create a new post" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:post-create' %}" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
@@ -45,7 +45,7 @@
                 {% endif %}
             </div>
             <div class="form-group-display">
-                <label for="{{ form.summery.id_for_label }}">
+                <label for="{{ form.summary.id_for_label }}">
                     {{ form.summery.label }}
                     {% if form.summery.field.required %}
                         <span class="text-danger">*</span>
@@ -164,8 +164,7 @@
                     {% endif %}
                 </label>
                 {% if post.image %}
-                    <img src="{{ post.image.url }}" alt="عکس فعلی بخش"
-                         style="max-width:200px; height:auto; margin-bottom:10px;">
+                    <img src="{{ post.image.url }}" style="max-width:200px; height:auto; margin-bottom:10px;">
                 {% endif %}
                 <input type="file" name="image" id="id_image" class="form-control" accept="image/*">
                 {% if form.image.errors %}
@@ -234,7 +233,7 @@
                             </div>
                             <div class="col-md-2">
                                 {% if gallery_formset.can_delete %}
-                                    <span class="d-block">حذف</span>
+                                    <span class="d-block">{% translate "Delete" %}</span>
                                     {{ g_form.DELETE }}
                                 {% endif %}
                             </div>
@@ -244,10 +243,10 @@
             </div>
             {% if available_forms %}
                 <div class="form-group-display">
-                    <label>فرم خود رو انتخاب کنید</label>
+                    <label>{% translate "Select your form" %}</label>
                     <select id="form-selector" class="form-control" name="selected_form"
                             data-url="{% url 'Admin_panel:get_form_fields' 0 %}">
-                        <option value="">انتخاب فرم...</option>
+                        <option value="">{% translate "Select form..." %}</option>
                         {% for form in available_forms %}
                             <option value="{{ form.id }}">{{ form.title }}</option>
                         {% endfor %}
@@ -255,8 +254,8 @@
                 </div>
                 <div id="dynamic-fields-container"></div>
             {% endif %}
-            <button class="btn btn-success">ثبت</button>
-            <a href="{% url 'Admin_panel:post' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Register" %}</button>
+            <a href="{% url 'Admin_panel:post' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

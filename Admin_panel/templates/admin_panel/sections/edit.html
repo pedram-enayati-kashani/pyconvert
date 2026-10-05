@@ -1,7 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش بخش</title>
+    <title>{% translate "Update section" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -10,7 +10,7 @@
          data-id="{{ form.instance.pk|default:'new' }}" style="display: none;"></div>
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ویرایش بخش</h3>
+            <h3>{% translate "Update section" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:section-update' section.id %}" method="post" enctype="multipart/form-data"
               novalidate>
@@ -79,8 +79,7 @@
                     {% endif %}
                 </label>
                 {% if section.image %}
-                    <img src="{{ section.image.url }}" alt="عکس فعلی بخش"
-                         style="max-width:200px; height:auto; margin-bottom:10px;">
+                    <img src="{{ section.image.url }}" style="max-width:200px; height:auto; margin-bottom:10px;">
                 {% endif %}
                 <input type="file" name="image" id="id_image" class="form-control" accept="image/*">
                 {% if form.image.errors %}
@@ -115,8 +114,8 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ویرایش</button>
-            <a href="{% url 'Admin_panel:section' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Update" %}</button>
+            <a href="{% url 'Admin_panel:section' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

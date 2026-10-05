@@ -1,7 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش نوشته</title>
+    <title>{% translate "Update post" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -11,7 +11,7 @@
     <!--    <div id="slug-config" data-model-key="post" data-instance="{{ form.instance.pk|default:'None' }}" data-url="{% url "Admin_panel:get-slug" %}" style="display: none;"></div>-->
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ویرایش نوشته</h3>
+            <h3>{% translate "Update post" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:post-update' post.id %}" method="post" enctype="multipart/form-data"
               novalidate>
@@ -164,8 +164,7 @@
                     {% endif %}
                 </label>
                 {% if post.image %}
-                    <img src="{{ post.image.url }}" alt="عکس فعلی بخش"
-                         style="max-width:200px; height:auto; margin-bottom:10px;">
+                    <img src="{{ post.image.url }}" style="max-width:200px; height:auto; margin-bottom:10px;">
                 {% endif %}
                 <input type="file" name="image" id="id_image" class="form-control" accept="image/*">
                 {% if form.image.errors %}
@@ -241,7 +240,7 @@
                                             <img src="{{ g_form.instance.image.url }}"
                                                  width="120"
                                                  class="rounded border shadow-sm"
-                                                 alt="{{ g_form.instance.alt_text|default:'تصویر گالری' }}">
+                                                 alt="{{ g_form.instance.alt_text }}">
                                         </div>
                                     {% endif %}
                                 </div>
@@ -251,11 +250,11 @@
                                 </div>
                                 <div class="col-md-2 text-center">
                                     {% if g_form.instance.pk %}
-                                        <label class="text-danger d-block mb-1">حذف تصویر</label>
+                                        <label class="text-danger d-block mb-1">{% translate "Delete image" %}</label>
                                         {{ g_form.DELETE }}
                                     {% else %}
-                                        <button type="button" class="btn btn-sm btn-outline-danger remove-form-row">حذف
-                                            ردیف
+                                        <button type="button" class="btn btn-sm btn-outline-danger remove-form-row">
+                                            {% translate "Remove row" %}
                                         </button>
                                     {% endif %}
                                 </div>
@@ -264,21 +263,22 @@
                     {% endfor %}
                 </div>
                 <button type="button" class="btn btn-info btn-sm mb-4" id="add-gallery-item">
-                    <i class="fa fa-plus"></i> افزودن تصویر به گالری
+                    <i class="fa fa-plus"></i> {% translate "Add image to gallery" %}
                 </button>
                 <div id="empty-form" style="display: none;">
                     <div class="gallery-row card p-3 mb-3 shadow-sm">
                         <div class="row align-items-center">
                             <div class="col-md-5">
-                                <label class="form-label d-block">انتخاب تصویر جدید</label>
+                                <label class="form-label d-block">{% translate "Choose new image" %}</label>
                                 {{ gallery_formset.empty_form.image }}
                             </div>
                             <div class="col-md-5">
-                                <label>متن جایگزین (سئو)</label>
+                                <label>{% translate "Alt text (SEO)" %}</label>
                                 {{ gallery_formset.empty_form.alt_text }}
                             </div>
                             <div class="col-md-2 text-center">
-                                <button type="button" class="btn btn-sm btn-outline-danger remove-form-row">حذف ردیف
+                                <button type="button" class="btn btn-sm btn-outline-danger remove-form-row">
+                                    {% translate "Remove row" %}
                                 </button>
                             </div>
                         </div>
@@ -289,12 +289,12 @@
 
             {% if available_forms %}
                 <div class="form-group-display mt-4">
-                    <label>انتخاب فرم فیلدها:</label>
+                    <label>{% translate "Select your form" %}</label>
                     <select id="form-selector" name="selected_form"
                             data-url="{% url 'Admin_panel:get_form_fields' 0 %}"
                             class="form-control"
                             {% if not can_change_form %} disabled {% endif %}>
-                        <option value="">-- بدون فرم --</option>
+                        <option value="">{% translate "-- No form --" %}</option>
                         {% for f in available_forms %}
                             <option value="{{ f.id }}" {% if f.id == selected_form_id %}selected{% endif %}>
                                 {{ f.title }}
@@ -312,8 +312,8 @@
                     {% endif %}
                 </div>
             {% endif %}
-            <button class="btn btn-success">ویرایش</button>
-            <a href="{% url 'Admin_panel:post' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Update" %}</button>
+            <a href="{% url 'Admin_panel:post' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

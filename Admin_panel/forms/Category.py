@@ -38,11 +38,11 @@ class CategoryForm(forms.ModelForm):
     )
 
     description_seo = forms.CharField(
-        label=_("Meta Description"),
+        label=_("Meta description"),
         max_length=160,
         required=False,
         error_messages={
-            'max_length': _("Meta Description cannot be more than %(limit_value)d characters."),
+            'max_length': _("Meta description cannot be more than %(limit_value)d characters."),
         },
         widget=forms.Textarea(attrs={
             'class': 'form-control',
@@ -53,9 +53,6 @@ class CategoryForm(forms.ModelForm):
     image = forms.ImageField(
         label=_("Image"),
         required=False,
-        error_messages={
-            'max_length': _("Meta Description cannot be more than %(limit_value)d characters."),
-        },
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
 

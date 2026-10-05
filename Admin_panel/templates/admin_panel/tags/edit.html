@@ -80,8 +80,7 @@
                     {% endif %}
                 </label>
                 {% if tag.image %}
-                    <img src="{{ tag.image.url }}" alt="عکس فعلی بخش"
-                         style="max-width:200px; height:auto; margin-bottom:10px;">
+                    <img src="{{ tag.image.url }}" style="max-width:200px; height:auto; margin-bottom:10px;">
                 {% endif %}
                 <input type="file" name="image" id="id_image" class="form-control" accept="image/*">
                 {% if form.image.errors %}

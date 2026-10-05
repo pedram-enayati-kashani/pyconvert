@@ -1,7 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load static permissions media_filter django_vite %}
+{% load static permissions i18n media_filter django_vite %}
 {% block meta %}
-    <title>نمایش نوشته ها</title>
+    <title>{% translate "Update" %}</title>
     <link rel="stylesheet" href="{% static 'admin/ckeditor/ckeditor5.css' %}">
     {% vite_asset 'assets/js/main.jsx' %}
 {% endblock %}
@@ -9,12 +9,12 @@
 {% block content %}
     <div class="dashboard-pages showPost">
         <div class="d-flex justify-content-between gap-3 align-items-center flex-wrap">
-            <a href="{% url 'Admin_panel:post-update' post.id %}" class="btn btn-warning">ویرایش اطلاعات</a>
+            <a href="{% url 'Admin_panel:post-update' post.id %}" class="btn btn-warning">{% translate "Update" %}</a>
             {% if request.user|is_admin %}
                 <form action="{% url 'Admin_panel:post-delete' post.id %}" class="Delete-Form" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">
-                        حذف
+                        {% translate "Delete" %}
                     </button>
                 </form>
             {% endif %}
@@ -26,17 +26,17 @@
                 <img src="/media/defaults/demo.png" class="image-tumbnail">
             {% endif %}
         </div>
-        <h2 class="mb-4">عنوان: {{ post.title }}</h2>
-        <h3 class="mb-4">عنوان گوگل: {{ post.title_search }}</h3>
-        <p class="mb-4">خلاصه: {{ post.summery }}</p>
-        <p class="mb-4">توضیحات گوگل: {{ post.summery_search }}</p>
+        <h2 class="mb-4">{% translate "Title" %}: {{ post.title }}</h2>
+        <h3 class="mb-4">{% translate "Meta title" %}: {{ post.title_search }}</h3>
+        <p class="mb-4">{% translate "Summary" %}: {{ post.summery }}</p>
+        <p class="mb-4">{% translate "Meta description" %}: {{ post.summery_search }}</p>
         <div class="mb-4">
-            <p class="mb-1">توضیحات:</p>
+            <p class="mb-1">{% translate "Description" %}:</p>
             {{ post.body|render_shortcodes }}
         </div>
         {% if post.tags.all %}
         <div class="tags d-flex align-items-center gap-3 mb-4">
-            <span>برچسب ها:</span>
+            <span>{% translate "Tags" %}:</span>
             {% for tag in post.tags.all %}
                 {% if not forloop.last %}
                     <span>
@@ -53,7 +53,7 @@
         {% endif %}
         {% if post.categories.all %}
             <div class="tags d-flex align-items-center gap-3 mb-4">
-                <span>دسته بندی ها:</span>
+                <span>{% translate "Categories:" %}</span>
                 {% for cats in post.categories.all %}
                     {% if not forloop.last %}
                         <span>
@@ -68,7 +68,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <p class="mb-4">تعداد بازدیدهای تقریبی: {{ post.views_count }}</p>
-        <p class="mb-0">نویسنده: {{ user }}</p>
+        <p class="mb-4">{% translate "Views count" %}: {{ post.views_count }}</p>
+        <p class="mb-0">{% translate "Author" %}: {{ user }}</p>
     </div>
 {% endblock %}

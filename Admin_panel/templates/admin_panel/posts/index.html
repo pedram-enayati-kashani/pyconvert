@@ -1,7 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load permissions %}
+{% load permissions i18n %}
 {% block meta %}
-    <title>نوشته ها</title>
+    <title>{% translate "Posts" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -23,8 +23,8 @@
     {% endif %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>نوشته ها</h3>
-            <a href="{% url 'Admin_panel:post-create' %}" class="createLink">ساخت نوشته جدید</a>
+            <h3>{% translate "Posts" %}</h3>
+            <a href="{% url 'Admin_panel:post-create' %}" class="createLink">{% translate "Create a new post" %}</a>
         </header>
         <div class="filter-form mb-4">
             <form class="d-flex align-items-center gap-1 flex-wrap" method="GET" action="{% url 'Admin_panel:post-query' %}">
@@ -36,19 +36,19 @@
                     {{ filter_form.title.label_tag }}
                     {{ filter_form.title }}
                 </div>
-                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
-                <a href="{% url 'Admin_panel:post' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+                <button type="submit" class="btn btn-primary">{% translate "Filtering" %}</button>
+                <a href="{% url 'Admin_panel:post' %}" class="btn btn-secondary">{% translate "Clear filter" %}</a>
             </form>
         </div>
         <div class="responsiverTable">
             <table class="table table-bordered table-striped m-0 mb-3">
             <thead>
-            <th scope="col">عنوان</th>
-            <th scope="col">بخش</th>
-            <th scope="col">وضعیت</th>
-            <th scope="col">تعداد نظرات</th>
-            <th scope="col">تعداد بازدید</th>
-            <th scope="col">تنظیمات</th>
+            <th scope="col">{% translate "Title" %}</th>
+            <th scope="col">{% translate "Section" %}</th>
+            <th scope="col">{% translate "Status" %}</th>
+            <th scope="col">{% translate "Comments count" %}</th>
+            <th scope="col">{% translate "Views count" %}</th>
+            <th scope="col">{% translate "Settings" %}</th>
             </thead>
             <tbody>
             {% for post in posts %}
@@ -57,25 +57,25 @@
                     <td>{{ post.section.title }}</td>
                     <td>
                         {% if post.status == 'draft' %}
-                            پیش نویس
+                            {% translate "Draft" %}
                         {% elif post.status == 'pending' %}
-                            در انتظار تایید
+                            {% translate "Pending" %}
                         {% elif post.status == 'published' %}
-                            منتشر شده
+                            {% translate "Published" %}
                         {% elif post.status == 'rejected' %}
-                            رد شده
+                            {% translate "Rejected" %}
                         {% endif %}
                     </td>
                     <td>{{ post.comments_count }}</td>
                     <td>{{ post.views_count }}</td>
                     <td class="d-flex gap-2 align-items-center">
-                        <a href="{% url 'Admin_panel:post-show' post.id %}" class="btn btn-primary">نمایش</a>
-                        <a href="{% url 'Admin_panel:post-update' post.id %}" class="btn btn-warning">ویرایش اطلاعات</a>
+                        <a href="{% url 'Admin_panel:post-show' post.id %}" class="btn btn-primary">{% translate "Show" %}</a>
+                        <a href="{% url 'Admin_panel:post-update' post.id %}" class="btn btn-warning">{% translate "Update" %}</a>
                         {% if request.user|is_admin %}
                             <form action="{% url 'Admin_panel:post-delete' post.id %}" class="Delete-Form" method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">
-                                    حذف
+                                    {% translate "Delete" %}
                                 </button>
                             </form>
                         {% endif %}
