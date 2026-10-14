@@ -35,7 +35,7 @@ class PostForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
-    summary = forms.CharField(
+    summery = forms.CharField(
         label=_("Summary"),
         max_length=200,
         required=False,
@@ -173,8 +173,7 @@ class PostForm(forms.ModelForm):
             'watermark','status','slug'
         ]
 
-    def __init__(self, *args,user=None, request=None, **kwargs):
-
+    def __init__(self, *args, user=None, request=None, **kwargs):
         if request and getattr(request, 'LANGUAGE_CODE', None):
             self.lang = request.LANGUAGE_CODE
         else:
@@ -186,7 +185,29 @@ class PostForm(forms.ModelForm):
             self.lang = instance.lang
 
         super().__init__(*args, **kwargs)
-        # region  check if user is author or not
+        print("lang",self.lang)
+        self.fields['section'].queryset = Section.objects.filter(
+            status='active',
+            type='post',
+            lang=self.lang,
+        )
+
+        self.fields['categories'].queryset = Category.objects.filter(
+            status='published',
+            lang=self.lang,
+        )
+
+        self.fields['tags'].queryset = Tag.objects.filter(
+            status='published',
+            lang=self.lang,
+        )
+
+        self.fields['pages'].queryset = Page.objects.filter(
+            status='active',
+            lang=self.lang,
+        )
+
+        # region check if user is author or not
         if user and user.groups.filter(name="author").exists():
             self.fields['status'].choices = [
                 ('draft', _('Draft')),
@@ -195,10 +216,6 @@ class PostForm(forms.ModelForm):
         # endregion
 
     # region clean Fields
-    from django.utils.translation import gettext_lazy as _
-    from django.utils.html import strip_tags
-    import re
-
     def clean_body(self):
         body = self.cleaned_data.get('body', '')
 
@@ -222,7 +239,7 @@ class PostForm(forms.ModelForm):
 
         if not text_only:
             raise forms.ValidationError(
-                _("Body field cannot be empty.")
+                _("Description field cannot be empty.")
             )
 
         return body
@@ -244,6 +261,17 @@ class PostForm(forms.ModelForm):
 
         return slug
     # endregion
+
+    def save(self, commit=True):
+        """Save with automatic language setting."""
+        instance = super().save(commit=False)
+        instance.lang = self.lang
+
+        if commit:
+            instance.save()
+            self.save_m2m()
+
+        return instance
 
 class PostGalleryForm(forms.ModelForm):
     class Meta:

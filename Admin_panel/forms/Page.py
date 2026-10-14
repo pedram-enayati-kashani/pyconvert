@@ -5,44 +5,40 @@ from django.utils.html import strip_tags
 from django_ckeditor_5.widgets import CKEditor5Widget
 from django.core.validators import RegexValidator
 from App_panel.models import Page
-
+from django.utils.translation import gettext_lazy as _
 
 class PageForm(forms.ModelForm):
     title = forms.CharField(
-        label='عنوان',
+        label= _("Title"),
         max_length=120,
         error_messages={
-            'required': 'عنوان اجباری می‌باشد',
-            'max_length': 'عنوان نباید بیشتر از 120 کاراکتر باشد',
+            'required': _("Title is required."),
+            'max_length': _("Title cannot be more than %(limit_value)d characters."),
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     title_seo = forms.CharField(
-        label='عنوان گوگل',
+        label=_("Meta title"),
         max_length=60,
         required=False,
         error_messages={
-            'max_length': 'عنوان گوگل نباید بیشتر از 60 کاراکتر باشد',
+            'max_length': _("Meta Title cannot be more than %(limit_value)d characters.")
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     body = forms.CharField(
-        label='توضیحات',
-        error_messages={
-            'required': 'توضیحات اجباری می‌باشد',
-        },
-        required=False,
+        label=_("Description"),
         widget=CKEditor5Widget(config_name='default'),
     )
 
     description_seo = forms.CharField(
-        label='توضیحات گوگل',
+        label=_("Meta description"),
         max_length=160,
         required=False,
         error_messages={
-            'max_length': 'توضیحات گوگل نباید بیشتر از 60 کاراکتر باشد',
+            'max_length': _("Meta description cannot be more than %(limit_value)d characters."),
         },
         widget=forms.Textarea(attrs={
             'class': 'form-control',
@@ -51,34 +47,38 @@ class PageForm(forms.ModelForm):
     )
 
     image = forms.ImageField(
-        label='عکس صفحه',
+        label=_("Image"),
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
 
     status = forms.TypedChoiceField(
         choices=[
-            ('active', 'فعال'),
-            ('inactive', 'غیرفعال')
+            ('active', _("Active")),
+            ('inactive', _("Inactive"))
         ],
         coerce=str,
         initial='active',
-        label='وضعیت',
+        label=_("Status"),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     slug_validator = RegexValidator(
         regex=r'^[-\w\u0600-\u06FF]+$',
-        message='اسلاگ فقط می‌تواند شامل حروف فارسی، انگلیسی، عدد و خط فاصله باشد.'
+        message=_(
+            "Slug can only contain English and Persian letters, numbers, and hyphens."
+        ),
+        code='invalid_slug'
     )
 
     slug = forms.CharField(
-        label='اسلاگ (URL)',
+        label=_("Slug (URL)"),
         max_length=100,
         required=False,
         validators=[slug_validator],
         widget=forms.TextInput(attrs={'class': 'form-control'}),
-        help_text="این قسمت به صورت خودکار تولید می شود، اما قابل ویرایش است."
+        help_text=_(
+            "Auto-generated from title. If left empty, uses title value. Duplicates are handled by appending numbers for uniqueness.")
     )
 
     class Meta:
@@ -107,11 +107,17 @@ class PageForm(forms.ModelForm):
 
     def clean_slug(self):
         slug = self.cleaned_data.get('slug')
+
         if slug:
-            qs = self._meta.model.all_objects.filter(slug__iexact=slug)
+            lang = self.lang
+            qs = self._meta.model.objects.filter(slug__iexact=slug, lang=lang)
+
             if self.instance and self.instance.pk:
                 qs = qs.exclude(pk=self.instance.pk)
+
             if qs.exists():
-                raise forms.ValidationError("این اسلاگ قبلاً ثبت شده است.")
+                raise forms.ValidationError(
+                    _("This slug already exists for this language.")
+                )
 
         return slug

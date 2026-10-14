@@ -9,13 +9,14 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.db.models import Count
 from django.template.loader import render_to_string
-from ..forms.Post import PostForm, PostGalleryFormSet
-from ..forms.Filter import FilterForm
-from ..helpers.pager import get_visible_page_numbers
+from django.utils.translation import get_language
+from Admin_panel.forms.Post import PostForm, PostGalleryFormSet
+from Admin_panel.forms.Filter import FilterForm
+from Admin_panel.helpers.pager import get_visible_page_numbers
 from Admin_panel.mixin.auth import AdminRequiredMixin, AdminOrAuthorRequiredMixin
+from Admin_panel.helpers.client.most_visited import get_posts_total_views
 from App_panel.models import Post
 from App_panel.models.Modules import Modules as app_modules
-from Admin_panel.helpers.client.most_visited import get_posts_total_views
 
 
 class Index(AdminOrAuthorRequiredMixin, ListView):
@@ -26,12 +27,18 @@ class Index(AdminOrAuthorRequiredMixin, ListView):
     form_class = FilterForm
 
     def get_queryset(self):
-        return (
+        queryset = (
             super()
             .get_queryset()
             .annotate(comments_count=Count('comments', distinct=True))
             .order_by('-id')
         )
+
+        lang = get_language()
+        if lang in ['fa', 'en']:
+            queryset = queryset.filter(lang=lang)
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -80,6 +87,7 @@ class Create(AdminOrAuthorRequiredMixin, CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
+        kwargs["request"] = self.request
         return kwargs
 
     def get_form_builder_models(self):
@@ -235,6 +243,7 @@ class Update(AdminOrAuthorRequiredMixin, UpdateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
+        kwargs["request"] = self.request
         return kwargs
 
     def get_form_builder_models(self):
@@ -447,6 +456,9 @@ class Query(AdminOrAuthorRequiredMixin, ListView):
 
             if title_filter:
                 queryset = queryset.filter(title__icontains=title_filter)
+        lang = get_language()
+        if lang in ['fa', 'en']:
+            queryset = queryset.filter(lang=lang)
 
         return queryset.order_by('-id')
 

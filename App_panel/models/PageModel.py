@@ -28,11 +28,11 @@ class Page(models.Model):
         now = datetime.now()
         return f'pages/{now.year}/{now.month:02d}/{now.day:02d}/{filename}'
 
-    title = models.CharField(max_length=150, verbose_name="عنوان")
+    title = models.CharField(max_length=160, verbose_name="عنوان")
     body = CKEditor5Field(verbose_name="محتوا")
     title_seo = models.CharField(max_length=60, null=True, verbose_name="عنوان گوگل", blank=True)
-    description_seo = models.TextField(max_length=255, null=True, verbose_name="توضیحات گوگل", blank=True)
-    slug = models.SlugField(default='', null=False, db_index=True, verbose_name="اسلاگ", max_length=255, unique=True,allow_unicode=True,blank=True)
+    description_seo = models.TextField(null=True, verbose_name="توضیحات گوگل", blank=True)
+    slug = models.SlugField(default='', null=False, db_index=True, verbose_name="اسلاگ", max_length=255,allow_unicode=True,blank=True)
     image = models.ImageField(upload_to=upload_image_pages, verbose_name="عکس", null=True, blank=True)
     lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,db_index=True, default='active', verbose_name="فعال / غیرفعال")
@@ -50,15 +50,17 @@ class Page(models.Model):
         verbose_name_plural = "صفحه ها"
 
     def save(self, *args, **kwargs):
+        current_lang = self.lang if self.lang is not None else 'fa'
         if not self.slug:
             base_slug = slugify(self.title, allow_unicode=True)
             slug = base_slug
             counter = 1
-            while Page.all_objects.filter(slug=slug).exclude(pk=self.pk).exists():
+
+            while Page.objects.filter(slug=slug, lang=current_lang).exclude(pk=self.pk).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
-            self.slug = slug
 
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def delete(self, using=None, keep_parents=False, hard=False):

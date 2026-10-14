@@ -1,8 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load pager %}
-{% load permissions %}
+{% load pager i18n permissions %}
 {% block meta %}
-    <title>صفحات</title>
+    <title>{% translate "Pages" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -24,9 +23,9 @@
     {% endif %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>صفحات</h3>
+            <h3>{% translate "Pages" %}</h3>
             {% if request.user|is_superuser %}
-                <a href="{% url 'Admin_panel:page-create' %}" class="createLink">ساخت صفحات جدید</a>
+                <a href="{% url 'Admin_panel:page-create' %}" class="createLink">{% translate "Create a new page" %}</a>
             {% endif %}
         </header>
         <div class="filter-form mb-4">
@@ -36,16 +35,16 @@
                     {{ filter_form.status.label_tag }}
                     {{ filter_form.status }}
                 </div>
-                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
-                <a href="{% url 'Admin_panel:page' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+                <button type="submit" class="btn btn-primary">{% translate "Filtering" %}</button>
+                <a href="{% url 'Admin_panel:page' %}" class="btn btn-secondary">{% translate "Clear filter" %}</a>
             </form>
         </div>
         <div class="responsiverTable">
             <table class="table table-bordered table-striped m-0 mb-3">
                 <thead>
-                <th scope="col">عنوان</th>
-                <th scope="col">فعال/غیرفعال</th>
-                <th scope="col">تنظیمات</th>
+                <th scope="col">{% translate "Title" %}</th>
+                <th scope="col">{% translate "Active/Inactive" %}</th>
+                <th scope="col">{% translate "Settings" %}</th>
                 </thead>
                 <tbody>
                 {% for page in pages %}
@@ -54,15 +53,14 @@
                         <td>
                             {% if page.status == 'active' %}
                                 <a class="btn btn-primary"
-                                   href="{% url 'Admin_panel:page-active' page.id %}?next={{ request.get_full_path }}">فعال</a>
+                                   href="{% url 'Admin_panel:page-active' page.id %}?next={{ request.get_full_path }}">{% translate "Active" %}</a>
                             {% elif page.status == 'inactive' %}
                                 <a class="btn btn-dark"
-                                   href="{% url 'Admin_panel:page-active' page.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                                   href="{% url 'Admin_panel:page-active' page.id %}?next={{ request.get_full_path }}">{% translate "Inactive" %}</a>
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{% url 'Admin_panel:page-update' page.id %}" class="btn btn-primary">ویرایش
-                                اطلاعات</a>
+                            <a href="{% url 'Admin_panel:page-update' page.id %}" class="btn btn-primary">{% translate "Update" %}</a>
                         </td>
                     </tr>
                 {% endfor %}

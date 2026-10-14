@@ -41,10 +41,10 @@ class Post(models.Model):
         now = datetime.now()
         return f'posts/{now.year}/{now.month:02d}/{now.day:02d}/{filename}'
 
-    title = models.CharField(max_length=150, verbose_name="عنوان")
-    title_search = models.CharField(max_length=150, verbose_name="عنوان سرچ گوگل")
-    summery = models.TextField(verbose_name="خلاصه")
-    summery_search = models.TextField(verbose_name="خلاصه سرچ گوگل")
+    title = models.CharField(max_length=160, verbose_name="عنوان")
+    title_search = models.CharField(max_length=60, verbose_name="عنوان سرچ گوگل")
+    summery = models.TextField(max_length=200)
+    summery_search = models.TextField(verbose_name="خلاصه سرچ گوگل",max_length=160)
     body = models.TextField(verbose_name="محتوا")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="author",null=True, blank=True)
     section = models.ForeignKey(Section, on_delete=models.SET_NULL, related_name="section", verbose_name="بخش نمایش",null=True, blank=True)
@@ -54,7 +54,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to=upload_image_Post_path, verbose_name="عکس")
     lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
     status = models.CharField(max_length=10,db_index=True, choices=STATUS_CHOICES, default='active', verbose_name="فعال / غیرفعال")
-    slug = models.SlugField(default='', null=False, db_index=True, max_length=255, unique=True,allow_unicode=True,blank=True)
+    slug = models.SlugField(default='', null=False, db_index=True, max_length=255, allow_unicode=True,blank=True)
     is_deleted = models.BooleanField(default=False, db_index=True,verbose_name="حذف شده / نشده")
     watermark = models.CharField(max_length=10, db_index=True, choices=WATERMARK_CHOICES, default='active',verbose_name="فعال / غیرفعال")
     view_numbers = models.IntegerField(null=True, blank=True)
@@ -73,15 +73,17 @@ class Post(models.Model):
         verbose_name_plural = "پوست ها"
 
     def save(self, *args, **kwargs):
+        current_lang = self.lang if self.lang is not None else 'fa'
         if not self.slug:
             base_slug = slugify(self.title, allow_unicode=True)
             slug = base_slug
             counter = 1
-            while Post.all_objects.filter(slug=slug).exclude(pk=self.pk).exists():
+
+            while Post.objects.filter(slug=slug, lang=current_lang).exclude(pk=self.pk).exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
-            self.slug = slug
 
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def delete(self, using=None, keep_parents=False, hard=False):

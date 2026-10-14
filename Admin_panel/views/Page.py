@@ -4,9 +4,10 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView
 from django.views.generic.list import ListView
-from ..forms.Page import PageForm
-from ..forms.Filter import FilterForm
-from ..helpers.pager import get_visible_page_numbers
+from django.utils.translation import get_language
+from Admin_panel.forms.Page import PageForm
+from Admin_panel.forms.Filter import FilterForm
+from Admin_panel.helpers.pager import get_visible_page_numbers
 from Admin_panel.mixin.auth import AdminRequiredMixin, SuperAdminMixin
 from App_panel.models import Page
 
@@ -20,6 +21,9 @@ class Index(AdminRequiredMixin, ListView):
 
     def get_queryset(self):
         query = super().get_queryset().order_by('id')
+        lang = get_language()
+        if lang in ['fa', 'en']:
+            query = query.filter(lang=lang)
         return query
 
     def get_context_data(self, **kwargs):
@@ -38,11 +42,21 @@ class Create(SuperAdminMixin,CreateView):
     form_class = PageForm
     success_url = reverse_lazy('Admin_panel:page')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
 class Update(AdminRequiredMixin, UpdateView):
     template_name = 'admin_panel/page/edit.html'
     model = Page
     form_class = PageForm
     success_url = reverse_lazy('Admin_panel:page')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
 class Active(AdminRequiredMixin,View):
     model = Page
@@ -83,7 +97,9 @@ class Query(AdminRequiredMixin, ListView):
                 queryset = queryset.filter(status='active')
             elif status_filter == 'inactive':
                 queryset = queryset.filter(status='inactive')
-
+        lang = get_language()
+        if lang in ['fa', 'en']:
+            queryset = queryset.filter(lang=lang)
         return queryset.order_by('id')
 
     def get_context_data(self, **kwargs):

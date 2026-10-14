@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-28 11:48+0330\n"
+"POT-Creation-Date: 2026-10-14 17:04+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,109 +31,133 @@ msgid "Remember Me"
 msgstr "مرا به خاطر بسپار"
 
 #: Admin_panel/forms/Category.py:15 Admin_panel/forms/Filter.py:20
+#: Admin_panel/forms/Post.py:19 Admin_panel/forms/Sections.py:22
 #: Admin_panel/forms/Tags.py:13
 #: Admin_panel/templates/admin_panel/categories/index.html:43
 #: Admin_panel/templates/admin_panel/dashboard.html:15
 #: Admin_panel/templates/admin_panel/module/index.html:31
+#: Admin_panel/templates/admin_panel/page/index.html:45
+#: Admin_panel/templates/admin_panel/posts/index.html:46
+#: Admin_panel/templates/admin_panel/posts/show.html:29
+#: Admin_panel/templates/admin_panel/sections/index.html:46
 #: Admin_panel/templates/admin_panel/tags/index.html:44
 msgid "Title"
 msgstr "عنوان"
 
-#: Admin_panel/forms/Category.py:18 Admin_panel/forms/Tags.py:16
+#: Admin_panel/forms/Category.py:18 Admin_panel/forms/Post.py:22
+#: Admin_panel/forms/Sections.py:25 Admin_panel/forms/Tags.py:16
 msgid "Title is required."
 msgstr "عنوان اجباری می باشد"
 
-#: Admin_panel/forms/Category.py:19 Admin_panel/forms/Tags.py:17
+#: Admin_panel/forms/Category.py:19 Admin_panel/forms/Post.py:23
+#: Admin_panel/forms/Sections.py:26 Admin_panel/forms/Tags.py:17
 #, python-format
 msgid "Title cannot be more than %(limit_value)d characters."
 msgstr "عنوان نباید بیشتر از %(limit_value)d کاراکتر باشد"
 
-#: Admin_panel/forms/Category.py:25 Admin_panel/forms/Tags.py:23
+#: Admin_panel/forms/Category.py:25 Admin_panel/forms/Post.py:29
+#: Admin_panel/forms/Sections.py:32 Admin_panel/forms/Tags.py:23
+#: Admin_panel/templates/admin_panel/posts/show.html:30
 msgid "Meta title"
 msgstr "عنوان متا"
 
-#: Admin_panel/forms/Category.py:29 Admin_panel/forms/Tags.py:27
-#, fuzzy, python-format
+#: Admin_panel/forms/Category.py:29 Admin_panel/forms/Post.py:33
+#: Admin_panel/forms/Sections.py:36 Admin_panel/forms/Tags.py:27
+#, python-format
 msgid "Meta Title cannot be more than %(limit_value)d characters."
-msgstr "عنوان متا نباید بیشتر از %(limit_value)d کاراکتر باشد"
+msgstr "عنوان گوگل نباید بیشتر از %(limit_value)d کاراکتر باشد"
 
-#: Admin_panel/forms/Category.py:35 Admin_panel/forms/Tags.py:33
+#: Admin_panel/forms/Category.py:35 Admin_panel/forms/Post.py:66
+#: Admin_panel/forms/Sections.py:42 Admin_panel/forms/Tags.py:33
+#: Admin_panel/templates/admin_panel/posts/show.html:34
 msgid "Description"
 msgstr "توضیحات"
 
-#: Admin_panel/forms/Category.py:41 Admin_panel/forms/Tags.py:39
-msgid "Meta Description"
+#: Admin_panel/forms/Category.py:41 Admin_panel/forms/Post.py:53
+#: Admin_panel/forms/Sections.py:48 Admin_panel/forms/Tags.py:39
+#: Admin_panel/templates/admin_panel/posts/show.html:32
+msgid "Meta description"
 msgstr "توضیحات متا"
 
-#: Admin_panel/forms/Category.py:45 Admin_panel/forms/Category.py:57
-#: Admin_panel/forms/Tags.py:43
-#, fuzzy, python-format
-#| msgid "Title cannot be more than %(limit_value)d characters."
-msgid "Meta Description cannot be more than %(limit_value)d characters."
-msgstr "عنوان نباید بیشتر از %(limit_value)d کاراکتر باشد"
+#: Admin_panel/forms/Category.py:45 Admin_panel/forms/Post.py:57
+#: Admin_panel/forms/Sections.py:52 Admin_panel/forms/Tags.py:43
+msgid "Meta description cannot be more than %(limit_value)d characters."
+msgstr "توضیحات گوگل نباید بیشتر از %(limit_value)d کاراکتر باشد"
 
-#: Admin_panel/forms/Category.py:54 Admin_panel/forms/Tags.py:52
+#: Admin_panel/forms/Category.py:54 Admin_panel/forms/Post.py:120
+#: Admin_panel/forms/Sections.py:61 Admin_panel/forms/Tags.py:52
 msgid "Image"
 msgstr "عکس/تصویر"
 
-#: Admin_panel/forms/Category.py:64
+#: Admin_panel/forms/Category.py:61
 msgid "Parent category"
 msgstr "والد دسته بندی"
 
-#: Admin_panel/forms/Category.py:71 Admin_panel/forms/Filter.py:7
-#: Admin_panel/forms/Tags.py:59
-#, fuzzy
-#| msgid "all"
+#: Admin_panel/forms/Category.py:68 Admin_panel/forms/Filter.py:7
+#: Admin_panel/forms/FilterActive.py:7 Admin_panel/forms/Post.py:137
+#: Admin_panel/forms/Sections.py:79 Admin_panel/forms/Tags.py:59
 msgid "All"
 msgstr "همه"
 
-#: Admin_panel/forms/Category.py:72 Admin_panel/forms/Category.py:124
-#: Admin_panel/forms/Filter.py:8 Admin_panel/forms/Tags.py:60
+#: Admin_panel/forms/Category.py:69 Admin_panel/forms/Category.py:121
+#: Admin_panel/forms/Filter.py:8 Admin_panel/forms/Post.py:138
+#: Admin_panel/forms/Post.py:213 Admin_panel/forms/Tags.py:60
 #: Admin_panel/forms/Tags.py:111
 #: Admin_panel/templates/admin_panel/categories/index.html:53
+#: Admin_panel/templates/admin_panel/posts/index.html:60
 #: Admin_panel/templates/admin_panel/tags/index.html:54
 msgid "Draft"
 msgstr "پیش نویس"
 
-#: Admin_panel/forms/Category.py:73 Admin_panel/forms/Category.py:125
-#: Admin_panel/forms/Filter.py:9 Admin_panel/forms/Tags.py:61
+#: Admin_panel/forms/Category.py:70 Admin_panel/forms/Category.py:122
+#: Admin_panel/forms/Filter.py:9 Admin_panel/forms/Post.py:139
+#: Admin_panel/forms/Post.py:214 Admin_panel/forms/Tags.py:61
 #: Admin_panel/forms/Tags.py:112
 #: Admin_panel/templates/admin_panel/categories/index.html:55
+#: Admin_panel/templates/admin_panel/posts/index.html:62
 #: Admin_panel/templates/admin_panel/tags/index.html:56
 msgid "Pending"
 msgstr "در انتظار تایید"
 
-#: Admin_panel/forms/Category.py:74 Admin_panel/forms/Filter.py:10
-#: Admin_panel/forms/Tags.py:62
+#: Admin_panel/forms/Category.py:71 Admin_panel/forms/Filter.py:10
+#: Admin_panel/forms/Post.py:140 Admin_panel/forms/Tags.py:62
 #: Admin_panel/templates/admin_panel/categories/index.html:57
+#: Admin_panel/templates/admin_panel/posts/index.html:64
 #: Admin_panel/templates/admin_panel/tags/index.html:58
 msgid "Published"
 msgstr "منتشر شد"
 
-#: Admin_panel/forms/Category.py:75 Admin_panel/forms/Filter.py:11
-#: Admin_panel/forms/Tags.py:63
+#: Admin_panel/forms/Category.py:72 Admin_panel/forms/Filter.py:11
+#: Admin_panel/forms/Post.py:141 Admin_panel/forms/Tags.py:63
 #: Admin_panel/templates/admin_panel/categories/index.html:59
+#: Admin_panel/templates/admin_panel/posts/index.html:66
 #: Admin_panel/templates/admin_panel/tags/index.html:60
 msgid "Rejected"
 msgstr "رد شد"
 
-#: Admin_panel/forms/Category.py:79 Admin_panel/forms/Filter.py:13
-#: Admin_panel/forms/Tags.py:67
+#: Admin_panel/forms/Category.py:76 Admin_panel/forms/Filter.py:13
+#: Admin_panel/forms/FilterActive.py:11 Admin_panel/forms/Post.py:145
+#: Admin_panel/forms/Sections.py:100 Admin_panel/forms/Tags.py:67
 #: Admin_panel/templates/admin_panel/categories/index.html:44
+#: Admin_panel/templates/admin_panel/posts/index.html:48
+#: Admin_panel/templates/admin_panel/sections/index.html:48
 #: Admin_panel/templates/admin_panel/tags/index.html:45
 msgid "Status"
 msgstr "وضعیت"
 
-#: Admin_panel/forms/Category.py:86 Admin_panel/forms/Tags.py:74
+#: Admin_panel/forms/Category.py:83 Admin_panel/forms/Post.py:152
+#: Admin_panel/forms/Sections.py:107 Admin_panel/forms/Tags.py:74
 msgid ""
 "Slug can only contain English and Persian letters, numbers, and hyphens."
 msgstr "اسلاگ فقط می‌تواند شامل حروف فارسی، انگلیسی، عدد و خط فاصله باشد."
 
-#: Admin_panel/forms/Category.py:92 Admin_panel/forms/Tags.py:80
+#: Admin_panel/forms/Category.py:89 Admin_panel/forms/Post.py:158
+#: Admin_panel/forms/Sections.py:113 Admin_panel/forms/Tags.py:80
 msgid "Slug (URL)"
 msgstr "اسلاگ (URL)"
 
-#: Admin_panel/forms/Category.py:98 Admin_panel/forms/Tags.py:86
+#: Admin_panel/forms/Category.py:95 Admin_panel/forms/Post.py:164
+#: Admin_panel/forms/Sections.py:119 Admin_panel/forms/Tags.py:86
 msgid ""
 "Auto-generated from title. If left empty, uses title value. Duplicates are "
 "handled by appending numbers for uniqueness."
@@ -141,13 +165,223 @@ msgstr ""
 "به طور خودکار از عنوان تولید می‌شود. اگر خالی بماند، از مقدار عنوان استفاده "
 "می‌کند. اسلاگ‌های تکراری با اضافه شدن عدد، منحصر به فرد می‌شوند"
 
-#: Admin_panel/forms/Category.py:157 Admin_panel/forms/Tags.py:155
+#: Admin_panel/forms/Category.py:154 Admin_panel/forms/Post.py:259
+#: Admin_panel/forms/Sections.py:184 Admin_panel/forms/Tags.py:156
 msgid "This slug already exists for this language."
 msgstr "این اسلاگ در حاظر وجود دارد"
 
 #: Admin_panel/forms/Filter.py:24
 msgid "Search in title..."
 msgstr "جستجو در عنوان ..."
+
+#: Admin_panel/forms/FilterActive.py:8 Admin_panel/forms/Sections.py:95
+#: Admin_panel/templates/admin_panel/module/index.html:41
+#: Admin_panel/templates/admin_panel/page/index.html:56
+#: Admin_panel/templates/admin_panel/sections/index.html:76
+msgid "Active"
+msgstr "فعال"
+
+#: Admin_panel/forms/FilterActive.py:9 Admin_panel/forms/Sections.py:96
+#: Admin_panel/templates/admin_panel/module/index.html:43
+#: Admin_panel/templates/admin_panel/page/index.html:59
+#: Admin_panel/templates/admin_panel/sections/index.html:79
+msgid "Inactive"
+msgstr "غیرفعال"
+
+#: Admin_panel/forms/Post.py:39
+#: Admin_panel/templates/admin_panel/posts/show.html:31
+msgid "Summary"
+msgstr "خلاصه"
+
+#: Admin_panel/forms/Post.py:43
+msgid "Summary is required."
+msgstr "خلاصه اجباری می باشد"
+
+#: Admin_panel/forms/Post.py:44
+#, python-format
+msgid "Summary cannot be more than %(limit_value)d characters."
+msgstr "خلاصه نباید بیشتر از %(limit_value)d کاراکتر باشد."
+
+#: Admin_panel/forms/Post.py:68
+msgid "Description is required."
+msgstr "توضیحات اجباری می باشد."
+
+#: Admin_panel/forms/Post.py:75
+#: Admin_panel/templates/admin_panel/posts/show.html:72
+msgid "Author"
+msgstr "نویسنده"
+
+#: Admin_panel/forms/Post.py:76
+msgid "Select a author..."
+msgstr "انتخاب نویسنده..."
+
+#: Admin_panel/forms/Post.py:78
+msgid "Author selection is required."
+msgstr "انتخاب نویسنده اجباری می باشد"
+
+#: Admin_panel/forms/Post.py:85
+#: Admin_panel/templates/admin_panel/posts/index.html:47
+msgid "Section"
+msgstr "بخش"
+
+#: Admin_panel/forms/Post.py:86
+msgid "Select a section..."
+msgstr "انتخاب بخش..."
+
+#: Admin_panel/forms/Post.py:88
+msgid "Section selection is required."
+msgstr "انتخاب بخش اجباری می باشد."
+
+#: Admin_panel/forms/Post.py:95
+#: Admin_panel/templates/admin_layouts/sidebar.html:14
+#: Admin_panel/templates/admin_panel/categories/index.html:4
+#: Admin_panel/templates/admin_panel/categories/index.html:26
+msgid "Categories"
+msgstr "دسته بندی ها"
+
+#: Admin_panel/forms/Post.py:97
+msgid "Category selection is required."
+msgstr "انتخاب دسته بندی اجباری می باشد."
+
+#: Admin_panel/forms/Post.py:104
+#: Admin_panel/templates/admin_layouts/sidebar.html:18
+#: Admin_panel/templates/admin_panel/posts/show.html:39
+#: Admin_panel/templates/admin_panel/tags/index.html:5
+#: Admin_panel/templates/admin_panel/tags/index.html:27
+msgid "Tags"
+msgstr "برچسب ها"
+
+#: Admin_panel/forms/Post.py:111
+msgid "Page"
+msgstr "صفحه"
+
+#: Admin_panel/forms/Post.py:112
+msgid "Select a page..."
+msgstr "انتخاب صفحه..."
+
+#: Admin_panel/forms/Post.py:114
+msgid "Page selection is required."
+msgstr "انتخاب صفحه اجباری می باشد"
+
+#: Admin_panel/forms/Post.py:127
+msgid "Yes"
+msgstr "بله"
+
+#: Admin_panel/forms/Post.py:128
+msgid "No"
+msgstr "خیر"
+
+#: Admin_panel/forms/Post.py:131
+#: Admin_panel/templates/admin_layouts/sidebar_module.html:48
+msgid "Watermark"
+msgstr "واترمارک"
+
+#: Admin_panel/forms/Post.py:242
+msgid "Description field cannot be empty."
+msgstr "فیلد توضبحات اجباری می باشد."
+
+#: Admin_panel/forms/Post.py:281
+msgid "Gallery image"
+msgstr "عکس های گالری"
+
+#: Admin_panel/forms/Post.py:282
+#: Admin_panel/templates/admin_panel/posts/edit.html:276
+msgid "Alt text (SEO)"
+msgstr "متن جایگزین (سئو)"
+
+#: Admin_panel/forms/Post.py:292
+msgid "Short description for SEO and accessibility"
+msgstr " توضیحات کوتاه برای سئو و دسترسی‌پذیری"
+
+#: Admin_panel/forms/Post.py:297
+msgid "Allowed formats: JPG, PNG, WebP | Max size: 10 MB"
+msgstr "فرمت‌های مجاز: JPG، PNG، WebP | حداکثر حجم: ۱۰ مگابایت"
+
+#: Admin_panel/forms/Post.py:298
+msgid "This text is used for SEO and visually impaired users."
+msgstr "این متن برای سئو و کاربران نابینا استفاده می‌شود"
+
+#: Admin_panel/forms/Post.py:305
+msgid "Image selection is required."
+msgstr "انتخاب عکس اجباری می باشد"
+
+#: Admin_panel/forms/Post.py:309
+msgid "Image size cannot exceed 10 MB."
+msgstr "حجم تصویر نمی‌تواند بیشتر از ۱۰ مگابایت باشد"
+
+#: Admin_panel/forms/Post.py:315
+#, python-format
+msgid "File format not allowed. Allowed formats: %(exts)s"
+msgstr " فرمت فایل مجاز نیست. فرمت‌های مجاز: %(exts)s"
+
+#: Admin_panel/forms/Post.py:324
+msgid "The uploaded file is not a valid image."
+msgstr "فایل ارسالی یک تصویر معتبر نیست"
+
+#: Admin_panel/forms/Sections.py:11
+#: Admin_panel/templates/admin_panel/sections/index.html:45
+msgid "Name"
+msgstr "نام"
+
+#: Admin_panel/forms/Sections.py:15
+msgid "Name is required."
+msgstr "نام اجباری می باشد"
+
+#: Admin_panel/forms/Sections.py:16
+#, python-format
+msgid "Name cannot be more than %(limit_value)d characters."
+msgstr "نام نباید بیشتر از %(limit_value)d کاراکتر باشد."
+
+#: Admin_panel/forms/Sections.py:67
+msgid "Display count"
+msgstr "تعداد نمایش"
+
+#: Admin_panel/forms/Sections.py:71
+msgid "Minimum value is 1."
+msgstr "کمترین مقدار ۱ می‌باشد."
+
+#: Admin_panel/forms/Sections.py:72
+msgid "Display count is required."
+msgstr "تعداد نمایش اجباری می باشد."
+
+#: Admin_panel/forms/Sections.py:80
+#: Admin_panel/templates/admin_panel/sections/index.html:60
+msgid "Without post"
+msgstr "بدون نوشته"
+
+#: Admin_panel/forms/Sections.py:81
+#: Admin_panel/templates/admin_panel/sections/index.html:62
+msgid "Last posts"
+msgstr "آخرین نوشته ها"
+
+#: Admin_panel/forms/Sections.py:82
+#: Admin_panel/templates/admin_panel/sections/index.html:64
+msgid "Most visited"
+msgstr "پربازدید ترین ها"
+
+#: Admin_panel/forms/Sections.py:83
+#: Admin_panel/templates/admin_panel/sections/index.html:66
+msgid "Most commented"
+msgstr "پربحث ترین ها"
+
+#: Admin_panel/forms/Sections.py:84
+#: Admin_panel/templates/admin_panel/sections/index.html:68
+msgid "Text advertisement"
+msgstr "تبلیغ متنی"
+
+#: Admin_panel/forms/Sections.py:85
+#: Admin_panel/templates/admin_panel/sections/index.html:70
+msgid "Banner advertisement"
+msgstr "تبلیغ بنر"
+
+#: Admin_panel/forms/Sections.py:89
+#: Admin_panel/templates/admin_panel/sections/index.html:47
+msgid "Type"
+msgstr "نوع"
+
+#: Admin_panel/forms/Sections.py:201
+msgid "This name already exists."
+msgstr "این نام در حاظر وجود دارد"
 
 #: Admin_panel/templates/admin_layouts/header.html:6
 msgid "Admin Panel"
@@ -162,6 +396,9 @@ msgstr "%(username)s خوش آمدی"
 #: Admin_panel/templates/admin_layouts/sidebar.html:61
 #: Admin_panel/templates/admin_panel/categories/index.html:45
 #: Admin_panel/templates/admin_panel/module/index.html:33
+#: Admin_panel/templates/admin_panel/page/index.html:47
+#: Admin_panel/templates/admin_panel/posts/index.html:51
+#: Admin_panel/templates/admin_panel/sections/index.html:49
 #: Admin_panel/templates/admin_panel/tags/index.html:46
 msgid "Settings"
 msgstr "تنظیمات"
@@ -183,22 +420,14 @@ msgid "Dashboard"
 msgstr "داشبورد"
 
 #: Admin_panel/templates/admin_layouts/sidebar.html:10
+#: Admin_panel/templates/admin_panel/posts/index.html:4
+#: Admin_panel/templates/admin_panel/posts/index.html:26
 msgid "Posts"
 msgstr "نوشته ها"
 
-#: Admin_panel/templates/admin_layouts/sidebar.html:14
-#: Admin_panel/templates/admin_panel/categories/index.html:4
-#: Admin_panel/templates/admin_panel/categories/index.html:26
-msgid "Categories"
-msgstr "دسته بندی ها"
-
-#: Admin_panel/templates/admin_layouts/sidebar.html:18
-#: Admin_panel/templates/admin_panel/tags/index.html:5
-#: Admin_panel/templates/admin_panel/tags/index.html:27
-msgid "Tags"
-msgstr "برچسب ها"
-
 #: Admin_panel/templates/admin_layouts/sidebar.html:23
+#: Admin_panel/templates/admin_panel/sections/index.html:4
+#: Admin_panel/templates/admin_panel/sections/index.html:26
 msgid "Sections"
 msgstr "بخش ها"
 
@@ -211,6 +440,8 @@ msgid "Profile"
 msgstr "پروفایل"
 
 #: Admin_panel/templates/admin_layouts/sidebar.html:39
+#: Admin_panel/templates/admin_panel/page/index.html:4
+#: Admin_panel/templates/admin_panel/page/index.html:26
 msgid "Pages"
 msgstr "صفحات"
 
@@ -259,10 +490,6 @@ msgstr "تبلیغ بنر"
 msgid "Address Redirect"
 msgstr "هدایتگر آدرس"
 
-#: Admin_panel/templates/admin_layouts/sidebar_module.html:48
-msgid "Watermark"
-msgstr "واترمارک"
-
 #: Admin_panel/templates/admin_layouts/sidebar_module.html:53
 msgid "Real Estate"
 msgstr "املاک"
@@ -287,42 +514,67 @@ msgid "Create a new category"
 msgstr "ساخت دسته بندی جدید"
 
 #: Admin_panel/templates/admin_panel/categories/create.html:130
+#: Admin_panel/templates/admin_panel/page/create.html:118
+#: Admin_panel/templates/admin_panel/posts/create.html:257
+#: Admin_panel/templates/admin_panel/sections/create.html:160
 #: Admin_panel/templates/admin_panel/tags/create.html:118
 msgid "Register"
 msgstr "ثبت"
 
 #: Admin_panel/templates/admin_panel/categories/create.html:131
 #: Admin_panel/templates/admin_panel/categories/edit.html:134
+#: Admin_panel/templates/admin_panel/page/create.html:119
+#: Admin_panel/templates/admin_panel/page/edit.html:121
+#: Admin_panel/templates/admin_panel/posts/create.html:258
+#: Admin_panel/templates/admin_panel/posts/edit.html:316
+#: Admin_panel/templates/admin_panel/sections/create.html:161
+#: Admin_panel/templates/admin_panel/sections/edit.html:118
 #: Admin_panel/templates/admin_panel/tags/create.html:119
-#: Admin_panel/templates/admin_panel/tags/edit.html:121
+#: Admin_panel/templates/admin_panel/tags/edit.html:120
 msgid "Cancel"
 msgstr "انصراف"
 
 #: Admin_panel/templates/admin_panel/categories/edit.html:6
 #: Admin_panel/templates/admin_panel/categories/edit.html:15
-#, fuzzy
-#| msgid "Parent category"
 msgid "Edit Category"
-msgstr "والد دسته بندی"
+msgstr "ویرایش دسته بندی"
 
 #: Admin_panel/templates/admin_panel/categories/edit.html:133
 #: Admin_panel/templates/admin_panel/categories/index.html:63
-#: Admin_panel/templates/admin_panel/tags/edit.html:120
+#: Admin_panel/templates/admin_panel/page/edit.html:120
+#: Admin_panel/templates/admin_panel/page/index.html:63
+#: Admin_panel/templates/admin_panel/posts/edit.html:315
+#: Admin_panel/templates/admin_panel/posts/index.html:73
+#: Admin_panel/templates/admin_panel/posts/show.html:4
+#: Admin_panel/templates/admin_panel/posts/show.html:12
+#: Admin_panel/templates/admin_panel/sections/edit.html:117
+#: Admin_panel/templates/admin_panel/sections/index.html:83
+#: Admin_panel/templates/admin_panel/tags/edit.html:119
 #: Admin_panel/templates/admin_panel/tags/index.html:64
 msgid "Update"
 msgstr "بروزرسانی"
 
 #: Admin_panel/templates/admin_panel/categories/index.html:36
+#: Admin_panel/templates/admin_panel/page/index.html:38
+#: Admin_panel/templates/admin_panel/posts/index.html:39
+#: Admin_panel/templates/admin_panel/sections/index.html:38
 #: Admin_panel/templates/admin_panel/tags/index.html:37
 msgid "Filtering"
 msgstr "فیلتر کردن"
 
 #: Admin_panel/templates/admin_panel/categories/index.html:37
+#: Admin_panel/templates/admin_panel/page/index.html:39
+#: Admin_panel/templates/admin_panel/posts/index.html:40
+#: Admin_panel/templates/admin_panel/sections/index.html:39
 #: Admin_panel/templates/admin_panel/tags/index.html:38
 msgid "Clear filter"
 msgstr "برداشتن فیلتر"
 
 #: Admin_panel/templates/admin_panel/categories/index.html:69
+#: Admin_panel/templates/admin_panel/posts/create.html:236
+#: Admin_panel/templates/admin_panel/posts/index.html:78
+#: Admin_panel/templates/admin_panel/posts/show.html:17
+#: Admin_panel/templates/admin_panel/sections/index.html:89
 #: Admin_panel/templates/admin_panel/tags/index.html:69
 msgid "Delete"
 msgstr "حذف کردن"
@@ -332,7 +584,9 @@ msgid "Top posts"
 msgstr "برترین نوشته ها"
 
 #: Admin_panel/templates/admin_panel/dashboard.html:16
-msgid "View count"
+#: Admin_panel/templates/admin_panel/posts/index.html:50
+#: Admin_panel/templates/admin_panel/posts/show.html:71
+msgid "Views count"
 msgstr "تعداد ویو"
 
 #: Admin_panel/templates/admin_panel/dashboard.html:32
@@ -344,16 +598,9 @@ msgid "Number of unread messages"
 msgstr "تعداد پیام های دیده نشده"
 
 #: Admin_panel/templates/admin_panel/module/index.html:32
+#: Admin_panel/templates/admin_panel/page/index.html:46
 msgid "Active/Inactive"
 msgstr "فعال/غیرفعال"
-
-#: Admin_panel/templates/admin_panel/module/index.html:41
-msgid "Active"
-msgstr "فعال"
-
-#: Admin_panel/templates/admin_panel/module/index.html:43
-msgid "Inactive"
-msgstr "غیرفعال"
 
 #: Admin_panel/templates/admin_panel/module/index.html:50
 #: Admin_panel/templates/admin_panel/module/index.html:54
@@ -367,6 +614,85 @@ msgstr "غیرفعال"
 msgid "Edit module"
 msgstr "ویرایش ماژول"
 
+#: Admin_panel/templates/admin_panel/page/create.html:4
+#: Admin_panel/templates/admin_panel/page/create.html:15
+#: Admin_panel/templates/admin_panel/page/index.html:28
+msgid "Create a new page"
+msgstr "ساخت صفجه جدید"
+
+#: Admin_panel/templates/admin_panel/page/edit.html:4
+#: Admin_panel/templates/admin_panel/page/edit.html:14
+msgid "Update page"
+msgstr "ویرایش صفحه"
+
+#: Admin_panel/templates/admin_panel/posts/create.html:4
+#: Admin_panel/templates/admin_panel/posts/create.html:15
+#: Admin_panel/templates/admin_panel/posts/index.html:27
+msgid "Create a new post"
+msgstr "ساخت نوشته جدید"
+
+#: Admin_panel/templates/admin_panel/posts/create.html:246
+#: Admin_panel/templates/admin_panel/posts/edit.html:292
+msgid "Select your form"
+msgstr "فرم رو انتخاب کن"
+
+#: Admin_panel/templates/admin_panel/posts/create.html:249
+msgid "Select form..."
+msgstr "انتخاب فرم..."
+
+#: Admin_panel/templates/admin_panel/posts/edit.html:4
+#: Admin_panel/templates/admin_panel/posts/edit.html:14
+msgid "Update post"
+msgstr "ویرایش نوشته"
+
+#: Admin_panel/templates/admin_panel/posts/edit.html:253
+msgid "Delete image"
+msgstr "حذف عکس"
+
+#: Admin_panel/templates/admin_panel/posts/edit.html:257
+#: Admin_panel/templates/admin_panel/posts/edit.html:281
+msgid "Remove row"
+msgstr "حذف ردیف"
+
+#: Admin_panel/templates/admin_panel/posts/edit.html:266
+msgid "Add image to gallery"
+msgstr "اضافه کردن عکس به گالری"
+
+#: Admin_panel/templates/admin_panel/posts/edit.html:272
+msgid "Choose new image"
+msgstr "انتخاب عکس جدید"
+
+#: Admin_panel/templates/admin_panel/posts/edit.html:297
+msgid "-- No form --"
+msgstr "-- بدون فرم --"
+
+#: Admin_panel/templates/admin_panel/posts/index.html:49
+msgid "Comments count"
+msgstr "تعداد نظرات"
+
+#: Admin_panel/templates/admin_panel/posts/index.html:72
+msgid "Show"
+msgstr "نمایش"
+
+#: Admin_panel/templates/admin_panel/posts/show.html:56
+msgid "Categories:"
+msgstr "دسته بندی ها"
+
+#: Admin_panel/templates/admin_panel/sections/create.html:4
+#: Admin_panel/templates/admin_panel/sections/create.html:15
+#: Admin_panel/templates/admin_panel/sections/index.html:28
+msgid "Create a new section"
+msgstr "ساخت دسته بندی جدید"
+
+#: Admin_panel/templates/admin_panel/sections/edit.html:4
+#: Admin_panel/templates/admin_panel/sections/edit.html:13
+msgid "Update section"
+msgstr "ویرایش بحش"
+
+#: Admin_panel/templates/admin_panel/sections/index.html:58
+msgid "Post"
+msgstr "نوشته"
+
 #: Admin_panel/templates/admin_panel/tags/create.html:4
 #: Admin_panel/templates/admin_panel/tags/create.html:15
 #: Admin_panel/templates/admin_panel/tags/index.html:28
@@ -378,6 +704,16 @@ msgstr "ساخت برچسب جدید"
 msgid "Update tag"
 msgstr "ویرایش برچسب"
 
+#: Admin_panel/views/Sections.py:73
+#, python-format
+msgid "Section '%(title)s' has been activated."
+msgstr "بخش '%(title)s' فعال شد"
+
+#: Admin_panel/views/Sections.py:78
+#, python-format
+msgid "Section '%(title)s' has been deactivated."
+msgstr "بخش '%(title)s' غیرفعال شد"
+
 #: config/settings.py:144
 msgid "فارسی"
 msgstr ""
@@ -386,5 +722,13 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#~ msgid "Description is required."
-#~ msgstr "توضیحات اجباری می باشد"
+#~ msgid "Meta Description"
+#~ msgstr "توضیحات متا"
+
+#~ msgid "View count"
+#~ msgstr "تعداد ویو"
+
+#, fuzzy
+#~| msgid "Tags"
+#~ msgid "Tag"
+#~ msgstr "برچسب"

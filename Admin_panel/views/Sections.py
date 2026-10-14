@@ -23,10 +23,8 @@ class Index(AdminRequiredMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('-id')
         lang = get_language()
-        if lang == 'fa':
-            queryset = queryset.filter(lang='fa')
-        elif lang == 'en':
-            queryset = queryset.filter(lang='en')
+        if lang in ['fa', 'en']:
+            queryset = queryset.filter(lang=lang)
         return queryset
 
     def get_context_data(self, **kwargs):
