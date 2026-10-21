@@ -1,8 +1,10 @@
 from django.core.cache import cache
 from melipayamak import Api
-import random
-import requests
+import random, requests
 from django.conf import settings
+from django.utils.translation import get_language
+from App_panel.models.SMSModel import SMSSettings
+
 
 
 # def send_otp_sms_pattern(phone_number, otp_code):
@@ -72,14 +74,28 @@ from django.conf import settings
 #         }
 
 def send_otp_sms_pattern(phone_number, otp_code):
-    api = Api(settings.MELI_USER,settings.MELI_PASSWORD)
-    sms = api.sms('soap')
-    response = sms.send_by_base_number(str(otp_code), str(phone_number), settings.MELI_BODY)
+    lang = get_language()
+    target_lang = lang if lang in ['fa', 'en'] else 'fa'
+    sms_config = SMSSettings.objects.filter(status='active', lang=target_lang).first()
+
+    if not sms_config:
+        return {
+            "success": False,
+            "response": "No active SMS configuration found for this language."
+        }
+
     try:
+        api = Api(sms_config.username, sms_config.password)
+        sms = api.sms('soap')
+        response = sms.send_by_base_number(str(otp_code), str(phone_number), sms_config.body_id)
         result_val = int(str(response).strip())
         is_success = result_val > 0
-    except ValueError:
-        is_success = False
+
+    except Exception as e:
+        return {
+            "success": False,
+            "response": str(e)
+        }
 
     return {
         "success": is_success,

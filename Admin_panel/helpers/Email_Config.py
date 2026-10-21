@@ -2,14 +2,22 @@ from django.core.mail import EmailMessage, get_connection
 from App_panel.models.EmailModel import EmailSettings
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
+from django.utils.translation import get_language
+from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 from Admin_panel.helpers.client.helper_client import get_site_info_value
 from email.utils import formataddr
 
 class EmailService:
     def __init__(self):
-        self.config = EmailSettings.objects.filter(status='active').first()
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
+            self.config = EmailSettings.objects.filter(status='active',lang=lang).first()
+        else:
+            self.config = EmailSettings.objects.filter(status='active', lang='fa').first()
         if not self.config:
-            raise ValueError("تنظیمات ایمیل فعال پیدا نشد.")
+            raise ValueError(_("Active email settings not found."))
 
     def get_connection(self):
         return get_connection(
@@ -42,23 +50,32 @@ class EmailService:
 
         return email.send(fail_silently=False)
 
-def send_Email_Contact(contact,full_link):
+def send_Email_Contact(contact, full_link):
     title = get_site_info_value("title")
     email_service = EmailService()
-    subject = f"پاسخ به پیام شما در {title}"
+    subject = _("Reply to your message on %(title)s") % {'title': title}
+
     html_content = render_to_string('admin_panel/emails/contact_reply.html', {
         'contact': contact,
         'link': full_link,
     })
     text_content = strip_tags(html_content)
-    email_service.send(subject=subject, body=text_content, to_emails=[contact.email], html_message=html_content)
+
+    email_service.send(
+        subject=subject,
+        body=text_content,
+        to_emails=[contact.email],
+        html_message=html_content
+    )
     return True
+
 
 def send_Email_test_connect(to_email):
     try:
-        title = get_site_info_value("title") or "سیستم"
+        title = get_site_info_value("title")
         email_service = EmailService()
-        subject = f"{title} - تست اتصال ایمیل"
+        subject = _("%(title)s - Email connection test") % {'title': title}
+
         html_content = render_to_string('admin_panel/emails/test_connection.html')
         text_content = strip_tags(html_content)
 
@@ -68,10 +85,11 @@ def send_Email_test_connect(to_email):
             to_emails=[to_email],
             html_message=html_content
         )
+        return True, _("Message sent successfully.")
 
-        return True, "پیام با موفقیت ارسال شد."
     except Exception as e:
-        return False, f"پیام با مشکل روبرو شد. خطا: {str(e)}"
+        error_msg = _("Message failed to send. Error: %(error)s") % {'error': str(e)}
+        return False, error_msg
 
 
 

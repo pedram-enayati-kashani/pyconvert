@@ -131,7 +131,7 @@ class TagForm(forms.ModelForm):
         for _ in range(max_iterations):
             new_description = re.sub(
                 pattern,
-                '<p></p>',
+                '<p>&nbsp;</p>',
                 description,
                 flags=re.IGNORECASE
             )

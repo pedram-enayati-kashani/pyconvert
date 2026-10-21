@@ -16,14 +16,14 @@ sitemaps = {
 
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
-    path('app/', include("App_panel.urls")),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
     path("captcha/", include("captcha.urls")),
 ]
 
 urlpatterns += i18n_patterns(
-path('admin/', include('Admin_panel.urls')),
     path('', include("Client.urls")),
+    path('admin/', include('Admin_panel.urls')),
+    path('app/', include("App_panel.urls")),
     path('sitemap.xml', index, {'sitemaps': sitemaps}, name='sitemap'),
     path('<section>-sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 )

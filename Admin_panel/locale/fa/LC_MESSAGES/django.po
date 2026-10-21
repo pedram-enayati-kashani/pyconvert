@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-14 17:04+0330\n"
+"POT-Creation-Date: 2026-10-18 13:11+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,8 +31,8 @@ msgid "Remember Me"
 msgstr "مرا به خاطر بسپار"
 
 #: Admin_panel/forms/Category.py:15 Admin_panel/forms/Filter.py:20
-#: Admin_panel/forms/Post.py:19 Admin_panel/forms/Sections.py:22
-#: Admin_panel/forms/Tags.py:13
+#: Admin_panel/forms/Page.py:12 Admin_panel/forms/Post.py:19
+#: Admin_panel/forms/Sections.py:22 Admin_panel/forms/Tags.py:13
 #: Admin_panel/templates/admin_panel/categories/index.html:43
 #: Admin_panel/templates/admin_panel/dashboard.html:15
 #: Admin_panel/templates/admin_panel/module/index.html:31
@@ -44,48 +44,57 @@ msgstr "مرا به خاطر بسپار"
 msgid "Title"
 msgstr "عنوان"
 
-#: Admin_panel/forms/Category.py:18 Admin_panel/forms/Post.py:22
-#: Admin_panel/forms/Sections.py:25 Admin_panel/forms/Tags.py:16
+#: Admin_panel/forms/Category.py:18 Admin_panel/forms/Page.py:15
+#: Admin_panel/forms/Post.py:22 Admin_panel/forms/Sections.py:25
+#: Admin_panel/forms/Tags.py:16
 msgid "Title is required."
 msgstr "عنوان اجباری می باشد"
 
-#: Admin_panel/forms/Category.py:19 Admin_panel/forms/Post.py:23
-#: Admin_panel/forms/Sections.py:26 Admin_panel/forms/Tags.py:17
+#: Admin_panel/forms/Category.py:19 Admin_panel/forms/Page.py:16
+#: Admin_panel/forms/Post.py:23 Admin_panel/forms/Sections.py:26
+#: Admin_panel/forms/Tags.py:17
 #, python-format
 msgid "Title cannot be more than %(limit_value)d characters."
 msgstr "عنوان نباید بیشتر از %(limit_value)d کاراکتر باشد"
 
-#: Admin_panel/forms/Category.py:25 Admin_panel/forms/Post.py:29
-#: Admin_panel/forms/Sections.py:32 Admin_panel/forms/Tags.py:23
+#: Admin_panel/forms/Category.py:25 Admin_panel/forms/Page.py:22
+#: Admin_panel/forms/Post.py:29 Admin_panel/forms/Sections.py:32
+#: Admin_panel/forms/Tags.py:23
 #: Admin_panel/templates/admin_panel/posts/show.html:30
 msgid "Meta title"
 msgstr "عنوان متا"
 
-#: Admin_panel/forms/Category.py:29 Admin_panel/forms/Post.py:33
-#: Admin_panel/forms/Sections.py:36 Admin_panel/forms/Tags.py:27
+#: Admin_panel/forms/Category.py:29 Admin_panel/forms/Page.py:26
+#: Admin_panel/forms/Post.py:33 Admin_panel/forms/Sections.py:36
+#: Admin_panel/forms/Tags.py:27
 #, python-format
 msgid "Meta Title cannot be more than %(limit_value)d characters."
 msgstr "عنوان گوگل نباید بیشتر از %(limit_value)d کاراکتر باشد"
 
-#: Admin_panel/forms/Category.py:35 Admin_panel/forms/Post.py:66
-#: Admin_panel/forms/Sections.py:42 Admin_panel/forms/Tags.py:33
+#: Admin_panel/forms/Category.py:35 Admin_panel/forms/Page.py:32
+#: Admin_panel/forms/Post.py:66 Admin_panel/forms/Sections.py:42
+#: Admin_panel/forms/Tags.py:33
 #: Admin_panel/templates/admin_panel/posts/show.html:34
 msgid "Description"
 msgstr "توضیحات"
 
-#: Admin_panel/forms/Category.py:41 Admin_panel/forms/Post.py:53
-#: Admin_panel/forms/Sections.py:48 Admin_panel/forms/Tags.py:39
+#: Admin_panel/forms/Category.py:41 Admin_panel/forms/Page.py:37
+#: Admin_panel/forms/Post.py:53 Admin_panel/forms/Sections.py:48
+#: Admin_panel/forms/Tags.py:39
 #: Admin_panel/templates/admin_panel/posts/show.html:32
 msgid "Meta description"
 msgstr "توضیحات متا"
 
-#: Admin_panel/forms/Category.py:45 Admin_panel/forms/Post.py:57
-#: Admin_panel/forms/Sections.py:52 Admin_panel/forms/Tags.py:43
+#: Admin_panel/forms/Category.py:45 Admin_panel/forms/Page.py:41
+#: Admin_panel/forms/Post.py:57 Admin_panel/forms/Sections.py:52
+#: Admin_panel/forms/Tags.py:43
+#, python-format
 msgid "Meta description cannot be more than %(limit_value)d characters."
 msgstr "توضیحات گوگل نباید بیشتر از %(limit_value)d کاراکتر باشد"
 
-#: Admin_panel/forms/Category.py:54 Admin_panel/forms/Post.py:120
-#: Admin_panel/forms/Sections.py:61 Admin_panel/forms/Tags.py:52
+#: Admin_panel/forms/Category.py:54 Admin_panel/forms/Page.py:50
+#: Admin_panel/forms/Post.py:120 Admin_panel/forms/Sections.py:61
+#: Admin_panel/forms/Tags.py:52
 msgid "Image"
 msgstr "عکس/تصویر"
 
@@ -136,8 +145,9 @@ msgid "Rejected"
 msgstr "رد شد"
 
 #: Admin_panel/forms/Category.py:76 Admin_panel/forms/Filter.py:13
-#: Admin_panel/forms/FilterActive.py:11 Admin_panel/forms/Post.py:145
-#: Admin_panel/forms/Sections.py:100 Admin_panel/forms/Tags.py:67
+#: Admin_panel/forms/FilterActive.py:11 Admin_panel/forms/Page.py:62
+#: Admin_panel/forms/Post.py:145 Admin_panel/forms/Sections.py:100
+#: Admin_panel/forms/Tags.py:67
 #: Admin_panel/templates/admin_panel/categories/index.html:44
 #: Admin_panel/templates/admin_panel/posts/index.html:48
 #: Admin_panel/templates/admin_panel/sections/index.html:48
@@ -145,19 +155,22 @@ msgstr "رد شد"
 msgid "Status"
 msgstr "وضعیت"
 
-#: Admin_panel/forms/Category.py:83 Admin_panel/forms/Post.py:152
-#: Admin_panel/forms/Sections.py:107 Admin_panel/forms/Tags.py:74
+#: Admin_panel/forms/Category.py:83 Admin_panel/forms/Page.py:69
+#: Admin_panel/forms/Post.py:152 Admin_panel/forms/Sections.py:107
+#: Admin_panel/forms/Tags.py:74
 msgid ""
 "Slug can only contain English and Persian letters, numbers, and hyphens."
 msgstr "اسلاگ فقط می‌تواند شامل حروف فارسی، انگلیسی، عدد و خط فاصله باشد."
 
-#: Admin_panel/forms/Category.py:89 Admin_panel/forms/Post.py:158
-#: Admin_panel/forms/Sections.py:113 Admin_panel/forms/Tags.py:80
+#: Admin_panel/forms/Category.py:89 Admin_panel/forms/Page.py:75
+#: Admin_panel/forms/Post.py:158 Admin_panel/forms/Sections.py:113
+#: Admin_panel/forms/Tags.py:80
 msgid "Slug (URL)"
 msgstr "اسلاگ (URL)"
 
-#: Admin_panel/forms/Category.py:95 Admin_panel/forms/Post.py:164
-#: Admin_panel/forms/Sections.py:119 Admin_panel/forms/Tags.py:86
+#: Admin_panel/forms/Category.py:95 Admin_panel/forms/Page.py:81
+#: Admin_panel/forms/Post.py:164 Admin_panel/forms/Sections.py:119
+#: Admin_panel/forms/Tags.py:86
 msgid ""
 "Auto-generated from title. If left empty, uses title value. Duplicates are "
 "handled by appending numbers for uniqueness."
@@ -165,8 +178,9 @@ msgstr ""
 "به طور خودکار از عنوان تولید می‌شود. اگر خالی بماند، از مقدار عنوان استفاده "
 "می‌کند. اسلاگ‌های تکراری با اضافه شدن عدد، منحصر به فرد می‌شوند"
 
-#: Admin_panel/forms/Category.py:154 Admin_panel/forms/Post.py:259
-#: Admin_panel/forms/Sections.py:184 Admin_panel/forms/Tags.py:156
+#: Admin_panel/forms/Category.py:154 Admin_panel/forms/Page.py:120
+#: Admin_panel/forms/Post.py:259 Admin_panel/forms/Sections.py:184
+#: Admin_panel/forms/Tags.py:156
 msgid "This slug already exists for this language."
 msgstr "این اسلاگ در حاظر وجود دارد"
 
@@ -174,14 +188,16 @@ msgstr "این اسلاگ در حاظر وجود دارد"
 msgid "Search in title..."
 msgstr "جستجو در عنوان ..."
 
-#: Admin_panel/forms/FilterActive.py:8 Admin_panel/forms/Sections.py:95
+#: Admin_panel/forms/FilterActive.py:8 Admin_panel/forms/Page.py:57
+#: Admin_panel/forms/Sections.py:95
 #: Admin_panel/templates/admin_panel/module/index.html:41
 #: Admin_panel/templates/admin_panel/page/index.html:56
 #: Admin_panel/templates/admin_panel/sections/index.html:76
 msgid "Active"
 msgstr "فعال"
 
-#: Admin_panel/forms/FilterActive.py:9 Admin_panel/forms/Sections.py:96
+#: Admin_panel/forms/FilterActive.py:9 Admin_panel/forms/Page.py:58
+#: Admin_panel/forms/Sections.py:96
 #: Admin_panel/templates/admin_panel/module/index.html:43
 #: Admin_panel/templates/admin_panel/page/index.html:59
 #: Admin_panel/templates/admin_panel/sections/index.html:79
@@ -704,21 +720,21 @@ msgstr "ساخت برچسب جدید"
 msgid "Update tag"
 msgstr "ویرایش برچسب"
 
-#: Admin_panel/views/Sections.py:73
+#: Admin_panel/views/Sections.py:71
 #, python-format
 msgid "Section '%(title)s' has been activated."
 msgstr "بخش '%(title)s' فعال شد"
 
-#: Admin_panel/views/Sections.py:78
+#: Admin_panel/views/Sections.py:76
 #, python-format
 msgid "Section '%(title)s' has been deactivated."
 msgstr "بخش '%(title)s' غیرفعال شد"
 
-#: config/settings.py:144
+#: config/settings.py:145
 msgid "فارسی"
 msgstr ""
 
-#: config/settings.py:145
+#: config/settings.py:146
 msgid "English"
 msgstr ""
 

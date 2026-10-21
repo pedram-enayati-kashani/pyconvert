@@ -1,0 +1,72 @@
+{% extends "App_layouts/layouts.html" %}
+{% block meta %}
+    <title>ویرایش تنظیمات SMS</title>
+{% endblock %}
+{% block content %}
+    <div class="dashboard-pages">
+        <header class="headerPage">
+            <h3>ویرایش تنظیمات SMS</h3>
+        </header>
+        <form action="{% url 'App_panel:setting-sms-update' %}" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <div class="form-group-display">
+                <label for="{{ form.username.id_for_label }}">
+                    {{ form.username.label }}
+                    {% if form.username.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <small class="text-danger">
+                        {{ form.username.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.password.id_for_label }}">
+                    {{ form.password.label }}
+                    {% if form.password.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <small class="text-danger">
+                        {{ form.password.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.body_id.id_for_label }}">
+                    {{ form.body_id.label }}
+                    {% if form.body_id.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.body_id }}
+                {% if form.body_id.errors %}
+                    <small class="text-danger">
+                        {{ form.body_id.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="form-group-display">
+                <label for="{{ form.status.id_for_label }}">
+                    {{ form.status.label }}
+                    {% if form.status.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <small class="text-danger">
+                        {{ form.status.errors.0 }}
+                    </small>
+                {% endif %}
+            </div>
+            <button class="btn btn-success">ویرایش</button>
+            <a href="{% url 'App_panel:setting-sms' %}" class="btn btn-danger">انصراف</a>
+        </form>
+    </div>
+{% endblock %}

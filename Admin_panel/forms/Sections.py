@@ -143,12 +143,6 @@ class SectionForm(forms.ModelForm):
             self.fields['type'].disabled = True
             self.fields['slug'].disabled = True
 
-        self.fields['hidden_lang'] = forms.CharField(
-            widget=forms.HiddenInput(),
-            initial=self.lang,
-            required=False
-        )
-
     def clean_description(self):
         description = self.cleaned_data.get('description', '')
 
@@ -159,7 +153,7 @@ class SectionForm(forms.ModelForm):
         for _ in range(max_iterations):
             new_description = re.sub(
                 pattern,
-                '<p></p>',
+                '<p>&nbsp;</p>',
                 description,
                 flags=re.IGNORECASE
             )

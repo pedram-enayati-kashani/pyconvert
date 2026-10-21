@@ -85,6 +85,21 @@ class PageForm(forms.ModelForm):
         model = Page
         fields = ['title', 'title_seo', 'body', 'description_seo','image','status','slug']
 
+    def __init__(self, *args, user=None, request=None, **kwargs):
+        self.request = request
+
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
+
+        instance = kwargs.get('instance')
+
+        if instance and instance.lang:
+            self.lang = instance.lang
+
+        super().__init__(*args, **kwargs)
+
     def clean_body(self):
         body = self.cleaned_data.get('body', '')
 
@@ -95,7 +110,7 @@ class PageForm(forms.ModelForm):
         for _ in range(max_iterations):
             new_body = re.sub(
                 pattern,
-                '<p></p>',
+                '<p>&nbsp;</p>',
                 body,
                 flags=re.IGNORECASE
             )
@@ -121,3 +136,14 @@ class PageForm(forms.ModelForm):
                 )
 
         return slug
+
+    def save(self, commit=True):
+        """Save with automatic language setting."""
+        instance = super().save(commit=False)
+        instance.lang = self.lang
+
+        if commit:
+            instance.save()
+            self.save_m2m()
+
+        return instance

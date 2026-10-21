@@ -1,0 +1,57 @@
+{% extends "App_layouts/layouts.html" %}
+{% load thumbnail %}
+{% block meta %}
+    <title>تنظیمات SMS</title>
+{% endblock %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages mb-4">
+        <header class="headerPage p-0">
+            <h3><h3>تنظیمات SMS</h3></h3>
+            <div class="tab-setting-link">
+                <a class="{% if request.resolver_match.view_name == 'App_panel:setting' %}active{% endif %}" href="{% url 'App_panel:setting' %}">سایت</a>
+                <a class="{% if request.resolver_match.view_name == 'App_panel:setting-email' %}active{% endif %}" href="{% url 'App_panel:setting-email' %}">ایمیل</a>
+                <a class="{% if request.resolver_match.view_name == 'App_panel:setting-sms' %}active{% endif %}" href="{% url 'App_panel:setting-sms' %}">sms</a>
+            </div>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered m-0 mb-3">
+                <tbody>
+                <tr>
+                    <td>
+                        نام کاربری :
+                        {{ sms.username }}
+                    </td>
+                    <td>
+                        ایدی پیام :
+                        {{ sms.body_id }}
+                    </td>
+                    <td>
+                        وضعیت :
+                        {{ sms.status }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><a href="{% url 'App_panel:setting-sms-test-connection' %}" class="btn btn-primary">تست ایمیل</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <a href="{% url 'App_panel:setting-sms-update' %}" class="btn btn-primary">ویرایش اطلاعات ایمیل</a>
+    </div>
+{% endblock %}

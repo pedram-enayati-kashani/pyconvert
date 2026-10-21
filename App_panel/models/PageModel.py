@@ -29,7 +29,7 @@ class Page(models.Model):
         return f'pages/{now.year}/{now.month:02d}/{now.day:02d}/{filename}'
 
     title = models.CharField(max_length=160, verbose_name="عنوان")
-    body = CKEditor5Field(verbose_name="محتوا")
+    body = CKEditor5Field(verbose_name="محتوا",null=True,blank=True)
     title_seo = models.CharField(max_length=60, null=True, verbose_name="عنوان گوگل", blank=True)
     description_seo = models.TextField(null=True, verbose_name="توضیحات گوگل", blank=True)
     slug = models.SlugField(default='', null=False, db_index=True, verbose_name="اسلاگ", max_length=255,allow_unicode=True,blank=True)

@@ -132,12 +132,6 @@ class CategoryForm(forms.ModelForm):
 
         self.fields['parent'].queryset = parent_qs
 
-        self.fields['hidden_lang'] = forms.CharField(
-            widget=forms.HiddenInput(),
-            initial=self.lang,
-            required=False
-        )
-
     # region clean Fields
     def clean_slug(self):
         slug = self.cleaned_data.get('slug')
@@ -166,7 +160,7 @@ class CategoryForm(forms.ModelForm):
         for _ in range(max_iterations):
             new_description = re.sub(
                 pattern,
-                '<p></p>',
+                '<p>&nbsp;</p>',
                 description,
                 flags=re.IGNORECASE
             )

@@ -1,0 +1,90 @@
+{% extends "App_layouts/layouts.html" %}
+{% load thumbnail %}
+{% block meta %}
+    <title>تنظیمات ایمیل</title>
+{% endblock %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert
+                          {% if 'success' in message.tags %}alert-success
+                          {% elif 'warning' in message.tags %}alert-warning
+                          {% elif 'error' in message.tags %}alert-danger
+                          {% else %}alert-info{% endif %}
+                          alert-dismissible fade show"
+                 role="alert">
+                {{ message }}
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="dashboard-pages mb-4">
+        <header class="headerPage p-0">
+            <h3><h3>تنظیمات ایمیل</h3></h3>
+            <div class="tab-setting-link">
+                <a class="{% if request.resolver_match.view_name == 'App_panel:setting' %}active{% endif %}" href="{% url 'App_panel:setting' %}">سایت</a>
+                <a class="{% if request.resolver_match.view_name == 'App_panel:setting-email' %}active{% endif %}" href="{% url 'App_panel:setting-email' %}">ایمیل</a>
+                <a class="{% if request.resolver_match.view_name == 'App_panel:setting-sms' %}active{% endif %}" href="{% url 'App_panel:setting-sms' %}">sms</a>
+            </div>
+        </header>
+        <div class="responsiverTable">
+            <table class="table table-bordered m-0 mb-3">
+                <tbody>
+                <tr>
+                    <td>
+                        نام کاربری :
+                        {{ email.username }}
+                    </td>
+                    <td>
+                        سرور خارجی :
+                        {{ email.host }}
+                    </td>
+                    <td>
+                        پورت smtp :
+                        {{ email.port }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        ایمیل ارسال کننده :
+                        {{ email.sender_email }}
+                    </td>
+                    <td>
+                        نام ارسال کننده :
+                        {{ email.sender_name }}
+                    </td>
+                    <td>
+                        فرمت نوشتاری :
+                        {{ email.charset }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        احراز هویت :
+                        {{ email.use_authentication }}
+                    </td>
+                    <td>
+                        خودکار TLS :
+                        {{ email.use_tls }}
+                    </td>
+                    <td>
+                        رمزنگاری :
+                        {{ email.use_ssl }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        وضعیت :
+                        {{ email.status }}
+                    </td>
+                    <td><a href="{% url 'App_panel:setting-email-test-connection' %}" class="btn btn-primary">تست ایمیل</a></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <a href="{% url 'App_panel:setting-email-update' %}" class="btn btn-primary">ویرایش اطلاعات ایمیل</a>
+    </div>
+{% endblock %}

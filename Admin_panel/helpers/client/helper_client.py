@@ -4,6 +4,7 @@ from App_panel.models.SiteInfoModel import SiteInfo
 from App_panel.models.Modules import Modules
 from module.models.MenuBuilder import Menu ,Menu_Links
 from module.models.SocialMediaModel import SocialMedia
+from django.utils.translation import get_language
 
 def get_site_info_value(key):
     """
@@ -11,8 +12,12 @@ def get_site_info_value(key):
     key = title, logo, favicon, description_seo
     """
     site_info = cache.get("site_info")
+
+
+
+    
     if not isinstance(site_info, dict):
-        obj = SiteInfo.objects.filter(id=1).only(
+        obj = SiteInfo.objects.filter().only(
             "title","title_seo", "logo", "description_seo","favicon","favicon_16","favicon_32","apple_touch_icon",
             "android_192","android_512","favicon_ico","robotsText","headMeta","footerScript"
         ).first()

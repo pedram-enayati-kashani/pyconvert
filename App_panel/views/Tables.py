@@ -11,6 +11,8 @@ from django.db import transaction, connection
 from django.db.models import NOT_PROVIDED
 from django.contrib.auth.models import Group
 from django.contrib import messages
+from django.utils.translation import get_language
+from django.conf import settings
 from App_panel.models import Page,Section
 from App_panel.helpers.backup import SQLGenerator
 from App_panel.forms.PageTable import TablePageForm
@@ -26,29 +28,69 @@ class Index(ListView):
     context_object_name = 'pages'
 
     def get_queryset(self):
-        return Page.objects.all()
+        query = super().get_queryset().order_by('id')
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
+            query = query.filter(lang=lang)
+        return query
 
     def get_context_data(self, **kwargs):
+        lang = get_language()
         context = super().get_context_data(**kwargs)
-        context['sections'] = Section.objects.all()
-        context['groups'] = Group.objects.all()
-        context['modules'] = Modules.objects.all()
+        context['sections'] = Section.objects.filter(lang=lang).order_by('id')
+        context['groups'] = Group.objects.order_by('id')
+        context['modules'] = Modules.objects.order_by('id')
 
         return context
 
-class PageCreate(FormView):
-    template_name = 'App_panel/Tables/create.html'
-    form_class = TablePageForm
-    success_url = reverse_lazy('App_panel:table')
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title_page'] = "ایجاد صفحات"
-        return context
+class PageCreate(View):
+    def get(self, request, *args, **kwargs):
+        lang = get_language()
+        data = []
+        if lang == "fa":
+            data = [
+                {
+                    "title": "خانه",
+                    "lang": lang,
+                    "slug": "home",
+                },
+                {
+                    "title": "درباره ما",
+                    "lang": lang,
+                    "slug": "about",
+                },
+                {
+                    "title": "تماس باما",
+                    "lang": lang,
+                    "slug": "contact",
+                },
+            ]
+        else:
+            data = [
+                {
+                    "title": "home",
+                    "lang": lang,
+                    "slug": "home",
+                },
+                {
+                    "title": "about",
+                    "lang": lang,
+                    "slug": "about",
+                },
+                {
+                    "title": "contact",
+                    "lang": lang,
+                    "slug": "contact",
+                },
+            ]
+        for item in data:
+            Page.objects.get_or_create(
+                title= item["title"],
+                lang= item["lang"],
+                slug= item["slug"],
+            )
+        return redirect(reverse_lazy('App_panel:table'))
 
 class SectionCreate(View):
     def get(self, request, *args, **kwargs):
@@ -77,7 +119,12 @@ class SectionIndex(ListView):
     context_object_name = 'sections'
 
     def get_queryset(self):
-        return super().get_queryset().order_by('-id')
+        query = super().get_queryset().order_by('id')
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
+            query = query.filter(lang=lang)
+        return query
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

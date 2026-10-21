@@ -1,5 +1,5 @@
 from django import forms
-from ..models.EmailModel import EmailSettings
+from App_panel.models.EmailModel import EmailSettings
 
 
 class EmailSettingsForm(forms.ModelForm):
@@ -53,7 +53,19 @@ class EmailSettingsForm(forms.ModelForm):
             'charset': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, request=None, **kwargs):
+        self.request = request
+
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
+
+        instance = kwargs.get('instance')
+
+        if instance and instance.lang:
+            self.lang = instance.lang
+
         super().__init__(*args, **kwargs)
 
         if self.instance.pk:
@@ -68,7 +80,7 @@ class EmailSettingsForm(forms.ModelForm):
         instance.use_tls = self.cleaned_data['use_tls']
         instance.use_ssl = self.cleaned_data['use_ssl']
         instance.status = self.cleaned_data['status']
-
+        instance.lang = self.lang
         if commit:
             instance.save()
             self.save_m2m()

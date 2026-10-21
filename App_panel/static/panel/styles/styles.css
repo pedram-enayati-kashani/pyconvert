@@ -8,7 +8,7 @@
     --c-light-blue:#02D9FF;
     --c-dark-blue:#0e2a42;
     --c-DarkOrange:#FAAC03;
-    --c-gray: #b49704;
+    --c-gray: #969696;
     --c-green-dark:#00A050;
     --c-green-light:#00C060;
     --c-light-red:#FF0004;
@@ -279,6 +279,29 @@ form .form-group-display{
     align-items: center;
     justify-content: center;
     gap: 10px;
+}
+
+.tab-setting-link{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.tab-setting-link a{
+    display: block;
+    padding: 8px 15px;
+    border-radius: 5px 5px 0 0;
+    border-right: 2px solid var(--c-dark-blue);
+    border-left: 2px solid var(--c-dark-blue);
+    border-top: 2px solid var(--c-dark-blue);
+    font: 500 15px var(--fontName);
+    color: var(--c-dark-blue);
+}
+
+.tab-setting-link a:hover,
+.tab-setting-link a.active{
+    color: var(--c-DarkOrange);
+    border-color: var(--c-DarkOrange);
 }
 
 /* media query */

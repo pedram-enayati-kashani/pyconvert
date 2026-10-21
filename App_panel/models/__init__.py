@@ -10,3 +10,4 @@ from .SectionModel import Section
 from .TagModel import Tag
 from .SiteInfoModel import SiteInfo
 from .EmailModel import EmailSettings
+from .SMSModel import SMSSettings
