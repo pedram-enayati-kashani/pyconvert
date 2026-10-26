@@ -1,14 +1,14 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ساخت کاربر</title>
+    <title>{% translate "Create a new user" %}</title>
     {{ form.media }}
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ساخت کاربر جدید</h3>
+            <h3>{% translate "Create a new user" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:user-create' %}" method="post" novalidate>
             {% csrf_token %}
@@ -110,7 +110,7 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ثبت</button>
+            <button class="btn btn-success">{% translate "Submit" %}</button>
             <a href="{% url 'Admin_panel:user' %}" class="btn btn-danger">انصراف</a>
         </form>
     </div>

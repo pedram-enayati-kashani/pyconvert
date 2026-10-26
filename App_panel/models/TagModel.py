@@ -36,6 +36,12 @@ class Tag(models.Model):
     class Meta:
         verbose_name = "برچسب"
         verbose_name_plural = "برچسب ها"
+        constraints = [
+            models.UniqueConstraint(
+                fields=['slug', 'lang'],
+                name='unique_slug_per_lang'
+            )
+        ]
 
     def save(self, *args, **kwargs):
         current_lang = self.lang if self.lang is not None else 'fa'

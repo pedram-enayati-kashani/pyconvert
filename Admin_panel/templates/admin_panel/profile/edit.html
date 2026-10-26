@@ -1,7 +1,8 @@
 {% extends "admin_layouts/layouts.html" %}
+{% load i18n %}
 
 {% block meta %}
-    <title>ویرایش پروفایل</title>
+    <title>{% translate "Update profile" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -10,7 +11,7 @@
          data-id="{{ user.pk|default:'new' }}" style="display: none;"></div>
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ویرایش پروفایل</h3>
+            <h3>{% translate "Update profile" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:profile-edit' %}" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
@@ -126,8 +127,8 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ویرایش</button>
-            <a href="{% url 'Admin_panel:profile' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Update" %}</button>
+            <a href="{% url 'Admin_panel:profile' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

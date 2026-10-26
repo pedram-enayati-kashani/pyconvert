@@ -17,7 +17,7 @@ class EmailService:
         else:
             self.config = EmailSettings.objects.filter(status='active', lang='fa').first()
         if not self.config:
-            raise ValueError(_("Active email settings not found."))
+            raise ValueError(_("Email settings not found."))
 
     def get_connection(self):
         return get_connection(

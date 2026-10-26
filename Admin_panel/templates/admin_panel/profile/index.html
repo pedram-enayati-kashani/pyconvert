@@ -1,14 +1,14 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load thumbnail %}
+{% load thumbnail i18n %}
 
 {% block meta %}
-    <title>پروفایل</title>
+    <title>{% translate "Profile" %}</title>
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>پروفایل</h3>
+            <h3>{% translate "Profile" %}</h3>
         </header>
         <div class="form-group-display mb-4">
             {% thumbnail request.user.avatar "120" quality=95 as im %}
@@ -18,21 +18,21 @@
         <div class="row mb-4">
             <div class="col-md-6">
                 <div class="form-group-display">
-                    <label>نام کاربری:</label>
+                    <label>{% translate "Username" %}:</label>
                     <span>{{ request.user.username }}</span>
                 </div>
                 <div class="form-group-display">
-                    <label>نام:</label>
+                    <label>{% translate "First Name" %}:</label>
                     <span>{{ request.user.first_name }}</span>
                 </div>
                 <div class="form-group-display">
-                    <label>نام خانوادگی:</label>
+                    <label>{% translate "Last Name" %}:</label>
                     <span>{{ request.user.last_name }}</span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group-display">
-                    <label>نام نمایشی:</label>
+                    <label>{% translate "Display name" %}:</label>
                     {% if request.user.display_name == 'first_last' %}
                         <span>{{ request.user.first_name }} {{ request.user.last_name }}</span>
                     {% elif request.user.display_name == 'last_first' %}
@@ -42,16 +42,16 @@
                     {% endif %}
                 </div>
                 <div class="form-group-display">
-                    <label>ایمیل:</label>
+                    <label>{% translate "Email" %}:</label>
                     <span>{{ request.user.email }}</span>
                 </div>
                 <div class="form-group-display">
-                    <label>شماره موبایل:</label>
+                    <label>{% translate "Mobile number" %}:</label>
                     <span>{{ request.user.mobile }}</span>
                 </div>
             </div>
         </div>
-        <a href="{% url 'Admin_panel:profile-edit' %}" class="btn btn-primary">ویرایش اطلاعات</a>
-        <a href="{% url 'Admin_panel:reset-password' %}" class="btn btn-warning">تغییر رمز</a>
+        <a href="{% url 'Admin_panel:profile-edit' %}" class="btn btn-primary">{% translate "Update" %}</a>
+        <a href="{% url 'Admin_panel:reset-password' %}" class="btn btn-warning">{% translate "Change password" %}</a>
     </div>
 {% endblock %}

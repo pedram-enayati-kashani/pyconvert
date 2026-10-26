@@ -1,14 +1,14 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش کاربر</title>
+    <title>{% translate "Update user" %}</title>
     {{ form.media }}
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ویرایش کاربر</h3>
+            <h3>{% translate "Update user" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:user-update' userUpdate.id %}" method="post" enctype="multipart/form-data"
               novalidate>
@@ -111,8 +111,8 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ویرایش</button>
-            <a href="{% url 'Admin_panel:user' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Update" %}</button>
+            <a href="{% url 'Admin_panel:user' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

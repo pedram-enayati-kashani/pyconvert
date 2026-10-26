@@ -109,11 +109,6 @@ class CategoryForm(forms.ModelForm):
         else:
             self.lang = translation.get_language() or 'fa'
 
-        instance = kwargs.get('instance')
-
-        if instance and instance.lang:
-            self.lang = instance.lang
-
         super().__init__(*args, **kwargs)
 
         if user and user.groups.filter(name="author").exists():

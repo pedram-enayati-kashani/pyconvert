@@ -21,7 +21,7 @@ class SmsSettingsForm(forms.ModelForm):
     )
 
     body_id = forms.CharField(
-        label='ایدی پیام',
+        label='شناسه الگو',
         required=False,
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
@@ -50,11 +50,6 @@ class SmsSettingsForm(forms.ModelForm):
             self.lang = request.LANGUAGE_CODE
         else:
             self.lang = translation.get_language() or 'fa'
-
-        instance = kwargs.get('instance')
-
-        if instance and instance.lang:
-            self.lang = instance.lang
 
         super().__init__(*args, **kwargs)
 

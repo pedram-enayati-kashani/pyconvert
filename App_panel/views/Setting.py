@@ -35,6 +35,11 @@ class Create(AppPanelRequiredMixin,CreateView):
     form_class = SiteInfoForm
     success_url = reverse_lazy('App_panel:setting')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
 
 class Update(AppPanelRequiredMixin, UpdateView):
     template_name = 'App_panel/setting/site/edit.html'
@@ -42,6 +47,11 @@ class Update(AppPanelRequiredMixin, UpdateView):
     form_class = SiteInfoForm
     success_url = reverse_lazy('App_panel:setting')
     context_object_name = 'setting'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
     def get_object(self, queryset=None):
         lang = get_language()
@@ -167,7 +177,7 @@ class UpdateSMS(AppPanelRequiredMixin, UpdateView):
         lang = get_language()
         available_langs = [code for code, name in settings.LANGUAGES]
         if lang in available_langs:
-            obj, created = EmailSettings.objects.get_or_create(lang=lang)
+            obj, created = SMSSettings.objects.get_or_create(lang=lang)
         else:
-            obj, created = EmailSettings.objects.get_or_create(lang="fa")
+            obj, created = SMSSettings.objects.get_or_create(lang="fa")
         return obj

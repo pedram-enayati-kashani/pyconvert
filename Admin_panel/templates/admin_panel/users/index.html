@@ -1,8 +1,8 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load pager %}
+{% load pager i18n %}
 
 {% block meta %}
-    <title>کاربران</title>
+    <title>{% translate "Users" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -24,8 +24,8 @@
     {% endif %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>کاربران</h3>
-            <a href="{% url 'Admin_panel:user-create' %}" class="createLink">ساخت کاربر جدید</a>
+            <h3>{% translate "Users" %}</h3>
+            <a href="{% url 'Admin_panel:user-create' %}" class="createLink">{% translate "Create a new user" %}</a>
         </header>
         <div class="filter-form mb-4">
             <form class="d-flex align-items-center gap-1 flex-wrap" method="GET"
@@ -34,16 +34,16 @@
                     {{ filter_form.status.label_tag }}
                     {{ filter_form.status }}
                 </div>
-                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
-                <a href="{% url 'Admin_panel:user' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+                <button type="submit" class="btn btn-primary">{% translate "Filtering" %}</button>
+                <a href="{% url 'Admin_panel:user' %}" class="btn btn-secondary">{% translate "Clear filter" %}</a>
             </form>
         </div>
         <div class="responsiverTable">
             <table class="table table-bordered table-striped m-0 mb-3">
                 <thead>
-                <th scope="col">نام کاربری</th>
-                <th scope="col">فعال/غیرفعال</th>
-                <th scope="col">تنظیمات</th>
+                <th scope="col">{% translate "Username" %}</th>
+                <th scope="col">{% translate "Active/Inactive" %}</th>
+                <th scope="col">{% translate "Settings" %}</th>
                 </thead>
                 <tbody>
                 {% for user in users %}
@@ -52,19 +52,18 @@
                         <td>
                             {% if user.is_active %}
                                 <a class="btn btn-primary"
-                                   href="{% url 'Admin_panel:user-active' user.id %}?next={{ request.get_full_path }}">فعال</a>
+                                   href="{% url 'Admin_panel:user-active' user.id %}?next={{ request.get_full_path }}">{% translate "Active" %}</a>
                             {% else %}
                                 <a class="btn btn-dark"
-                                   href="{% url 'Admin_panel:user-active' user.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                                   href="{% url 'Admin_panel:user-active' user.id %}?next={{ request.get_full_path }}">{% translate "Inactive" %}</a>
                             {% endif %}
                         </td>
                         <td class="d-flex gap-2 align-items-center flex-wrap">
-                            <a href="{% url 'Admin_panel:user-update' user.id %}" class="btn btn-primary">ویرایش
-                                اطلاعات</a>
+                            <a href="{% url 'Admin_panel:user-update' user.id %}" class="btn btn-primary">{% translate "Update" %}</a>
                             <form action="{% url 'Admin_panel:user-delete' user.id %}" class="Delete-Form" method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">
-                                    حذف
+                                    {% translate "Delete" %}
                                 </button>
                             </form>
                         </td>

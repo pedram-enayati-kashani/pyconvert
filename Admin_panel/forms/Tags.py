@@ -98,11 +98,6 @@ class TagForm(forms.ModelForm):
         else:
             self.lang = translation.get_language() or 'fa'
 
-        instance = kwargs.get('instance')
-
-        if instance and instance.pk and instance.lang:
-            self.lang = instance.lang
-
         super().__init__(*args, **kwargs)
 
         # region  check if user is author or not

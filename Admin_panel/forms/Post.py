@@ -96,14 +96,14 @@ class PostForm(forms.ModelForm):
         error_messages={
             'required': _("Category selection is required."),
         },
-        widget=forms.SelectMultiple(attrs={'class': 'form-control'})
+        widget=forms.SelectMultiple(attrs={'class': 'form-control','style': 'height: 250px;'})
     )
 
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.filter(status='published'),
         label=_("Tags"),  # جمع
         required=False,
-        widget=forms.SelectMultiple(attrs={'class': 'form-control'})
+        widget=forms.SelectMultiple(attrs={'class': 'form-control','style': 'height: 250px;'})
     )
 
     pages = forms.ModelChoiceField(
@@ -178,11 +178,6 @@ class PostForm(forms.ModelForm):
             self.lang = request.LANGUAGE_CODE
         else:
             self.lang = translation.get_language() or 'fa'
-
-        instance = kwargs.get('instance')
-
-        if instance and instance.pk and instance.lang:
-            self.lang = instance.lang
 
         super().__init__(*args, **kwargs)
         print("lang",self.lang)

@@ -2,57 +2,58 @@ from django import forms
 from django.core import validators
 from django.utils.html import strip_tags
 from django.contrib.auth.models import Group
+from django.utils.translation import gettext_lazy as _
 from App_panel.models import Users
 
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(
-        label='نام کاربری',
+        label= _("Username"),
         max_length=20,
         error_messages={
-            'required': 'عنوان اجباری می‌باشد',
-            'max_length': 'عنوان نباید بیشتر از 20 کاراکتر باشد',
+            'required': _("Username is required."),
+            'max_length': _("Username cannot be more than %(limit_value)d characters."),
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     email = forms.EmailField(
-        label='ایمیل',
+        label= _("Email"),
         error_messages={
-            'required': 'ایمیل اجباری می‌باشد',
-            'invalid': 'ایمیل معتبر وارد کنید'
+            'required': _("Email is required."),
+            'invalid': _("Enter a valid email address.")
         },
         widget=forms.EmailInput(attrs={'class': 'form-control'}),
     )
 
     password = forms.CharField(
-        label='رمز عبور',
+        label=_('Password'),
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )
 
     password_con = forms.CharField(
-        label='تکرار رمز عبور',
+        label=_('Confirm Password'),
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )
 
     is_active = forms.BooleanField(
-        label='فعال باشد',
+        label=_('Is Active'),
         required=False,
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
     )
 
     is_staff = forms.BooleanField(
-        label='دسترسی به پنل ادمین',
+        label=_('Admin panel access'),
         required=False,
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
     )
 
     group = forms.ModelChoiceField(
         queryset=Group.objects.filter(extra__status='active', extra__isnull=False),
-        label='گروه',
+        label=_('Group'),
         empty_label=None,
         error_messages={
-            'required': 'انتخاب بخش اجباری می‌باشد',
+            'required': _("Group selection is required."),
         },
         widget=forms.Select(attrs={'class': 'form-control'})
     )
@@ -96,23 +97,29 @@ class UserForm(forms.ModelForm):
 
         if password or password_con:
             if password != password_con:
-                raise forms.ValidationError('رمز عبور و تکرار آن یکسان نیستند')
+                raise forms.ValidationError(_('Password and confirmation do not match.'))
 
         return cleaned_data
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if self.instance.pk and self.instance.username == username:
+
+        if self.instance and self.instance.pk and self.instance.username == username:
             return username
-        if Users.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
-            raise forms.ValidationError('کاربری با این نام کاربری وجود دارد')
+
+        if Users.all_objects.filter(username=username).exists():
+            raise forms.ValidationError(_('A user with this username already exists.'))
+
         return username
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if self.instance.pk and self.instance.email == email:
+
+        if self.instance and self.instance.pk and self.instance.email == email:
             return email
-        if Users.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
-            raise forms.ValidationError('کاربری با این ایمیل قبلاً ثبت شده است')
+
+        if Users.all_objects.filter(email=email).exists():
+            raise forms.ValidationError(_('A user with this email already exists.'))
+
         return email
 

@@ -18,6 +18,9 @@ class Users(AbstractUser):
     def upload_avatar_path(instance, filename):
         now = datetime.now()
         return f'avatar/{now.year}/{now.month:02d}/{now.day:02d}/{filename}'
+    username = models.CharField(max_length=20, unique=True)
+    first_name = models.CharField(max_length=30, unique=True,null=True,blank=True)
+    last_name = models.CharField(max_length=40, unique=True,null=True,blank=True)
     DISPLAY_NAME_CHOICES = [("username", "نام کاربری"),("first_last", "نام نام‌خانوادگی"),("last_first", "نام‌خانوادگی نام")]
     display_name = models.CharField(max_length=20,choices=DISPLAY_NAME_CHOICES,default="username",verbose_name="نحوه نمایش نام")
     email = models.EmailField(unique=True)
@@ -27,7 +30,8 @@ class Users(AbstractUser):
     title_seo = models.CharField(max_length=60, null=True, verbose_name="عنوان گوگل",blank=True)
     description = models.TextField(verbose_name="توضیحات",null=True,blank=True)
     description_seo = models.TextField(verbose_name="توضیحات",null=True,blank=True)
-    summery = models.TextField(verbose_name="توضیحات",null=True,blank=True)
+    summery = models.TextField(max_length=200,null=True,blank=True)
+    lang = models.CharField(max_length=2, default='fa', db_index=True, null=True, blank=True)
     is_deleted = models.BooleanField(default=False, verbose_name="حذف شده / نشده")
     created_by = models.ForeignKey("self", on_delete=models.SET_NULL,null=True,blank=True,related_name="created_users",verbose_name="ایجاد شده توسط")
     created_at = models.DateTimeField(auto_now_add=True,null=True)

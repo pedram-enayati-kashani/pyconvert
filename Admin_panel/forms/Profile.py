@@ -1,38 +1,46 @@
 from django import forms
 from django.core import validators
 from django_ckeditor_5.widgets import CKEditor5Widget
+from django.utils.translation import gettext_lazy as _
 from App_panel.models.UsersModel import Users
 
 class ProfileForm(forms.ModelForm):
     first_name = forms.CharField(
-        label='نام',
-        max_length=60,
+        label= _("First Name"),
+        max_length=30,
+        error_messages={
+            'required': _("First Name is required."),
+            'max_length': _("First Name cannot be more than %(limit_value)d characters."),
+        },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     last_name = forms.CharField(
-        label='نام خانوادگی',
-        max_length=60,
+        label= _("Last Name"),
+        max_length=40,
+        error_messages={
+            'required': _("Last Name is required."),
+            'max_length': _("Last Name cannot be more than %(limit_value)d characters."),
+        },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     summery = forms.CharField(
-        label='خلاصه شما',
-        max_length=255,
+        label= _("summary"),
+        max_length=200,
         required=False,
         error_messages={
-            'required': 'خلاصه شما اجباری می‌باشد',
-            'max_length': 'خلاصه شما نباید بیشتر از 255 کاراکتر باشد',
+            'max_length': _("Summary cannot be more than %(limit_value)d characters."),
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     description_seo = forms.CharField(
-        label='توضیحات گوگل',
+        label= _("Meta description"),
         max_length=160,
         required=False,
         error_messages={
-            'max_length': 'توضیحات گوگل نباید بیشتر از 60 کاراکتر باشد',
+            'max_length': _("Meta description cannot be more than %(limit_value)d characters."),
         },
         widget=forms.Textarea(attrs={
             'class': 'form-control',
@@ -41,27 +49,29 @@ class ProfileForm(forms.ModelForm):
     )
 
     description = forms.CharField(
-        label='توضیحات',
+        label= _("Description"),
         required=False,
-        error_messages={
-            'required': 'توضیحات اجباری می‌باشد',
-        },
         widget=CKEditor5Widget(config_name='default'),
     )
 
     mobile = forms.CharField(
-        label='شماره موبایل',
+        label=_('Mobile number'),
         required=False,
-        max_length=20,
+        max_length=15,
+        error_messages={
+            'max_length': _("Mobile number cannot be more than %(limit_value)d characters."),
+        },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
+
     display_name = forms.ChoiceField(
-        label='نحوه نمایش نام',
+        label=_('Display name format'),
         choices=[],
         widget=forms.Select(attrs={'class': 'form-select'})
     )
+
     avatar = forms.ImageField(
-        label='عکس پروفایل',
+        label=_('Profile picture'),
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
@@ -95,7 +105,7 @@ class ProfileForm(forms.ModelForm):
         for _ in range(max_iterations):
             new_description = re.sub(
                 pattern,
-                '<p></p>',
+                '<p>&nbsp;</p>',
                 description,
                 flags=re.IGNORECASE
             )
@@ -107,7 +117,7 @@ class ProfileForm(forms.ModelForm):
 
 class ResetPasswordForm(forms.Form):
     old_password = forms.CharField(
-        label='کلمه عبور قدیمی',
+        label=_('Old Password'),
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
         validators=[
             validators.MaxLengthValidator(100),
@@ -115,7 +125,7 @@ class ResetPasswordForm(forms.Form):
     )
 
     password = forms.CharField(
-        label='کلمه عبور',
+        label=_('New Password'),
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
         validators=[
             validators.MaxLengthValidator(100),
@@ -123,7 +133,7 @@ class ResetPasswordForm(forms.Form):
     )
 
     confirm_password = forms.CharField(
-        label='تکرار کلمه عبور',
+        label=_('Confirm New Password'),
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
         validators=[
             validators.MaxLengthValidator(100),

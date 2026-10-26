@@ -20,7 +20,7 @@ class EmailSettings(models.Model):
     use_authentication = models.BooleanField(default=True, verbose_name='احراز هویت')
     use_tls = models.BooleanField(default=False, verbose_name='خودکار TLS')
     use_ssl = models.BooleanField(default=False, verbose_name='رمزنگاری')
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, db_index=True, default='active',
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, db_index=True, default='inactive',
                               verbose_name="فعال / غیرفعال")
 
     class Meta:

@@ -1,7 +1,7 @@
 import re
 from django import forms
 from PIL import Image
-from ..models.SiteInfoModel import SiteInfo
+from App_panel.models.SiteInfoModel import SiteInfo
 from django.core.exceptions import ValidationError
 from django.contrib.sites.models import Site
 
@@ -96,6 +96,12 @@ class SiteInfoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
+
         site = Site.objects.filter(id=1).first()
         if site:
             self.fields['domain'].initial = site.domain
@@ -110,6 +116,8 @@ class SiteInfoForm(forms.ModelForm):
 
         if not instance.pk and not instance.robotsText:
             instance.robotsText = f"User-agent: *\nSitemap: https://{domain}/sitemap.xml"
+
+        instance.lang = self.lang
 
         if commit:
             instance.save()

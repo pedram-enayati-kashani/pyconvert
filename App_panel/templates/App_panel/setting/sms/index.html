@@ -38,7 +38,7 @@
                         {{ sms.username }}
                     </td>
                     <td>
-                        ایدی پیام :
+                        شناسه الگو :
                         {{ sms.body_id }}
                     </td>
                     <td>
@@ -47,11 +47,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><a href="{% url 'App_panel:setting-sms-test-connection' %}" class="btn btn-primary">تست ایمیل</a></td>
+                    <td><a href="{% url 'App_panel:setting-sms-test-connection' %}" class="btn btn-primary">تست sms</a></td>
                 </tr>
                 </tbody>
             </table>
             </div>
-            <a href="{% url 'App_panel:setting-sms-update' %}" class="btn btn-primary">ویرایش اطلاعات ایمیل</a>
+            <a href="{% url 'App_panel:setting-sms-update' %}" class="btn btn-primary">ویرایش اطلاعات</a>
     </div>
 {% endblock %}
