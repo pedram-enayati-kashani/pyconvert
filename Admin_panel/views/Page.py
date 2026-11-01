@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView
 from django.views.generic.list import ListView
 from django.utils.translation import get_language
+from django.conf import settings
 from Admin_panel.forms.Page import PageForm
 from Admin_panel.forms.Filter import FilterForm
 from Admin_panel.helpers.pager import get_visible_page_numbers
@@ -22,7 +23,8 @@ class Index(AdminRequiredMixin, ListView):
     def get_queryset(self):
         query = super().get_queryset().order_by('id')
         lang = get_language()
-        if lang in ['fa', 'en']:
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
             query = query.filter(lang=lang)
         return query
 
@@ -98,7 +100,8 @@ class Query(AdminRequiredMixin, ListView):
             elif status_filter == 'inactive':
                 queryset = queryset.filter(status='inactive')
         lang = get_language()
-        if lang in ['fa', 'en']:
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
             queryset = queryset.filter(lang=lang)
         return queryset.order_by('id')
 

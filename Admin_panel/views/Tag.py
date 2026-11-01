@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, DeleteView
 from django.views.generic.list import ListView
 from django.utils.translation import get_language
+from django.conf import settings
 from Admin_panel.forms.Tags import TagForm
 from Admin_panel.helpers.pager import get_visible_page_numbers
 from Admin_panel.mixin.auth import AdminRequiredMixin,AdminOrAuthorRequiredMixin
@@ -19,10 +20,9 @@ class Index(AdminOrAuthorRequiredMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('-id')
         lang = get_language()
-        if lang == 'fa':
-            queryset = queryset.filter(lang='fa')
-        elif lang == 'en':
-            queryset = queryset.filter(lang='en')
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
+            queryset = queryset.filter(lang=lang)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -70,10 +70,11 @@ class Query(AdminOrAuthorRequiredMixin, ListView):
         self.form = self.form_class(self.request.GET)
         queryset = super().get_queryset()
         lang = get_language()
-        if lang == 'fa':
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
+            queryset = queryset.filter(lang=lang)
+        else:
             queryset = queryset.filter(lang='fa')
-        elif lang == 'en':
-            queryset = queryset.filter(lang='en')
 
         if self.form.is_valid():
             status_filter = self.form.cleaned_data.get('status', 'all')

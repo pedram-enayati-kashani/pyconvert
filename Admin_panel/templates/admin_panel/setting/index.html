@@ -1,41 +1,42 @@
 {% extends "admin_layouts/layouts.html" %}
+{% load i18n %}
 {% block meta %}
-    <title>تنظیمات</title>
+    <title>{% translate "Settings" %}</title>
 {% endblock %}
 {% block content %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>تنظیمات سایت</h3>
+            <h3>{% translate "Settings" %}</h3>
         </header>
         <div class="responsiverTable">
             <table class="table table-bordered m-0 mb-3">
                 <tbody>
                 <tr>
                     <td>
-                        عنوان سایت :
+                        {% translate "Title" %} :
                         {{ setting.title }}
                     </td>
                     <td>
-                        عنوان گوگل :
+                        {% translate "Meta title" %} :
                         {{ setting.title_seo }}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        توضیحات گوگل :
+                        {% translate "Meta description" %} :
                         {{ setting.description_seo }}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        عکس لوگو :
+                        {% translate "Logo Image" %} :
                         {% if setting.logo %}
                         <img class="imageProfile" src="{{ setting.logo.url }}" style="max-width: 150px"
                              decoding="async"/>
                         {% endif %}
                     </td>
                     <td>
-                        ایکون سایت :
+                        {% translate "Site Icon" %} :
                         {% if setting.logo %}
                         <img src="{{ setting.favicon.url }}" style="max-width: 150px" decoding="async"/>
                         {% endif %}
@@ -45,7 +46,7 @@
             </table>
         </div>
         {% if setting != null %}
-            <a href="{% url "Admin_panel:setting-update" %}" class="btn btn-primary">ویرایش اطلاعات سایت</a>
+            <a href="{% url 'Admin_panel:setting-update' %}" class="btn btn-primary">{% translate "Update" %}</a>
         {% endif %}
     </div>
 {% endblock %}

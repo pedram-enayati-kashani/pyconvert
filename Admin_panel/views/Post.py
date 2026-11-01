@@ -10,6 +10,8 @@ from django.db import transaction
 from django.db.models import Count
 from django.template.loader import render_to_string
 from django.utils.translation import get_language
+from django.conf import settings
+from module.models.FormBuilder import Form
 from Admin_panel.forms.Post import PostForm, PostGalleryFormSet
 from Admin_panel.forms.Filter import FilterForm
 from Admin_panel.helpers.pager import get_visible_page_numbers
@@ -33,9 +35,9 @@ class Index(AdminOrAuthorRequiredMixin, ListView):
             .annotate(comments_count=Count('comments', distinct=True))
             .order_by('-id')
         )
-
         lang = get_language()
-        if lang in ['fa', 'en']:
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
             queryset = queryset.filter(lang=lang)
 
         return queryset
@@ -206,13 +208,11 @@ class Create(AdminOrAuthorRequiredMixin, CreateView):
             _, Assignment, Field, Value = self.get_form_builder_models()
 
             if form_id and Assignment and Field and Value:
-                # اتصال فرم انتخاب‌شده به پست
                 Assignment.objects.update_or_create(
                     post=self.object,
                     defaults={'form_id': form_id},
                 )
 
-                # ذخیره مقدار فیلدهای کاستوم مستقیم برای پست
                 fields = Field.objects.filter(
                     form_id=form_id,
                     status='active',
@@ -224,7 +224,6 @@ class Create(AdminOrAuthorRequiredMixin, CreateView):
                         '',
                     ).strip()
 
-                    # فقط مقدارهای غیرخالی ذخیره می‌شوند
                     if value:
                         Value.objects.update_or_create(
                             post=self.object,
@@ -457,7 +456,8 @@ class Query(AdminOrAuthorRequiredMixin, ListView):
             if title_filter:
                 queryset = queryset.filter(title__icontains=title_filter)
         lang = get_language()
-        if lang in ['fa', 'en']:
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
             queryset = queryset.filter(lang=lang)
 
         return queryset.order_by('-id')
@@ -489,7 +489,6 @@ class GetFormFieldsView(AdminRequiredMixin, View):
         form_builder = app_modules.objects.filter(name="form_builder", status='active').first()
         html = ''
         if form_builder:
-            from module.models.FormBuilder import Form
             form_obj = get_object_or_404(Form, pk=form_id)
             fields = form_obj.fields.filter(status='active').order_by('order')
             html = render_to_string('admin_panel/posts/_dynamic_fields.html', {

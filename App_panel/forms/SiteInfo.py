@@ -94,7 +94,7 @@ class SiteInfoForm(forms.ModelForm):
         model = SiteInfo
         fields = ['title', 'title_seo', 'description_seo', 'logo', 'favicon', 'status', 'domain', 'name']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, request=None, **kwargs):
         super().__init__(*args, **kwargs)
 
         if request and getattr(request, 'LANGUAGE_CODE', None):

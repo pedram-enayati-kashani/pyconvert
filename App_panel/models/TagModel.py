@@ -39,7 +39,7 @@ class Tag(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['slug', 'lang'],
-                name='unique_slug_per_lang'
+                name='unique_tag_slug_per_lang'
             )
         ]
 

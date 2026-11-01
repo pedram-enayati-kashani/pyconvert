@@ -64,6 +64,12 @@ class Section(models.Model):
     class Meta:
         verbose_name = "بخش"
         verbose_name_plural = "بخش ها"
+        constraints = [
+            models.UniqueConstraint(
+                fields=['slug', 'lang'],
+                name='unique_section_slug_per_lang'
+            )
+        ]
 
     def save(self, *args, **kwargs):
         current_lang = self.lang if self.lang is not None else 'fa'

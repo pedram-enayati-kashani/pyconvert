@@ -2,13 +2,14 @@ from django import forms
 from django.utils.html import strip_tags
 from django_ckeditor_5.widgets import CKEditor5Widget
 from App_panel.models.ContactUsModel import ContactMessage
-
+from django.utils.translation import gettext_lazy as _
+from django.utils import translation
 
 class ContactForm(forms.ModelForm):
     message = forms.CharField(
-        label='پیغام',
+        label=_('Message'),
         error_messages={
-            'required': 'پیغام اجباری می‌باشد',
+            'required': _("Message is required."),
         },
         widget=forms.Textarea(attrs={
             'class': 'form-control',
@@ -17,7 +18,7 @@ class ContactForm(forms.ModelForm):
     )
 
     image = forms.ImageField(
-        label='عکس',
+        label=_("Image"),
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
@@ -29,6 +30,7 @@ class ContactForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         self.ticket = kwargs.pop('ticket', None)
+
         super().__init__(*args, **kwargs)
 
     def save(self, commit=True):

@@ -1,9 +1,11 @@
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, DeleteView, DetailView
 from django.views.generic.list import ListView
-from ..forms.Comment import CommentForm
-from ..forms.FilterComment import FilterCommentForm
-from ..helpers.pager import get_visible_page_numbers
+from django.conf import settings
+from django.utils.translation import get_language
+from Admin_panel.forms.Comment import CommentForm
+from Admin_panel.forms.FilterComment import FilterCommentForm
+from Admin_panel.helpers.pager import get_visible_page_numbers
 from Admin_panel.mixin.auth import AdminRequiredMixin
 from App_panel.models.CommentsModel import Comments
 
@@ -16,7 +18,12 @@ class Index(AdminRequiredMixin, ListView):
     form_class = FilterCommentForm
 
     def get_queryset(self):
-        return super().get_queryset().select_related('post').prefetch_related('children').filter(parent=None).order_by('-updated_at')
+        queryset = super().get_queryset().order_by('-id')
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        return queryset.select_related('post').prefetch_related('children').filter(parent=None,lang=lang).order_by('-updated_at')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -86,6 +93,11 @@ class Query(AdminRequiredMixin, ListView):
     def get_queryset(self):
         self.form = self.form_class(self.request.GET)
         queryset = super().get_queryset()
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        queryset = queryset.filter(lang=lang)
         if self.form.is_valid():
             selected_value = self.form.cleaned_data.get('status')
             if selected_value in ["not-see", "see"]:

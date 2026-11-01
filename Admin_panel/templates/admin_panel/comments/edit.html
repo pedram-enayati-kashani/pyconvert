@@ -1,7 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش نظر</title>
+    <title>{% translate "Edit comment" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -9,7 +9,7 @@
     <div id="editor-config" data-model="comment" data-url="{% url 'ck_editor_5_upload_file' %}" data-id="{{ form.instance.pk|default:'new' }}" style="display: none;"></div>
     <div class="dashboard-pages">
             <header class="headerPage">
-                <h3>ویرایش نظر</h3>
+                <h3>{% translate "Edit comment" %}</h3>
             </header>
             <form action="{% url 'Admin_panel:comment-update' comment.id %}" method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
@@ -126,8 +126,8 @@
                     {% endif %}
                     <small>{{ form.user.help_text }}</small>
                 </div>
-                <button class="btn btn-success">ویرایش</button>
-                <a href="{% url 'Admin_panel:comment' %}" class="btn btn-danger">انصراف</a>
+                <button class="btn btn-success">{% translate "Update" %}</button>
+                <a href="{% url 'Admin_panel:comment' %}" class="btn btn-danger">{% translate "Cancel" %}</a>
             </form>
         </div>
 {% endblock %}

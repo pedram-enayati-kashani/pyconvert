@@ -71,6 +71,12 @@ class Post(models.Model):
     class Meta:
         verbose_name = "پوست"
         verbose_name_plural = "پوست ها"
+        constraints = [
+            models.UniqueConstraint(
+                fields=['slug', 'lang'],
+                name='unique_post_slug_per_lang'
+            )
+        ]
 
     def save(self, *args, **kwargs):
         current_lang = self.lang if self.lang is not None else 'fa'

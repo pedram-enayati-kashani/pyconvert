@@ -32,6 +32,11 @@ class contact(CreateView):
     form_class = ContactUsModelForm
     success_url = reverse_lazy('Client:contact')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
     def form_valid(self, form):
         self.object = form.save()
         token_str = self.object.token

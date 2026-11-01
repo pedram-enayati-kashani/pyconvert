@@ -59,6 +59,16 @@ class ContactUsModelForm(forms.ModelForm):
         }),
     )
 
+    def __init__(self, *args, request=None, **kwargs):
+        self.request = request
+
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
+
+        super().__init__(*args, **kwargs)
+
     class Meta:
         model = ContactUs
         fields = ['full_name', 'email', 'title']
@@ -68,6 +78,8 @@ class ContactUsModelForm(forms.ModelForm):
             ticket = super().save(commit=False)
             if not ticket.token:
                 ticket.token = uuid.uuid4().hex
+
+            ticket.lang = self.lang
 
             if commit:
                 ticket.save()

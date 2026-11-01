@@ -1,6 +1,7 @@
-# App_panel/sitemaps.py
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
+from django.conf import settings
+from django.utils.translation import get_language
 from App_panel.models.PostModel import Post
 from App_panel.models.CategoriesModel import Category
 from App_panel.models.TagModel import Tag
@@ -15,7 +16,12 @@ class PostSitemap(Sitemap):
     limit = 1000
 
     def items(self):
-        return Post.objects.filter(status='published').order_by("-id")
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+
+        return Post.objects.filter(status='published', lang=lang).order_by("-id")
 
     def lastmod(self, obj):
         return obj.updated_at
@@ -27,7 +33,11 @@ class CategorySitemap(Sitemap):
     limit = 1000
 
     def items(self):
-        return Category.objects.filter(status='published').order_by("-id")
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        return Category.objects.filter(status='published',lang=lang).order_by("-id")
 
     def location(self, obj):
         return reverse('Client:category', kwargs={'cat_slug': obj.slug})
@@ -41,7 +51,11 @@ class TagSitemap(Sitemap):
     limit = 1000
 
     def items(self):
-        return Tag.objects.filter(status='published').order_by("-id")
+        available_langs = [code for code, name in settings.LANGUAGES]
+        lang = get_language()
+        if lang not in available_langs:
+            lang = 'fa'
+        return Tag.objects.filter(status='published',lang=lang).order_by("-id")
 
     def location(self, obj):
         return reverse('Client:tag', kwargs={'tag_slug': obj.slug})
@@ -55,9 +69,13 @@ class SectionSitemap(Sitemap):
     limit = 1000
 
     def items(self):
+        available_langs = [code for code, name in settings.LANGUAGES]
+        lang = get_language()
+        if lang not in available_langs:
+            lang = 'fa'
         return (
             Section.objects
-            .filter(status="active")
+            .filter(status="active",lang=lang)
             .filter(
                 Q(type="post") |
                 Q(slug__in=["rent", "sell-buy"])
@@ -66,13 +84,6 @@ class SectionSitemap(Sitemap):
         )
 
     def location(self, obj):
-        special_routes = {
-            "rent": "Client:rent",
-            "sell-buy": "Client:sell-buy",
-        }
-        if obj.slug in special_routes:
-            return reverse(special_routes[obj.slug])
-
         return reverse("Client:section", kwargs={"section_slug": obj.slug})
 
     def lastmod(self, obj):
@@ -83,7 +94,11 @@ class PagesSitemap(Sitemap):
     limit = 1000
 
     def items(self):
-        return Page.objects.filter(status='active').order_by("-id")
+        available_langs = [code for code, name in settings.LANGUAGES]
+        lang = get_language()
+        if lang not in available_langs:
+            lang = 'fa'
+        return Page.objects.filter(status='active',lang=lang).order_by("-id")
 
     def location(self, obj):
         if obj.slug == "home":

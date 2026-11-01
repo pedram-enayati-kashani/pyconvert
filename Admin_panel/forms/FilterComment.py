@@ -1,16 +1,17 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 class FilterCommentForm(forms.Form):
     status = forms.ChoiceField(
         choices=[
-            ('all', 'همه'),
-            ('approved', 'تایید شده'),
-            ('rejected', 'رد شده'),
-            ('pending', 'در انتظار تایید'),
-            ('see', 'مشاهده شده'),
-            ('not-see', 'مشاهده نشده'),
+            ('all', _('All')),
+            ('approved', _('Approved')),
+            ('rejected', _('Rejected')),
+            ('pending', _('Pending')),
+            ('see', _('Seen')),
+            ('not-see', _('Unseen')),
         ],
-        label="وضعیت",
+        label=_('Status'),
         initial='all',
         required=False,
         widget = forms.Select(attrs={'class': 'form-select'})

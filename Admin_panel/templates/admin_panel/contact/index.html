@@ -1,8 +1,8 @@
 {% extends "admin_layouts/layouts.html" %}
 {% load pager %}
-{% load permissions %}
+{% load permissions i18n %}
 {% block meta %}
-    <title>تماس باما</title>
+    <title>{% translate "Contacts us" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -24,8 +24,7 @@
     {% endif %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>تماس باما</h3>
-{#            <a href="{% url 'Admin_panel:page-create' %}" class="createLink">ساخت صفحات جدید</a>#}
+            <h3>{% translate "Contacts us" %}</h3>
         </header>
         <div class="filter-form mb-4">
             <form class="d-flex align-items-center gap-1 flex-wrap" method="GET"
@@ -34,18 +33,18 @@
                     {{ filter_form.status.label_tag }}
                     {{ filter_form.status }}
                 </div>
-                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
-                <a href="{% url 'Admin_panel:contact' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+                <button type="submit" class="btn btn-primary">{% translate "Filtering" %}</button>
+                <a href="{% url 'Admin_panel:contact' %}" class="btn btn-secondary">{% translate "Clear filter" %}</a>
             </form>
         </div>
         <div class="responsiverTable">
             <table class="table table-bordered table-striped m-0 mb-3">
                 <thead>
-                <th scope="col">عنوان</th>
-                <th scope="col">وضعیت</th>
-                <th scope="col">مشاهده شده/نشده</th>
-                <th scope="col">تعداد پیام ها</th>
-                <th scope="col">تنظیمات</th>
+                <th scope="col">{% translate "Title" %}</th>
+                <th scope="col">{% translate "Status" %}</th>
+                <th scope="col">{% translate "Seen / Unseen" %}</th>
+                <th scope="col">{% translate "Messages Count" %}</th>
+                <th scope="col">{% translate "Settings" %}</th>
                 </thead>
                 <tbody>
                 {% for contact in contacts %}
@@ -53,20 +52,20 @@
                         <td>{{ contact.title }}</td>
                         <td>
                             {% if contact.status == 'pending' %}
-                                در انتظار پاسخ
+                                {% translate "Pending" %}
                             {% elif contact.status == 'answered' %}
-                                پاسخ داده شده
+                                {% translate "Answered" %}
                             {% elif contact.status == 'accepted' %}
-                                تایید شده توسط کاربر
+                                {% translate "Accepted" %}
                             {% elif contact.status == 'closed' %}
-                                بسته شده
+                                {% translate "Closed" %}
                             {% endif %}
                         </td>
                         <td>
                             {% if contact.saw == 'see' %}
-                                مشاهده شد
+                                {% translate "Seen" %}
                             {% elif contact.saw == 'not-see' %}
-                                مشاهده نشد
+                                {% translate "Unseen" %}
                             {% endif %}
                         </td>
                         <td>{{ contact.messages_count }}</td>

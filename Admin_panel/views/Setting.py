@@ -1,9 +1,11 @@
-from Admin_panel.mixin.auth import AdminRequiredMixin
 from django.views.generic import TemplateView, UpdateView
 from App_panel.models.SiteInfoModel import SiteInfo
 from django.urls import reverse_lazy
-from ..forms.SiteInfo import SiteInfoForm
 from django.core.cache import cache
+from django.utils.translation import get_language
+from django.conf import settings
+from Admin_panel.forms.SiteInfo import SiteInfoForm
+from Admin_panel.mixin.auth import AdminRequiredMixin
 
 class Index(AdminRequiredMixin, TemplateView):
     template_name = 'admin_panel/setting/index.html'
@@ -11,8 +13,12 @@ class Index(AdminRequiredMixin, TemplateView):
     context_object_name = 'setting'
 
     def get_context_data(self, **kwargs):
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
         context = super().get_context_data(**kwargs)
-        context[self.context_object_name] = SiteInfo.objects.filter(id=1).first()
+        context[self.context_object_name] = SiteInfo.objects.filter(lang=lang).first()
         return context
 
 
@@ -24,7 +30,11 @@ class Update(AdminRequiredMixin, UpdateView):
     context_object_name = 'setting'
 
     def get_object(self, queryset=None):
-        return SiteInfo.objects.filter(id=1).first()
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        return SiteInfo.objects.filter(lang=lang).first()
 
     def form_valid(self, form):
         response = super().form_valid(form)

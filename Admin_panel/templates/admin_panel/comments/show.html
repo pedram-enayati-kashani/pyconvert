@@ -1,8 +1,8 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load permissions %}}
+{% load permissions i18n %}}
 
 {% block meta %}
-    <title>نظرات</title>
+    <title>{% translate "Show comment" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -24,35 +24,35 @@
         {% endif %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <a href="{% url 'Admin_panel:comment' %}" class="btn btn-primary">بازگشت</a>
-            <a href="{% url 'Admin_panel:comment-update' comment.id %}" class="btn btn-primary">ویرایش اطلاعات</a>
+            <a href="{% url 'Admin_panel:comment' %}" class="btn btn-primary">{% translate "Return back" %}</a>
+            <a href="{% url 'Admin_panel:comment-update' comment.id %}" class="btn btn-primary">{% translate "Update" %}</a>
         </header>
         <div class="dataContent">
             <div class="">
-                <span class="label">نام :</span>
+                <span class="label">{% translate "Full name" %} :</span>
                 <p>{{ comment.fullName }}</p>
             </div>
             <div class="">
-                <span class="label">ایمیل :</span>
+                <span class="label">{% translate "Email" %} :</span>
                 <p>{{ comment.email }}</p>
             </div>
             <div class="">
-                <span class="label">محتوا :</span>
+                <span class="label">{% translate "Content" %} :</span>
                 <p>{{ comment.body }}</p>
             </div>
             <div>
-                <span class="label">مربوط به نوشته :</span>
+                <span class="label">{% translate "Related post" %}:</span>
                 <p>{{ comment.post.title }}</p>
             </div>
         </div>
         {% if comment.children.all %}
             <table class="table table-bordered table-striped m-0 mb-3">
                 <thead>
-                    <th scope="col">نوشته</th>
-                    <th scope="col">نظر</th>
-                    <th scope="col">وضعیت</th>
-                    <th scope="col">مشاهده شده/نشده</th>
-                    <th scope="col">تنظیمات</th>
+                    <th scope="col">{% translate "Post" %}</th>
+                    <th scope="col">{% translate "Comment" %}</th>
+                    <th scope="col">{% translate "Status" %}</th>
+                    <th scope="col">{% translate "Seen / Unseen" %}</th>
+                    <th scope="col">{% translate "Settings" %}</th>
                 </thead>
                 <tbody>
                 {% for sub in comment.children.all %}
@@ -61,28 +61,28 @@
                         <td>{{ sub.body }}</td>
                         <td>
                             {% if sub.status == 'approved' %}
-                                تایید شده
+                                {% translate "Approved" %}
                             {% elif sub.status == 'pending' %}
-                                در انتظار تایید
+                                {% translate "Pending" %}
                             {% elif sub.status == 'rejected' %}
-                                رد شده
+                                {% translate "Rejected" %}
                             {% endif %}
                         </td>
                         <td>
                             {% if sub.saw == 'see' %}
-                                مشاهده شده
+                                {% translate "Seen" %}
                             {% elif sub.saw == 'not-see' %}
-                                مشاهده نشده
+                                {% translate "Unseen" %}
                             {% endif %}
                         </td>
                         <td class="d-flex gap-2 align-items-center">
-                            <a href="{% url 'Admin_panel:comment-show' sub.id %}" class="btn btn-primary">نمایش</a>
-                            <a href="{% url 'Admin_panel:comment-update' sub.id %}" class="btn btn-primary">ویرایش اطلاعات</a>
+                            <a href="{% url 'Admin_panel:comment-show' sub.id %}" class="btn btn-primary">{% translate "Show" %}</a>
+                            <a href="{% url 'Admin_panel:comment-update' sub.id %}" class="btn btn-primary">{% translate "Update" %}</a>
                             {% if request.user|is_admin %}
                                 <form action="{% url 'Admin_panel:comment-delete' sub.id %}" class="Delete-Form" method="post">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger">
-                                        حذف
+                                        {% translate "Delete" %}
                                     </button>
                                 </form>
                             {% endif %}

@@ -6,13 +6,15 @@ from django.views.generic import UpdateView, CreateView, DeleteView, DetailView
 from django.views.generic.list import ListView
 from django.db import transaction
 from django.db.models import Count, Prefetch
-from Admin_panel.forms.Contact import ContactForm
-from ..forms.Filter import FilterForm
-from ..helpers.pager import get_visible_page_numbers
-from Admin_panel.mixin.auth import AdminRequiredMixin
-from App_panel.models.ContactUsModel import ContactUs, ContactMessage
-from Admin_panel.helpers.Email_Config import send_Email_Contact
 from django.urls import reverse_lazy, reverse
+from django.conf import settings
+from django.utils.translation import get_language
+from Admin_panel.forms.Contact import ContactForm
+from Admin_panel.forms.Filter import FilterForm
+from Admin_panel.helpers.pager import get_visible_page_numbers
+from Admin_panel.mixin.auth import AdminRequiredMixin
+from Admin_panel.helpers.Email_Config import send_Email_Contact
+from App_panel.models.ContactUsModel import ContactUs, ContactMessage
 
 class Index(AdminRequiredMixin, ListView):
     template_name = 'admin_panel/contact/index.html'
@@ -22,7 +24,11 @@ class Index(AdminRequiredMixin, ListView):
     form_class = FilterForm
 
     def get_queryset(self):
-        return ContactUs.objects.annotate(
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        return ContactUs.objects.filter(lang=lang).annotate(
             messages_count=Count('messages')
         ).order_by('-id')
 
@@ -69,7 +75,9 @@ class Show(AdminRequiredMixin, DetailView):
 class Reply(AdminRequiredMixin, View):
     def post(self, request, pk):
         contact = get_object_or_404(ContactUs, pk=pk)
+
         form = ContactForm(request.POST, request.FILES, user=request.user, ticket=contact)
+
         if form.is_valid():
             email_sent = False
             try:
@@ -78,45 +86,54 @@ class Reply(AdminRequiredMixin, View):
                     contact.status = 'answered'
                     contact.save(update_fields=['status'])
 
-                messages.success(request, 'پاسخ با موفقیت در سیستم ثبت شد.')
+                messages.success(request, _("Reply successfully registered in the system."))
+
                 try:
                     if contact.email:
                         token = contact.token
                         full_link = self.request.build_absolute_uri(
                             reverse('Client:contact-token', kwargs={'token_id': token})
                         )
-                        email_sent = send_Email_Contact(contact,full_link)
+                        email_sent = send_Email_Contact(contact, full_link)
                 except Exception as mail_error:
-                    messages.warning(request, f'پاسخ ثبت شد، اما خطایی در ارسال ایمیل رخ داد: {str(mail_error)}')
+                    messages.warning(
+                        request,
+                        _("Reply registered, but an error occurred while sending the email: %(error)s") % {
+                            'error': str(mail_error)}
+                    )
 
                 if email_sent:
-                    messages.info(request, 'ایمیل اطلاع‌رسانی با موفقیت برای کاربر ارسال شد.')
+                    messages.info(request, _("Notification email successfully sent to the user."))
 
             except Exception as e:
-                messages.error(request, f'خطای دیتابیس: {str(e)}')
+                messages.error(
+                    request,
+                    _("Database error: %(error)s") % {'error': str(e)}
+                )
         else:
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.error(request, f"{error}")
+                    messages.error(request, error)
 
         return redirect('Admin_panel:contact-show', pk=pk)
 
 
-class Active(AdminRequiredMixin,View):
+class Active(AdminRequiredMixin, View):
     model = ContactUs
     success_url = reverse_lazy('Admin_panel:page')
     def get(self, request, pk, *args, **kwargs):
         page = get_object_or_404(self.model, pk=pk)
         page.toggle_status()
+
         if page.status == 'active':
             messages.success(
                 request,
-                f"برچسب '{page.title}' فعال شد.",
+                _("Message '%(title)s' has been activated.") % {'title': page.title},
             )
         else:
             messages.warning(
                 request,
-                f"برچسب '{page.title}' غیرفعال شد.",
+                _("Message '%(title)s' has been deactivated.") % {'title': page.title},
             )
 
         next_url = request.GET.get('next')
@@ -134,7 +151,11 @@ class Query(AdminRequiredMixin, ListView):
 
     def get_queryset(self):
         self.form = self.form_class(self.request.GET)
-        queryset = super().get_queryset()
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        queryset = super().get_queryset().filter(lang=lang)
         if self.form.is_valid():
             status_filter = self.form.cleaned_data.get('status', 'all')
             if status_filter == 'active':

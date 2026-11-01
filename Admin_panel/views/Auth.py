@@ -9,7 +9,7 @@ from Admin_panel.forms.Auth import LoginForm
 # Auth
 class LoginView(View):
     MAX_LOGIN_ATTEMPTS = 3
-    LOCKOUT_TIME = 180  # 3 دقیقه
+    LOCKOUT_TIME = 180
 
     def get(self, request):
         return render(request, 'admin_panel/auth/login.html', {

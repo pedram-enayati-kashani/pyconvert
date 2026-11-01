@@ -21,9 +21,9 @@ class SiteInfo(models.Model):
         ('en', 'انگلیسی'),
     )
 
-    title = models.CharField(max_length=150, verbose_name="عنوان")
-    title_seo = models.CharField(max_length=150, verbose_name="عنوان سرچ گوگل")
-    description_seo = models.TextField(max_length=255, verbose_name="خلاصه سرچ گوگل")
+    title = models.CharField(max_length=200, verbose_name="عنوان")
+    title_seo = models.CharField(max_length=60, verbose_name="عنوان سرچ گوگل")
+    description_seo = models.TextField(max_length=160, verbose_name="خلاصه سرچ گوگل")
     logo = models.ImageField(upload_to=upload_image_Logo_icon, verbose_name="لوگو")
     favicon = models.ImageField(upload_to=upload_image_Logo_icon, verbose_name="ایکون")
     favicon_16 = models.ImageField(upload_to=upload_image_Logo_icon, blank=True, null=True)

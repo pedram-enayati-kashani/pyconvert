@@ -4,9 +4,11 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, CreateView, DeleteView
 from django.views.generic.list import ListView
-from ..forms.Users import UserForm
-from ..forms.FilterActive import FilterForm
-from ..helpers.pager import get_visible_page_numbers
+from django.utils.translation import get_language
+from django.conf import settings
+from Admin_panel.forms.Users import UserForm
+from Admin_panel.forms.FilterActive import FilterForm
+from Admin_panel.helpers.pager import get_visible_page_numbers
 from Admin_panel.mixin.auth import AdminRequiredMixin
 from App_panel.models import Users
 
@@ -19,7 +21,12 @@ class Index(AdminRequiredMixin, ListView):
     form_class = FilterForm
 
     def get_queryset(self):
-        query = super().get_queryset().exclude(id=1)
+        query = super().get_queryset().order_by('id')
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
+            query = query.filter(lang=lang)
+        query = query.exclude(id=1)
         return query
 
     def get_context_data(self, **kwargs):
@@ -83,6 +90,11 @@ class Query(AdminRequiredMixin, ListView):
     def get_queryset(self):
         self.form = self.form_class(self.request.GET)
         queryset = super().get_queryset().exclude(id=1)
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        queryset = queryset.filter(lang=lang)
         if self.form.is_valid():
             status_filter = self.form.cleaned_data.get('status', 'all')
             if status_filter == 'active':

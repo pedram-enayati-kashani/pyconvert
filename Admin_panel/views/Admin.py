@@ -1,28 +1,32 @@
-# views
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
 from django.http import HttpRequest
+from django.utils.translation import get_language
 from Admin_panel.mixin.auth import AdminOrAuthorRequiredMixin
 from Admin_panel.forms.Profile import ProfileForm, ResetPasswordForm
-from App_panel.models import Users, Post, Comments, ContactUs
 from Admin_panel.helpers.client.most_visited import get_posts_total_views
+from App_panel.models import Users, Post, Comments, ContactUs
 
 class DashboardView(AdminOrAuthorRequiredMixin, TemplateView):
     template_name = 'admin_panel/dashboard.html'
 
     def get_context_data(self, **kwargs):
+        lang = get_language()
+        if not lang:
+            lang = 'fa'
+
         context = super().get_context_data(**kwargs)
-        posts = list(Post.objects.filter(status="published"))
+        posts = list(Post.objects.filter(status="published",lang=lang))
         post_ids = [post.id for post in posts]
         views_map = get_posts_total_views(post_ids)
         for post in posts:
             post.views_count = views_map.get(post.id, 0)
         top_posts = sorted(posts, key=lambda x: x.views_count, reverse=True)[:10]
         context['top_posts'] = top_posts
-        context['comment_count'] = Comments.objects.filter(saw="not-see").count()
-        context["contact_count"] = ContactUs.objects.filter(saw="not-see").count()
+        context['comment_count'] = Comments.objects.filter(saw="not-see",lang=lang).count()
+        context["contact_count"] = ContactUs.objects.filter(saw="not-see",lang=lang).count()
         return context
 
 # profile

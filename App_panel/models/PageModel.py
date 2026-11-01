@@ -48,6 +48,12 @@ class Page(models.Model):
     class Meta:
         verbose_name = "صفحه"
         verbose_name_plural = "صفحه ها"
+        constraints = [
+            models.UniqueConstraint(
+                fields=['slug', 'lang'],
+                name='unique_page_slug_per_lang'
+            )
+        ]
 
     def save(self, *args, **kwargs):
         current_lang = self.lang if self.lang is not None else 'fa'

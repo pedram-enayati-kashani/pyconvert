@@ -1,39 +1,40 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from App_panel.models.SiteInfoModel import SiteInfo
 from PIL import Image
 
 
 class SiteInfoForm(forms.ModelForm):
     title = forms.CharField(
-        label='عنوان',
-        max_length=120,
+        label=_('Title'),
+        max_length=200,
         error_messages={
-            'required': 'عنوان اجباری می‌باشد',
-            'max_length': 'عنوان نباید بیشتر از 120 کاراکتر باشد',
+            'required': _("Title is required."),
+            'max_length': _("Title cannot be more than %(limit_value)d characters."),
         },
-        help_text="حداکثر 120 کاراکتر",
+        help_text=_("Maximum 120 characters."),
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     title_seo = forms.CharField(
-        label='عنوان گوگل',
+        label=_('Meta title'),
         max_length=60,
         required=False,
         error_messages={
-            'max_length': 'عنوان گوگل نباید بیشتر از 60 کاراکتر باشد',
+            'max_length': _("Meta title cannot be more than %(limit_value)d characters."),
         },
-        help_text="بین 30 تا 60 کاراکتر",
+        help_text=_("Between 30 and 60 characters."),
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     description_seo = forms.CharField(
-        label='توضیحات گوگل',
+        label=_('Meta description'),
         max_length=160,
         required=False,
         error_messages={
-            'max_length': 'توضیحات گوگل نباید بیشتر از 160 کاراکتر باشد',
+            'max_length': _("Meta description cannot be more than %(limit_value)d characters."),
         },
-        help_text="بین 100 تا 160 کاراکتر",
+        help_text=_("Between 100 and 160 characters."),
         widget=forms.Textarea(attrs={
             'class': 'form-control',
             'rows': 3,
@@ -41,52 +42,52 @@ class SiteInfoForm(forms.ModelForm):
     )
 
     logo = forms.ImageField(
-        label='عکس بخش',
+        label=_('Site Logo'),
         required=False,
-        help_text="پیشنهاد: 300×100 یا SVG",
+        help_text=_("Recommended: 300x100 or SVG."),
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
 
     favicon = forms.ImageField(
-        label='عکس بخش',
+        label=_('Site Icon'),
         required=False,
-        help_text="تصویر باید مربع و حداقل 512×512 پیکسل باشد (PNG یا SVG)",
+        help_text=_("Image must be square and at least 512x512 pixels (PNG or SVG)."),
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
 
     headMeta = forms.CharField(
-        label='متا های درون هد',
+        label=_('Head Meta Tags'),
         required=False,
         widget=forms.Textarea(attrs={
             'class': 'form-control',
             'rows': 8,
-            'dir':'ltr'
+            'dir': 'ltr'
         }),
     )
 
     footerScript = forms.CharField(
-        label='اسکریپت های درون فوتر',
+        label=_('Footer Scripts'),
         required=False,
         widget=forms.Textarea(attrs={
             'class': 'form-control',
             'rows': 8,
-            'dir':'ltr'
+            'dir': 'ltr'
         }),
     )
 
     robotsText = forms.CharField(
-        label='محتوای درون robots.text',
+        label=_('robots.txt Content'),
         required=False,
         widget=forms.Textarea(attrs={
             'class': 'form-control',
             'rows': 8,
-            'dir':'ltr'
+            'dir': 'ltr'
         }),
     )
 
     class Meta:
         model = SiteInfo
-        fields = ['title', 'title_seo', 'description_seo','logo','favicon','headMeta','footerScript','robotsText']
+        fields = ['title', 'title_seo', 'description_seo', 'logo', 'favicon', 'headMeta', 'footerScript', 'robotsText']
 
     def clean_favicon(self):
         favicon = self.cleaned_data.get("favicon")
@@ -99,10 +100,10 @@ class SiteInfoForm(forms.ModelForm):
 
         # being square
         if width != height:
-            raise forms.ValidationError("ایکون باید مربع باشد (عرض و ارتفاع برابر).")
+            raise forms.ValidationError(_("The icon must be square (equal width and height)."))
 
         # Minimum size
         if width < 512 or height < 512:
-            raise forms.ValidationError("اندازه تصویر باید حداقل 512×512 باشد.")
+            raise forms.ValidationError(_("The image size must be at least 512x512 pixels."))
 
         return favicon
