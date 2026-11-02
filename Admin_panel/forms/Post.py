@@ -30,7 +30,7 @@ class PostForm(forms.ModelForm):
         max_length=60,
         required=False,
         error_messages={
-            'max_length': _("Meta Title cannot be more than %(limit_value)d characters.")
+            'max_length': _("Meta title cannot be more than %(limit_value)d characters.")
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
@@ -92,7 +92,7 @@ class PostForm(forms.ModelForm):
 
     categories = forms.ModelMultipleChoiceField(
         queryset=Category.objects.filter(status='published'),
-        label=_("Categories"),  # جمع
+        label=_("Categories"),
         error_messages={
             'required': _("Category selection is required."),
         },
@@ -101,7 +101,7 @@ class PostForm(forms.ModelForm):
 
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.filter(status='published'),
-        label=_("Tags"),  # جمع
+        label=_("Tags"),
         required=False,
         widget=forms.SelectMultiple(attrs={'class': 'form-control','style': 'height: 250px;'})
     )
@@ -180,7 +180,7 @@ class PostForm(forms.ModelForm):
             self.lang = translation.get_language() or 'fa'
 
         super().__init__(*args, **kwargs)
-        print("lang",self.lang)
+
         self.fields['section'].queryset = Section.objects.filter(
             status='active',
             type='post',

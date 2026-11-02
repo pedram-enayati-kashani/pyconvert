@@ -51,12 +51,12 @@ class Active(AppPanelRequiredMixin,View):
         if module.status == 'active':
             messages.success(
                 request,
-                f"ماژول '{module.title}' فعال شد.",
+                f"ماژول '{module.name}' فعال شد.",
             )
         else:
             messages.warning(
                 request,
-                f"ماژول '{module.title}' غیرفعال شد.",
+                f"ماژول '{module.name}' غیرفعال شد.",
             )
         cache.delete("form_builder_status")
         next_url = request.GET.get('next')

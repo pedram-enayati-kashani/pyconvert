@@ -30,7 +30,10 @@ class EmailSettingsForm(forms.ModelForm):
     )
 
     status = forms.ChoiceField(
-        choices=EmailSettings.STATUS_CHOICES,
+        choices=[
+            ('active', 'فعال'),
+            ('inactive', 'غیرفعال')
+        ],
         label='وضعیت فعال / غیرفعال',
         widget=forms.Select(attrs={'class': 'form-control'})
     )

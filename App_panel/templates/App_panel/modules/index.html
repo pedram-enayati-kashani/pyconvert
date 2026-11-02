@@ -30,7 +30,6 @@
         <div class="responsiverTable">
             <table class="table table-bordered table-striped m-0 mb-3">
                 <thead>
-                <th scope="col">عنوان</th>
                 <th scope="col">نام</th>
                 <th scope="col">فعال/غیرفعال</th>
                 <th scope="col">تنظیمات</th>
@@ -38,7 +37,6 @@
                 <tbody>
                 {% for module in modules %}
                     <tr>
-                        <td>{{ module.title }}</td>
                         <td>{{ module.name }}</td>
                         <td>
                             {% if module.status == 'active' %}

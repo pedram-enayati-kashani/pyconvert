@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from module.models.Advertising import AdvText, AdvImage
 from App_panel.models.PostModel import Post
 from App_panel.models.PageModel import Page
@@ -9,70 +10,70 @@ from App_panel.models.SectionModel import Section
 class AdvTextForm(forms.ModelForm):
     # region  field
     title = forms.CharField(
-        label='عنوان',
-        max_length=120,
+        label=_("Title"),
+        max_length=60,
         error_messages={
-            'required': 'عنوان اجباری می‌باشد',
-            'max_length': 'عنوان نباید بیشتر از 120 کاراکتر باشد',
+            'required': _("Title is required."),
+            'max_length': _("Title cannot be more than %(limit_value)d characters."),
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     section = forms.ModelChoiceField(
-        queryset=Section.objects.filter(status='active', type="adv_text"),
-        label='بخش',
-        empty_label=None,
+        queryset=Section.objects.filter(status='active',type="post"),
+        label=_("Section"),
+        empty_label=_("Select a section..."),
         error_messages={
-            'required': 'انتخاب بخش اجباری می‌باشد',
+            'required': _("Section selection is required."),
         },
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     url = forms.CharField(
-        label='آدرس',
+        label=_('URL'),
         error_messages={
-            'required': 'آدرس اجباری می‌باشد',
+            'required': _("URL is required."),
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     rel = forms.MultipleChoiceField(
         choices=[
-            ("nofollow", "عدم انتقال اعتبار سئو (nofollow)"),
-            ("noopener", "امنیت تب جدید (noopener)"),
-            ("noreferrer", "عدم ارسال آدرس مبدا (noreferrer)"),
-            ("ugc", "لینک کاربرساز (ugc)"),
-            ("sponsored", "لینک تبلیغاتی/اسپانسری (sponsored)"),
+            ("nofollow", _("Do not pass SEO credit (nofollow)")),
+            ("noopener", _("New tab security (noopener)")),
+            ("noreferrer", _("Do not send referrer (noreferrer)")),
+            ("ugc", _("User-generated content link (ugc)")),
+            ("sponsored", _("Sponsored/Advertisement link (sponsored)")),
         ],
         required=False,
-        label="ویژگی rel",
+        label=_("Rel Attribute"),
         widget=forms.CheckboxSelectMultiple,
-        help_text = "اگر هیچ گزینه‌ای انتخاب نشود، rel خالی می‌ماند (حالت عادی)."
+        help_text=_("If no option is selected, rel will remain empty (normal mode).")
     )
 
     address_list = forms.TypedChoiceField(
         choices=[],
         coerce=str,
-        label='لیست صفحات سایت',
+        label=_('Site Pages List'),
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'}),
-        help_text = "با انتخاب گزینه های لیست صفحات ادرس صفحه انتخاب شده در فیلد آدرس ثرار خواهد گرفت"
+        help_text=_("By selecting from the site pages list, the selected page address will be placed in the URL field.")
     )
 
     target_blank = forms.BooleanField(
         required=False,
         initial=False,
-        label="باز شدن در تب جدید"
+        label=_("Open in new tab")
     )
 
     status = forms.TypedChoiceField(
         choices=[
-            ('active', 'فعال'),
-            ('inactive', 'غیرفعال'),
+            ('active', _("Active")),
+            ('inactive', _("Inactive"))
         ],
         coerce=str,
         initial='active',
-        label='وضعیت',
+        label=_("Status"),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
@@ -81,7 +82,13 @@ class AdvTextForm(forms.ModelForm):
         model = AdvText
         fields = ['title','section','url','address_list','target_blank','status','rel']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args,request=None, **kwargs):
+
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
+
         super().__init__(*args, **kwargs)
 
         dynamic_choices = [
@@ -89,115 +96,120 @@ class AdvTextForm(forms.ModelForm):
         ]
 
         # page
-        pages = Page.objects.filter(status="active").order_by('id')
+        pages = Page.objects.filter(status="active",lang=self.lang).order_by('id')
         for page in pages:
-            dynamic_choices.append((f'page_{page.id}', f'صفحه - {page.title}'))
+            dynamic_choices.append((f'page_{page.id}', _("Page - %(title)s") % {'title': page.title}))
 
         # post
-        posts = Post.objects.filter(status="published").order_by('id')
+        posts = Post.objects.filter(status="published",lang=self.lang).order_by('id')
         for post in posts:
-            dynamic_choices.append((f'post_{post.id}', f'نوشته - {post.title}'))
-
-        # category
-        categories = Category.objects.filter(status="published").order_by('id')
-        for category in categories:
-            dynamic_choices.append(
-                (f'cate_{category.id}', f'دسته بندی - {category.title}'))
-
-        # tag
-        tags = Tag.objects.filter(status="published").order_by('id')
-        for tag in tags:
-            dynamic_choices.append((f'tag_{tag.id}', f'برچسب - {tag.title}'))
+            dynamic_choices.append((f'post_{post.id}', _("Post - %(title)s") % {'title': post.title}))
 
         # section
-        sections = Section.objects.filter(status="active").order_by('id')
+        sections = Section.objects.filter(status="active",lang=self.lang).order_by('id')
         for section in sections:
-            dynamic_choices.append((f'sec_{section.id}', f'بخش - {section.title}'))
+            dynamic_choices.append((f'sec_{section.id}', _("Section - %(title)s") % {'title': section.title}))
 
         self.fields['address_list'].choices = dynamic_choices
 
         if self.instance and self.instance.pk and self.instance.rel:
             self.initial["rel"] = self.instance.rel.split()
 
+        self.fields['section'].queryset = Section.objects.filter(
+            status='active',
+            type='post',
+            lang=self.lang,
+        )
+
     def clean_rel(self):
         values = self.cleaned_data.get("rel") or []
         return " ".join(values)
 
+
+    def save(self, commit=True):
+        """Save with automatic language setting."""
+        instance = super().save(commit=False)
+        instance.lang = self.lang
+
+        if commit:
+            instance.save()
+
+        return instance
+
+
 class AdvImageForm(forms.ModelForm):
     # region  field
     title = forms.CharField(
-        label='عنوان',
-        max_length=120,
+        label=_("Title"),
+        max_length=60,
         error_messages={
-            'required': 'عنوان اجباری می‌باشد',
-            'max_length': 'عنوان نباید بیشتر از 120 کاراکتر باشد',
+            'required': _("Title is required."),
+            'max_length': _("Title cannot be more than %(limit_value)d characters."),
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     section = forms.ModelChoiceField(
-        queryset=Section.objects.filter(status='active', type="adv_image"),
-        label='بخش',
-        empty_label=None,
+        queryset=Section.objects.filter(status='active',type="post"),
+        label=_("Section"),
+        empty_label=_("Select a section..."),
         error_messages={
-            'required': 'انتخاب بخش اجباری می‌باشد',
+            'required': _("Section selection is required."),
         },
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     image = forms.ImageField(
-        label='عکس',
-        error_messages={
-            'required': 'عکس اجباری می‌باشد',
-        },
+        label=_("Image"),
+        required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
 
     url = forms.CharField(
-        label='آدرس',
+        label=_('URL'),
         error_messages={
-            'required': 'آدرس اجباری می‌باشد',
+            'required': _("URL is required."),
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     rel = forms.MultipleChoiceField(
         choices=[
-            ("nofollow", "عدم انتقال اعتبار سئو (nofollow)"),
-            ("noopener", "امنیت تب جدید (noopener)"),
-            ("noreferrer", "عدم ارسال آدرس مبدا (noreferrer)"),
-            ("ugc", "لینک کاربرساز (ugc)"),
-            ("sponsored", "لینک تبلیغاتی/اسپانسری (sponsored)"),
+            ("nofollow", _("Do not pass SEO credit (nofollow)")),
+            ("noopener", _("New tab security (noopener)")),
+            ("noreferrer", _("Do not send referrer (noreferrer)")),
+            ("ugc", _("User-generated content link (ugc)")),
+            ("sponsored", _("Sponsored/Advertisement link (sponsored)")),
         ],
         required=False,
-        label="ویژگی rel",
+        label=_("Rel Attribute"),
         widget=forms.CheckboxSelectMultiple,
-        help_text = "اگر هیچ گزینه‌ای انتخاب نشود، rel خالی می‌ماند (حالت عادی)."
+        help_text=_("If no option is selected, rel will remain empty (normal mode).")
     )
 
     address_list = forms.TypedChoiceField(
         choices=[],
         coerce=str,
-        label='لیست صفحات سایت',
+        label=_('Site Pages List'),
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'}),
-        help_text = "با انتخاب گزینه های لیست صفحات ادرس صفحه انتخاب شده در فیلد آدرس ثرار خواهد گرفت"
+        help_text=_("By selecting from the site pages list, the selected page address will be placed in the URL field.")
     )
 
     target_blank = forms.BooleanField(
         required=False,
         initial=False,
-        label="باز شدن در تب جدید"
+        label=_("Open in new tab")
     )
 
     status = forms.TypedChoiceField(
         choices=[
-            ('active', 'فعال'),
-            ('inactive', 'غیرفعال'),
+            ('active', _("Active")),
+            ('inactive', _("Inactive"))
         ],
         coerce=str,
         initial='active',
-        label='وضعیت',
+        label=_("Status"),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
@@ -206,7 +218,13 @@ class AdvImageForm(forms.ModelForm):
         model = AdvImage
         fields = ['title','section','url','image','address_list','target_blank','status','rel']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, request=None, **kwargs):
+
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
+
         super().__init__(*args, **kwargs)
 
         dynamic_choices = [
@@ -214,32 +232,27 @@ class AdvImageForm(forms.ModelForm):
         ]
 
         # page
-        pages = Page.objects.filter(status="active").order_by('id')
+        pages = Page.objects.filter(status="active",lang=self.lang).order_by('id')
         for page in pages:
-            dynamic_choices.append((f'page_{page.id}', f'صفحه - {page.title}'))
+            dynamic_choices.append((f'page_{page.id}', _("Page - %(title)s") % {'title': page.title}))
 
         # post
-        posts = Post.objects.filter(status="published").order_by('id')
+        posts = Post.objects.filter(status="published",lang=self.lang).order_by('id')
         for post in posts:
-            dynamic_choices.append((f'post_{post.id}', f'نوشته - {post.title}'))
-
-        # category
-        categories = Category.objects.filter(status="published").order_by('id')
-        for category in categories:
-            dynamic_choices.append(
-                (f'cate_{category.id}', f'دسته بندی - {category.title}'))
-
-        # tag
-        tags = Tag.objects.filter(status="published").order_by('id')
-        for tag in tags:
-            dynamic_choices.append((f'tag_{tag.id}', f'برچسب - {tag.title}'))
+            dynamic_choices.append((f'post_{post.id}', _("Post - %(title)s") % {'title': post.title}))
 
         # section
-        sections = Section.objects.filter(status="active").order_by('id')
+        sections = Section.objects.filter(status="active",lang=self.lang).order_by('id')
         for section in sections:
-            dynamic_choices.append((f'sec_{section.id}', f'بخش - {section.title}'))
+            dynamic_choices.append((f'sec_{section.id}', _("Section - %(title)s") % {'title': section.title}))
 
         self.fields['address_list'].choices = dynamic_choices
+
+        self.fields['section'].queryset = Section.objects.filter(
+            status='active',
+            type='post',
+            lang=self.lang,
+        )
 
         if self.instance and self.instance.pk and self.instance.rel:
             self.initial["rel"] = self.instance.rel.split()
@@ -247,3 +260,13 @@ class AdvImageForm(forms.ModelForm):
     def clean_rel(self):
         values = self.cleaned_data.get("rel") or []
         return " ".join(values)
+
+    def save(self, commit=True):
+        """Save with automatic language setting."""
+        instance = super().save(commit=False)
+        instance.lang = self.lang
+
+        if commit:
+            instance.save()
+
+        return instance

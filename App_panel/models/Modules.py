@@ -2,13 +2,9 @@ from django.db import models
 from django.core.cache import cache
 
 class Modules(models.Model):
-    STATUS_CHOICES = (
-        ('active', 'فعال'),
-        ('inactive', 'غیرفعال'),
-    )
-    title = models.CharField(max_length=60)
     name = models.CharField(max_length=60,unique=True,default='unique')
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='inactive', verbose_name="فعال / غیرفعال")
+    status = models.CharField(max_length=10, default='inactive', verbose_name="فعال / غیرفعال")
+    lang = models.CharField(max_length=2, default='fa', db_index=True, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

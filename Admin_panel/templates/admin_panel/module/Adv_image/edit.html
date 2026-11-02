@@ -1,15 +1,14 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش تبلیغ</title>
-    {{ form.media }}
+    <title>{% translate "Update post" %}</title>
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
         <div id="config_info" data-url="{% url 'Admin_panel:link-resolve_target' %}"></div>
         <header class="headerPage">
-            <h3>ویرایش تبلیغ</h3>
+            <h3>{% translate "Update post" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:adv-image-update' object.id %}" method="post" enctype="multipart/form-data"
               novalidate>
@@ -130,8 +129,8 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ویرایش</button>
-            <a href="{% url 'Admin_panel:adv-image' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Update" %}</button>
+            <a href="{% url 'Admin_panel:adv-image' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

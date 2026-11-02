@@ -8,16 +8,6 @@ from django.core.validators import RegexValidator
 
 class ModuleForm(forms.ModelForm):
     # region  field
-    title = forms.CharField(
-        label='عنوان',
-        max_length=60,
-        error_messages={
-            'required': 'عنوان اجباری می‌باشد',
-            'max_length': 'عنوان نباید بیشتر از 60 کاراکتر باشد',
-        },
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-    )
-
     name = forms.CharField(
         label='نام',
         max_length=60,
@@ -48,7 +38,7 @@ class ModuleForm(forms.ModelForm):
     # endregion
     class Meta:
         model = Modules
-        fields = ['title', 'name','status']
+        fields = ['name','status']
 
     def clean_name(self):
         name = self.cleaned_data.get('name')

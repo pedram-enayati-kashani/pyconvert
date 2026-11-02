@@ -23,7 +23,7 @@ class PageForm(forms.ModelForm):
         max_length=60,
         required=False,
         error_messages={
-            'max_length': _("Meta Title cannot be more than %(limit_value)d characters.")
+            'max_length': _("Meta title cannot be more than %(limit_value)d characters.")
         },
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )

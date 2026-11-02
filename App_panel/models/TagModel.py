@@ -4,29 +4,17 @@ from datetime import datetime
 from django.urls import reverse
 
 class Tag(models.Model):
-    STATUS_CHOICES = (
-        ('draft', 'پیش نویس'),
-        ('pending', 'در انتظار تایید'),
-        ('published', 'منتشر شده'),
-        ('rejected', 'رد شده'),
-    )
-
-    LANG_CHOICES = (
-        ('fa', 'قارسی'),
-        ('en', 'انگلیسی'),
-    )
-
     def upload_image_tags(instance, filename):
         now = datetime.now()
         return f'tags/{now.year}/{now.month:02d}/{now.day:02d}/{filename}'
     title = models.CharField(max_length=160, verbose_name="عنوان")
     title_seo = models.CharField(max_length=60, null=True, blank=True, verbose_name="عنوان گوگل")
-    status = models.CharField(max_length=10,db_index=True, choices=STATUS_CHOICES, default='draft', verbose_name="فعال / غیرفعال")
+    status = models.CharField(max_length=10,db_index=True, default='draft', verbose_name="فعال / غیرفعال")
     description = models.TextField(verbose_name="توضیحات",null=True, blank=True)
     description_seo = models.TextField(max_length=160, null=True, blank=True, verbose_name="توضیحات گوگل")
     slug = models.SlugField(null=False,db_index=True, verbose_name="اسلاک", max_length=255,allow_unicode=True,blank=True)
     image = models.ImageField(upload_to=upload_image_tags, verbose_name="عکس", null=True, blank=True)
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
+    lang = models.CharField(max_length=2, default='fa', db_index=True,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

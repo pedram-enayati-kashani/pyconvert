@@ -5,27 +5,13 @@ from App_panel.models.UsersModel import Users
 from datetime import datetime
 
 class ContactUs(models.Model):
-    STATUS_CHOICES = (
-        ('pending', 'در انتظار پاسخ'),
-        ('answered', 'پاسخ داده شده'),
-        ('accepted', 'تایید شده توسط کاربر'),
-        ('closed', 'بسته شده'),
-    )
-    SAW_CHOICES = (
-        ('see', 'مشاهده شده'),
-        ('not-see', 'مشاهده نشده'),
-    )
-    LANG_CHOICES = (
-        ('fa', 'قارسی'),
-        ('en', 'انگلیسی'),
-    )
     token = models.CharField(max_length=64,unique=True,default=uuid.uuid4,editable=False,verbose_name='توکن پیگیری')
     title = models.CharField(max_length=300, verbose_name='عنوان موضوع')
     email = models.EmailField(max_length=300, verbose_name='ایمیل فرستنده')
     full_name = models.CharField(max_length=300, verbose_name='نام و نام خانوادگی')
-    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='pending', verbose_name='وضعیت تیکت')
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
-    saw = models.CharField(max_length=10, choices=SAW_CHOICES, default='not-see', verbose_name='وضعیت مشاهده ادمین')
+    status = models.CharField(max_length=15, default='pending', verbose_name='وضعیت تیکت')
+    lang = models.CharField(max_length=2, default='fa', db_index=True,null=True, blank=True)
+    saw = models.CharField(max_length=10, default='not-see', verbose_name='وضعیت مشاهده ادمین')
     created_at = models.DateTimeField(verbose_name='تاریخ ایجاد تیکت', auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, verbose_name='آخرین بروزرسانی')
 

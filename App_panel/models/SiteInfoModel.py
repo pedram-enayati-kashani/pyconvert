@@ -6,20 +6,6 @@ from django.core.files.base import ContentFile
 class SiteInfo(models.Model):
     def upload_image_Logo_icon(instance, filename):
         return f'site/{filename}'
-    STATUS_CHOICES = (
-        ('active', 'فعال'),
-        ('inactive', 'غیرفعال'),
-    )
-
-    maintenance_CHOICES = (
-        ('active', 'فعال'),
-        ('inactive', 'غیرفعال'),
-    )
-
-    LANG_CHOICES = (
-        ('fa', 'قارسی'),
-        ('en', 'انگلیسی'),
-    )
 
     title = models.CharField(max_length=200, verbose_name="عنوان")
     title_seo = models.CharField(max_length=60, verbose_name="عنوان سرچ گوگل")
@@ -32,12 +18,12 @@ class SiteInfo(models.Model):
     android_192 = models.ImageField(upload_to=upload_image_Logo_icon, blank=True, null=True)
     android_512 = models.ImageField(upload_to=upload_image_Logo_icon, blank=True, null=True)
     favicon_ico = models.FileField(upload_to=upload_image_Logo_icon, blank=True, null=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active', verbose_name="فعال / غیرفعال")
+    status = models.CharField(max_length=10, default='active', verbose_name="فعال / غیرفعال")
     headMeta = models.TextField(verbose_name="متا های درون هد",null=True,blank=True)
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
+    lang = models.CharField(max_length=2, default='fa', db_index=True,null=True, blank=True)
     footerScript = models.TextField(verbose_name="اسکریپت های درون فوتر",null=True,blank=True)
     robotsText = models.TextField(verbose_name="محتوای robots.txt",null=True,blank=True)
-    maintenance = models.CharField(max_length=10, choices=maintenance_CHOICES, default='inactive', verbose_name="فعال / غیرفعال")
+    maintenance = models.CharField(max_length=10, default='inactive', verbose_name="فعال / غیرفعال")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

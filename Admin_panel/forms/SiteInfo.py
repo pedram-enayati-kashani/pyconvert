@@ -12,7 +12,7 @@ class SiteInfoForm(forms.ModelForm):
             'required': _("Title is required."),
             'max_length': _("Title cannot be more than %(limit_value)d characters."),
         },
-        help_text=_("Maximum 120 characters."),
+        help_text=_("Maximum 200 characters."),
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 

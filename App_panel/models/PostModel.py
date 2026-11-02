@@ -21,22 +21,6 @@ class PostManager(models.Manager.from_queryset(PostQuerySet)):
         return super().get_queryset().filter(is_deleted=False)
 
 class Post(models.Model):
-    STATUS_CHOICES = (
-        ('draft', 'پیش نویس'),
-        ('pending', 'در انتظار تایید'),
-        ('published', 'منتشر شده'),
-        ('rejected', 'رد شده'),
-    )
-
-    WATERMARK_CHOICES = (
-        ('active', 'فعال'),
-        ('inactive', 'غیرفعال'),
-    )
-
-    LANG_CHOICES = (
-        ('fa', 'قارسی'),
-        ('en', 'انگلیسی'),
-    )
     def upload_image_Post_path(instance, filename):
         now = datetime.now()
         return f'posts/{now.year}/{now.month:02d}/{now.day:02d}/{filename}'
@@ -52,11 +36,11 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, related_name="tags", verbose_name="برچسب", blank=True)
     pages = models.ForeignKey(Page, on_delete=models.SET_NULL, related_name="pages", verbose_name="صفحات",default=1,null=True, blank=True)
     image = models.ImageField(upload_to=upload_image_Post_path, verbose_name="عکس")
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
-    status = models.CharField(max_length=10,db_index=True, choices=STATUS_CHOICES, default='active', verbose_name="فعال / غیرفعال")
+    lang = models.CharField(max_length=2, default='fa', db_index=True,null=True, blank=True)
+    status = models.CharField(max_length=10,db_index=True, default='active', verbose_name="فعال / غیرفعال")
     slug = models.SlugField(default='', null=False, db_index=True, max_length=255, allow_unicode=True,blank=True)
     is_deleted = models.BooleanField(default=False, db_index=True,verbose_name="حذف شده / نشده")
-    watermark = models.CharField(max_length=10, db_index=True, choices=WATERMARK_CHOICES, default='active',verbose_name="فعال / غیرفعال")
+    watermark = models.CharField(max_length=10, db_index=True, default='active',verbose_name="فعال / غیرفعال")
     view_numbers = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

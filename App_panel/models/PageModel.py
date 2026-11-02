@@ -16,14 +16,6 @@ class PageManager(models.Manager.from_queryset(PageQuerySet)):
         return super().get_queryset().filter(is_deleted=False)
 
 class Page(models.Model):
-    STATUS_CHOICES = (
-        ('active', 'فعال'),
-        ('inactive', 'غیرفعال'),
-    )
-    LANG_CHOICES = (
-        ('fa', 'قارسی'),
-        ('en', 'انگلیسی'),
-    )
     def upload_image_pages(instance, filename):
         now = datetime.now()
         return f'pages/{now.year}/{now.month:02d}/{now.day:02d}/{filename}'
@@ -34,8 +26,8 @@ class Page(models.Model):
     description_seo = models.TextField(null=True, verbose_name="توضیحات گوگل", blank=True)
     slug = models.SlugField(default='', null=False, db_index=True, verbose_name="اسلاگ", max_length=255,allow_unicode=True,blank=True)
     image = models.ImageField(upload_to=upload_image_pages, verbose_name="عکس", null=True, blank=True)
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES,db_index=True, default='active', verbose_name="فعال / غیرفعال")
+    lang = models.CharField(max_length=2, default='fa', db_index=True,null=True, blank=True)
+    status = models.CharField(max_length=10, db_index=True, default='active', verbose_name="فعال / غیرفعال")
     is_deleted = models.BooleanField(default=False,db_index=True, verbose_name="حذف شده / نشده")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

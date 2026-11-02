@@ -16,26 +16,6 @@ class SectionManager(models.Manager.from_queryset(SectionQuerySet)):
         return super().get_queryset().filter(is_deleted=False)
 
 class Section(models.Model):
-    STATUS_CHOICES = (
-        ('active', 'فعال'),
-        ('inactive', 'غیرفعال'),
-    )
-
-    LANG_CHOICES = (
-        ('fa', 'قارسی'),
-        ('en', 'انگلیسی'),
-    )
-
-    TYPE_CHOICES = (
-        ('post', 'نوشته'),
-        ('last_news', 'آخرین اخبار'),
-        ('most_visited', 'پربازدید ترین'),
-        ('most_commented', 'پربحث ترین'),
-        ('adv_text', 'تبلیغ متنی'),
-        ('adv_image', 'تبلیغ بنر'),
-        ('no_post', 'اطلاعیه بدون نوشته'),
-    )
-
     def upload_image_sections(instance, filename):
         now = datetime.now()
         return f'sections/{now.year}/{now.month:02d}/{now.day:02d}/{filename}'
@@ -43,13 +23,13 @@ class Section(models.Model):
     name = models.CharField(max_length=60, verbose_name="نام بخش",blank=True, null=True)
     title = models.CharField(max_length=160, verbose_name="عنوان")
     title_seo = models.CharField(max_length=60, null=True, verbose_name="عنوان گوگل", blank=True)
-    status = models.CharField(max_length=10,db_index=True, choices=STATUS_CHOICES, default='active', verbose_name="فعال / غیرفعال")
-    type = models.CharField(max_length=14, choices=TYPE_CHOICES,db_index=True, default='post', verbose_name="نوع بخش")
+    status = models.CharField(max_length=10,db_index=True, default='active', verbose_name="فعال / غیرفعال")
+    type = models.CharField(max_length=14, db_index=True, default='post', verbose_name="نوع بخش")
     description = models.TextField(verbose_name="توضیحات",null=True, blank=True)
     display_number = models.IntegerField(verbose_name="تعداد نمایش", default=1)
     description_seo = models.TextField(max_length=160, null=True, verbose_name="توضیحات گوگل", blank=True)
     slug = models.SlugField(default='',db_index=True, verbose_name="اسلاگ", max_length=255, allow_unicode=True,blank=True)
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
+    lang = models.CharField(max_length=2, default='fa', db_index=True,null=True, blank=True)
     image = models.ImageField(upload_to=upload_image_sections, verbose_name="عکس", null=True, blank=True)
     is_deleted = models.BooleanField(default=False,db_index=True, verbose_name="حذف شده / نشده")
     posts_updated_at = models.DateTimeField(default=timezone.now, db_index=True)
