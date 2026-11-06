@@ -154,19 +154,18 @@ class GroupCreate(View):
 class ModuleCreate(View):
     def get(self, request, *args, **kwargs):
         data = [
-            {'title':"فرم ساز","name":"form_builder"},
-            {'title':"منو ساز","name":"Menu_Builder"},
-            {'title':"شبکه های اجتماعی","name":"social_media"},
-            {'title':"تبلیغات متنی","name":"adv_text"},
-            {'title':"تبلیغات بنر","name":"adv_image"},
-            {'title':"هدایتگر آدرس‌ها","name":"redirect_rule"},
-            {'title':"واترمارک","name":"watermark"},
-            {'title':"املاک","name":"Real_Estate"},
-            {'title':"رسانه","name":"media"},
+            {"name":"form_builder"},
+            {"name":"Menu_Builder"},
+            {"name":"social_media"},
+            {"name":"adv_text"},
+            {"name":"adv_image"},
+            {"name":"redirect_rule"},
+            {"name":"watermark"},
+            {"name":"Real_Estate"},
+            {"name":"media"},
         ]
         for item in data:
             Modules.objects.get_or_create(
-                title=item["title"],
                 name= item["name"]
             )
         return redirect(reverse_lazy('App_panel:table'))

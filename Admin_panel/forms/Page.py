@@ -5,6 +5,7 @@ from django.utils.html import strip_tags
 from django_ckeditor_5.widgets import CKEditor5Widget
 from django.core.validators import RegexValidator
 from App_panel.models import Page
+from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 
 class PageForm(forms.ModelForm):

@@ -14,22 +14,11 @@ class FormManager(models.Manager.from_queryset(FormQuerySet)):
         return super().get_queryset().filter(is_deleted=False)
 
 class Form(models.Model):
-    STATUS_CHOICES = [('active', 'فعال'), ('inactive', 'غیرفعال')]
-    POST_TYPE_CHOICES = [('post', 'نوشته'), ('contact', 'تماس باما'), ('general', 'عمومی')]
-    LANG_CHOICES = (
-        ('fa', 'قارسی'),
-        ('en', 'انگلیسی'),
-    )
-    title = models.CharField(max_length=200)
-    target_post_type = models.CharField(
-        max_length=50,
-        choices=POST_TYPE_CHOICES,
-        verbose_name="مخصوص نوع نوشته",
-        default='post'
-    )
-    status = models.CharField(max_length=10, db_index=True,choices=STATUS_CHOICES, default='active')
+    title = models.CharField(max_length=60)
+    target_post_type = models.CharField( max_length=11, verbose_name="مخصوص نوع نوشته", default='post')
+    status = models.CharField(max_length=10, db_index=True, default='active')
     is_deleted = models.BooleanField(default=False, db_index=True, verbose_name="حذف شده / نشده")
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
+    lang = models.CharField(max_length=2, default='fa', db_index=True,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = FormManager()

@@ -20,7 +20,7 @@ class AdvTextForm(forms.ModelForm):
     )
 
     section = forms.ModelChoiceField(
-        queryset=Section.objects.filter(status='active',type="post"),
+        queryset=Section.objects.filter(status='active',type="adv_text"),
         label=_("Section"),
         empty_label=_("Select a section..."),
         error_messages={
@@ -91,6 +91,12 @@ class AdvTextForm(forms.ModelForm):
 
         super().__init__(*args, **kwargs)
 
+        self.fields['section'].queryset = Section.objects.filter(
+            status='active',
+            type='adv_text',
+            lang=self.lang,
+        )
+
         dynamic_choices = [
             ('', '---------'),
         ]
@@ -114,12 +120,6 @@ class AdvTextForm(forms.ModelForm):
 
         if self.instance and self.instance.pk and self.instance.rel:
             self.initial["rel"] = self.instance.rel.split()
-
-        self.fields['section'].queryset = Section.objects.filter(
-            status='active',
-            type='post',
-            lang=self.lang,
-        )
 
     def clean_rel(self):
         values = self.cleaned_data.get("rel") or []
@@ -150,7 +150,7 @@ class AdvImageForm(forms.ModelForm):
     )
 
     section = forms.ModelChoiceField(
-        queryset=Section.objects.filter(status='active',type="post"),
+        queryset=Section.objects.filter(status='active',type="adv_image"),
         label=_("Section"),
         empty_label=_("Select a section..."),
         error_messages={
@@ -227,6 +227,12 @@ class AdvImageForm(forms.ModelForm):
 
         super().__init__(*args, **kwargs)
 
+        self.fields['section'].queryset = Section.objects.filter(
+            status='active',
+            type='adv_image',
+            lang=self.lang,
+        )
+
         dynamic_choices = [
             ('', '---------'),
         ]
@@ -247,12 +253,6 @@ class AdvImageForm(forms.ModelForm):
             dynamic_choices.append((f'sec_{section.id}', _("Section - %(title)s") % {'title': section.title}))
 
         self.fields['address_list'].choices = dynamic_choices
-
-        self.fields['section'].queryset = Section.objects.filter(
-            status='active',
-            type='post',
-            lang=self.lang,
-        )
 
         if self.instance and self.instance.pk and self.instance.rel:
             self.initial["rel"] = self.instance.rel.split()

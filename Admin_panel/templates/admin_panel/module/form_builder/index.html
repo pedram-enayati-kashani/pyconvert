@@ -1,8 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load pager %}
-{% load permissions %}
+{% load pager permissions i18n %}
 {% block meta %}
-    <title>فرم ساز</title>
+    <title>{% translate "Form Builder" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -24,9 +23,9 @@
     {% endif %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>فرم ساز</h3>
+            <h3>{% translate "Form Builder" %}</h3>
             {% if request.user|is_superuser %}
-                <a href="{% url 'Admin_panel:form-builder-create' %}" class="createLink">ساخت فرم جدید</a>
+                <a href="{% url 'Admin_panel:form-builder-create' %}" class="createLink">{% translate "Create a new form" %}</a>
             {% endif %}
         </header>
         <div class="filter-form mb-4">
@@ -36,16 +35,16 @@
                     {{ filter_form.status.label_tag }}
                     {{ filter_form.status }}
                 </div>
-                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
-                <a href="{% url 'Admin_panel:page' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+                <button type="submit" class="btn btn-primary">{% translate "Filtering" %}</button>
+                <a href="{% url 'Admin_panel:page' %}" class="btn btn-secondary">{% translate "Clear filter" %}</a>
             </form>
         </div>
         <div class="responsiverTable">
             <table class="table table-bordered table-striped m-0 mb-3">
                 <thead>
-                <th scope="col">عنوان</th>
-                <th scope="col">فعال/غیرفعال</th>
-                <th scope="col">تنظیمات</th>
+                <th scope="col">{% translate "Title" %}</th>
+                <th scope="col">{% translate "Status" %}</th>
+                <th scope="col">{% translate "Settings" %}</th>
                 </thead>
                 <tbody>
                 {% for form in forms %}
@@ -54,24 +53,21 @@
                         <td>
                             {% if form.status == 'active' %}
                                 <a class="btn btn-primary"
-                                   href="{% url 'Admin_panel:form-builder-active' form.id %}?next={{ request.get_full_path }}">فعال</a>
+                                   href="{% url 'Admin_panel:form-builder-active' form.id %}?next={{ request.get_full_path }}">{% translate "Active" %}</a>
                             {% elif form.status == 'inactive' %}
                                 <a class="btn btn-dark"
-                                   href="{% url 'Admin_panel:form-builder-active' form.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                                   href="{% url 'Admin_panel:form-builder-active' form.id %}?next={{ request.get_full_path }}">{% translate "Inactive" %}</a>
                             {% endif %}
                         </td>
                         <td class="d-flex gap-2 align-items-center flex-wrap">
-                            <a href="{% url 'Admin_panel:form-builder-update' form.id %}" class="btn btn-primary">ویرایش
-                                اطلاعات</a>
-                            <a href="{% url 'Admin_panel:form-builder-field' form.id %}" class="btn btn-primary">فیلد
-                                های
-                                فرم</a>
+                            <a href="{% url 'Admin_panel:form-builder-update' form.id %}" class="btn btn-primary">{% translate "Update" %}</a>
+                            <a href="{% url 'Admin_panel:form-builder-field' form.id %}" class="btn btn-primary">{% translate "Form Fields" %}</a>
                             {% if request.user|is_admin %}
                                 <form action="{% url 'Admin_panel:form-builder-delete' form.id %}" class="Delete-Form"
                                       method="post">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger">
-                                        حذف
+                                        {% translate "Delete" %}
                                     </button>
                                 </form>
                             {% endif %}

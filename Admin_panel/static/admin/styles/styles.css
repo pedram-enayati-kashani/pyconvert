@@ -260,7 +260,7 @@ form .form-group-display{
 
 .authForm #choseTypeInput{
     position: absolute;
-    left: 10px;
+    inset-inline-end: 10px;
     top: 15px;
 }
 

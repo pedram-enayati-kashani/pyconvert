@@ -1,14 +1,14 @@
 {% extends "admin_layouts/layouts.html" %}
 {% load i18n %}
 {% block meta %}
-    <title>{% translate "Create a new post" %}</title>
+    <title>{% translate "Create a new banner" %}</title>
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
         <div id="config_info" data-url="{% url 'Admin_panel:link-resolve_target' %}"></div>
         <header class="headerPage">
-            <h3>{% translate "Create a new post" %}</h3>
+            <h3>{% translate "Create a new banner" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:adv-image-create' %}" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}

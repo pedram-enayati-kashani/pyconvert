@@ -1,7 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ساخت تبلیغ جدید</title>
+    <title>{% translate "Create a new advert" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -9,7 +9,7 @@
     <div class="dashboard-pages">
         <div id="config_info" data-url="{% url 'Admin_panel:link-resolve_target' %}"></div>
         <header class="headerPage">
-            <h3>ساخت تبلیغ جدید</h3>
+            <h3>{% translate "Create a new advert" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:adv-text-create' %}" method="post" novalidate>
             {% csrf_token %}
@@ -113,8 +113,8 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ثبت</button>
-            <a href="{% url 'Admin_panel:adv-text' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Submit" %}</button>
+            <a href="{% url 'Admin_panel:adv-text' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش فرم</title>
+    <title>{% translate "Update form" %}</title>
     {{ form.media }}
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
             <header class="headerPage">
-                <h3>ویرایش فرم</h3>
+                <h3>{% translate "Update form" %}</h3>
             </header>
             <form action="{% url "Admin_panel:form-builder-update" form_obj.id %}" method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
@@ -54,8 +54,8 @@
                         </small>
                     {% endif %}
                 </div>
-                <button class="btn btn-success">ویرایش</button>
-                <a href="{% url 'Admin_panel:form-builder' %}" class="btn btn-danger">انصراف</a>
+                <button class="btn btn-success">{% translate "Update" %}</button>
+                <a href="{% url 'Admin_panel:form-builder' %}" class="btn btn-danger">{% translate "Cancel" %}</a>
             </form>
         </div>
 {% endblock %}
