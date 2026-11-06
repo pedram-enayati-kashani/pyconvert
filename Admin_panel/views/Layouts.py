@@ -8,7 +8,7 @@ def footer(request):
     return render(request, "admin_layouts/footer.html")
 
 def sidebar(request):
-    modules = Modules.objects.all()
+    modules = Modules.objects.order_by('created_at')
     if '/module/' in request.path:
         return render(request, "admin_layouts/sidebar_module.html", {'modules': modules})
     else:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 10:25+0330\n"
+"POT-Creation-Date: 2026-11-06 12:33+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,8 @@ msgstr "مرا به خاطر بسپار"
 #: Admin_panel/templates/admin_panel/dashboard.html:15
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:46
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:46
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:34
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:45
 #: Admin_panel/templates/admin_panel/module/index.html:31
 #: Admin_panel/templates/admin_panel/page/index.html:45
 #: Admin_panel/templates/admin_panel/posts/index.html:46
@@ -183,6 +185,8 @@ msgstr "رد شد"
 #: Admin_panel/templates/admin_panel/contact/show.html:42
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:47
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:47
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:37
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:46
 #: Admin_panel/templates/admin_panel/posts/index.html:48
 #: Admin_panel/templates/admin_panel/sections/index.html:48
 #: Admin_panel/templates/admin_panel/tags/index.html:45
@@ -238,6 +242,8 @@ msgstr "جستجو در عنوان ..."
 #: Admin_panel/forms/Sections.py:95
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:57
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:57
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:61
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:56
 #: Admin_panel/templates/admin_panel/module/index.html:41
 #: Admin_panel/templates/admin_panel/page/index.html:56
 #: Admin_panel/templates/admin_panel/sections/index.html:76
@@ -253,6 +259,8 @@ msgstr "فعال"
 #: Admin_panel/forms/Sections.py:96
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:60
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:60
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:64
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:59
 #: Admin_panel/templates/admin_panel/page/index.html:59
 #: Admin_panel/templates/admin_panel/sections/index.html:79
 #: Admin_panel/templates/admin_panel/users/index.html:58
@@ -393,21 +401,19 @@ msgstr "تماس باما"
 
 #: Admin_panel/forms/Module/FormBuilder.py:26
 msgid "General"
-msgstr ""
+msgstr "عمومی"
 
 #: Admin_panel/forms/Module/FormBuilder.py:30
 msgid "For"
-msgstr ""
+msgstr "برای"
 
 #: Admin_panel/forms/Module/FormBuilder.py:75
 msgid "Label"
-msgstr ""
+msgstr "برچسب"
 
 #: Admin_panel/forms/Module/FormBuilder.py:78
-#, fuzzy
-#| msgid "Name is required."
 msgid "Label is required."
-msgstr "نام اجباری می باشد"
+msgstr "برچسب اجباری می باشد"
 
 #: Admin_panel/forms/Module/FormBuilder.py:79
 #, fuzzy, python-format
@@ -416,6 +422,7 @@ msgid "Label cannot be more than %(limit_value)d characters."
 msgstr "نام نباید بیشتر از %(limit_value)d کاراکتر باشد."
 
 #: Admin_panel/forms/Module/FormBuilder.py:85 Admin_panel/forms/Sections.py:11
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:35
 #: Admin_panel/templates/admin_panel/sections/index.html:45
 msgid "Name"
 msgstr "نام"
@@ -433,26 +440,23 @@ msgstr "نام نباید بیشتر از %(limit_value)d کاراکتر باش�
 msgid ""
 "Only English letters, no spaces, and separate words with '_'. Example: "
 "first_text"
-msgstr ""
+msgstr "فقط با حروف انگلیسی و کلمات با _ جدا شود. به عنوان مثال (first_text)"
 
 #: Admin_panel/forms/Module/FormBuilder.py:98
-#, fuzzy
-#| msgid ""
-#| "Slug can only contain English and Persian letters, numbers, and hyphens."
 msgid "Name must contain English letters, numbers, and separate words with _."
-msgstr "اسلاگ فقط می‌تواند شامل حروف فارسی، انگلیسی، عدد و خط فاصله باشد."
+msgstr "نام فقط می‌تواند شامل حروف فارسی، انگلیسی، عدد و کلمات با _ جدا شود."
 
 #: Admin_panel/forms/Module/FormBuilder.py:103
 msgid "Short text"
-msgstr ""
+msgstr "متن کوتاه"
 
 #: Admin_panel/forms/Module/FormBuilder.py:104
 msgid "Long text"
-msgstr ""
+msgstr "متن بلند"
 
 #: Admin_panel/forms/Module/FormBuilder.py:105
 msgid "Number"
-msgstr ""
+msgstr "عدد"
 
 #: Admin_panel/forms/Module/FormBuilder.py:106 Admin_panel/forms/Users.py:21
 #: Admin_panel/templates/admin_panel/comments/show.html:36
@@ -462,15 +466,15 @@ msgstr "ایمیل"
 
 #: Admin_panel/forms/Module/FormBuilder.py:107
 msgid "Checkbox"
-msgstr ""
+msgstr "چک‌باکس"
 
 #: Admin_panel/forms/Module/FormBuilder.py:108
 msgid "Dropdown list"
-msgstr ""
+msgstr "لیست کشویی"
 
 #: Admin_panel/forms/Module/FormBuilder.py:109
 msgid "Radio button"
-msgstr ""
+msgstr "دکمه رادیویی"
 
 #: Admin_panel/forms/Module/FormBuilder.py:113 Admin_panel/forms/Sections.py:89
 #: Admin_panel/templates/admin_panel/sections/index.html:47
@@ -478,42 +482,38 @@ msgid "Type"
 msgstr "نوع"
 
 #: Admin_panel/forms/Module/FormBuilder.py:129
-#, fuzzy
-#| msgid "URL is required."
 msgid "Is Required?"
-msgstr "آدرس url اجباری می باشد"
+msgstr "اجباری باشد؟"
 
 #: Admin_panel/forms/Module/FormBuilder.py:135
 msgid "Prefix"
-msgstr ""
+msgstr "پیشوند"
 
 #: Admin_panel/forms/Module/FormBuilder.py:139
-#, fuzzy, python-format
-#| msgid "Name cannot be more than %(limit_value)d characters."
+#, python-format
 msgid "Prefix cannot be more than %(limit_value)d characters."
-msgstr "نام نباید بیشتر از %(limit_value)d کاراکتر باشد."
+msgstr "پیشوند نباید بیشتر از %(limit_value)d کاراکتر باشد."
 
 #: Admin_panel/forms/Module/FormBuilder.py:145
 msgid "Suffix"
-msgstr ""
+msgstr "پسوند"
 
 #: Admin_panel/forms/Module/FormBuilder.py:149
-#, fuzzy, python-format
-#| msgid "Summary cannot be more than %(limit_value)d characters."
+#, python-format
 msgid "Suffix cannot be more than %(limit_value)d characters."
-msgstr "خلاصه نباید بیشتر از %(limit_value)d کاراکتر باشد."
+msgstr "پسوند نباید بیشتر از %(limit_value)d کاراکتر باشد."
 
 #: Admin_panel/forms/Module/FormBuilder.py:155
 msgid "Options (separated by comma)"
-msgstr ""
+msgstr "گزینه‌ها (با کاما جدا کنید)"
 
 #: Admin_panel/forms/Module/FormBuilder.py:160
 msgid "Option 1, Option 2, Option 3"
-msgstr ""
+msgstr "گزینه ۱، گزینه ۲، گزینه ۳"
 
 #: Admin_panel/forms/Module/FormBuilder.py:162
 msgid "Used only for dropdown list, radio, and checkbox."
-msgstr ""
+msgstr "فقط برای لیست کشویی، دکمه رادیویی و چک‌باکس استفاده می‌شود."
 
 #: Admin_panel/forms/Module/FormBuilder.py:176
 #: Admin_panel/forms/Sections.py:190
@@ -890,6 +890,8 @@ msgstr "%(username)s خوش آمدی"
 #: Admin_panel/templates/admin_panel/contact/index.html:47
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:48
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:48
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:38
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:47
 #: Admin_panel/templates/admin_panel/module/index.html:33
 #: Admin_panel/templates/admin_panel/page/index.html:47
 #: Admin_panel/templates/admin_panel/posts/index.html:51
@@ -966,6 +968,8 @@ msgid "Logout"
 msgstr "خروج"
 
 #: Admin_panel/templates/admin_layouts/sidebar_module.html:18
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:4
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:26
 #: Admin_panel/views/Module.py:24
 msgid "Form Builder"
 msgstr "فرم ساز"
@@ -1025,6 +1029,8 @@ msgstr "ایجاد دسته بندی جدید"
 #: Admin_panel/templates/admin_panel/contact/show.html:114
 #: Admin_panel/templates/admin_panel/module/Adv_image/create.html:129
 #: Admin_panel/templates/admin_panel/module/Adv_text/create.html:116
+#: Admin_panel/templates/admin_panel/module/form_builder/create.html:58
+#: Admin_panel/templates/admin_panel/module/form_builder/field/create.html:129
 #: Admin_panel/templates/admin_panel/page/create.html:118
 #: Admin_panel/templates/admin_panel/posts/create.html:257
 #: Admin_panel/templates/admin_panel/sections/create.html:160
@@ -1041,6 +1047,10 @@ msgstr "ثبت"
 #: Admin_panel/templates/admin_panel/module/Adv_image/edit.html:133
 #: Admin_panel/templates/admin_panel/module/Adv_text/create.html:117
 #: Admin_panel/templates/admin_panel/module/Adv_text/edit.html:117
+#: Admin_panel/templates/admin_panel/module/form_builder/create.html:59
+#: Admin_panel/templates/admin_panel/module/form_builder/edit.html:58
+#: Admin_panel/templates/admin_panel/module/form_builder/field/create.html:130
+#: Admin_panel/templates/admin_panel/module/form_builder/field/edit.html:130
 #: Admin_panel/templates/admin_panel/page/create.html:119
 #: Admin_panel/templates/admin_panel/page/edit.html:121
 #: Admin_panel/templates/admin_panel/posts/create.html:258
@@ -1071,6 +1081,10 @@ msgstr "ویرایش دسته بندی"
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:64
 #: Admin_panel/templates/admin_panel/module/Adv_text/edit.html:116
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:64
+#: Admin_panel/templates/admin_panel/module/form_builder/edit.html:57
+#: Admin_panel/templates/admin_panel/module/form_builder/field/edit.html:129
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:69
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:63
 #: Admin_panel/templates/admin_panel/page/edit.html:120
 #: Admin_panel/templates/admin_panel/page/index.html:63
 #: Admin_panel/templates/admin_panel/posts/edit.html:315
@@ -1096,6 +1110,7 @@ msgstr "بروزرسانی"
 #: Admin_panel/templates/admin_panel/contact/index.html:36
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:39
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:39
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:38
 #: Admin_panel/templates/admin_panel/page/index.html:38
 #: Admin_panel/templates/admin_panel/posts/index.html:39
 #: Admin_panel/templates/admin_panel/sections/index.html:38
@@ -1109,6 +1124,7 @@ msgstr "فیلتر کردن"
 #: Admin_panel/templates/admin_panel/contact/index.html:37
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:40
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:40
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:39
 #: Admin_panel/templates/admin_panel/page/index.html:39
 #: Admin_panel/templates/admin_panel/posts/index.html:40
 #: Admin_panel/templates/admin_panel/sections/index.html:39
@@ -1122,6 +1138,8 @@ msgstr "برداشتن فیلتر"
 #: Admin_panel/templates/admin_panel/comments/show.html:85
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:70
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:70
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:74
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:70
 #: Admin_panel/templates/admin_panel/posts/create.html:236
 #: Admin_panel/templates/admin_panel/posts/index.html:78
 #: Admin_panel/templates/admin_panel/posts/show.html:17
@@ -1280,6 +1298,41 @@ msgstr "ایجاد تبلیغ جدید"
 #: Admin_panel/templates/admin_panel/module/Adv_text/edit.html:12
 msgid "Update advert"
 msgstr "ویرایش تبلیغ"
+
+#: Admin_panel/templates/admin_panel/module/form_builder/create.html:4
+#: Admin_panel/templates/admin_panel/module/form_builder/create.html:11
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:28
+msgid "Create a new form"
+msgstr "ایجاد فرم جدید"
+
+#: Admin_panel/templates/admin_panel/module/form_builder/edit.html:4
+#: Admin_panel/templates/admin_panel/module/form_builder/edit.html:11
+msgid "Update form"
+msgstr "ویرایش فرم"
+
+#: Admin_panel/templates/admin_panel/module/form_builder/field/create.html:4
+#: Admin_panel/templates/admin_panel/module/form_builder/field/create.html:11
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:28
+msgid "Create a new field"
+msgstr "ایجاد فیلد جدید"
+
+#: Admin_panel/templates/admin_panel/module/form_builder/field/edit.html:4
+#: Admin_panel/templates/admin_panel/module/form_builder/field/edit.html:11
+msgid "Update field"
+msgstr "ویرایش فیلد"
+
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:4
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:26
+msgid "Field Builder"
+msgstr "فیلد ساز"
+
+#: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:36
+msgid "Display Order"
+msgstr "ترتیب نمایش"
+
+#: Admin_panel/templates/admin_panel/module/form_builder/index.html:64
+msgid "Form Fields"
+msgstr "فیلدهای فرم"
 
 #: Admin_panel/templates/admin_panel/module/index.html:32
 #: Admin_panel/templates/admin_panel/page/index.html:46
@@ -1452,29 +1505,25 @@ msgid "Advertisement '%(title)s' has been deactivated."
 msgstr "بنر '%(title)s' غیرفعال شد"
 
 #: Admin_panel/views/Modules/FormBuilder.py:79
-#, fuzzy, python-format
-#| msgid "Section '%(title)s' has been activated."
+#, python-format
 msgid "Form '%(title)s' has been activated."
-msgstr "بخش '%(title)s' فعال شد"
+msgstr "فرم '%(title)s' فعال شد"
 
 #: Admin_panel/views/Modules/FormBuilder.py:84
-#, fuzzy, python-format
-#| msgid "Section '%(title)s' has been deactivated."
+#, python-format
 msgid "Form '%(title)s' has been deactivated."
-msgstr "بخش '%(title)s' غیرفعال شد"
+msgstr "فرم '%(title)s' غیرفعال شد"
 
 # python-format
 #: Admin_panel/views/Modules/FormBuilder.py:211
-#, fuzzy, python-format
-#| msgid "Message '%(title)s' has been activated."
+#, python-format
 msgid "Field '%(label)s' has been activated."
-msgstr "پیام '%(title)s' فعال شد"
+msgstr "پیام '%(label)s' فعال شد"
 
 #: Admin_panel/views/Modules/FormBuilder.py:216
-#, fuzzy, python-format
-#| msgid "Message '%(title)s' has been deactivated."
+#, python-format
 msgid "Field '%(label)s' has been deactivated."
-msgstr "پیام '%(title)s' غیرفعال شد"
+msgstr "فیلد '%(label)s' غیرفعال شد"
 
 #: Admin_panel/views/Sections.py:73
 #, python-format
