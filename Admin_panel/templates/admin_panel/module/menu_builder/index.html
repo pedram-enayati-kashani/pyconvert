@@ -1,8 +1,8 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load pager %}
-{% load permissions %}
+{% load pager permissions i18n %}
+
 {% block meta %}
-    <title>منو ساز</title>
+    <title>{% translate "Menu Builder" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -24,9 +24,9 @@
     {% endif %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>منو ساز</h3>
+            <h3>{% translate "Menu Builder" %}</h3>
             {% if request.user|is_superuser %}
-                <a href="{% url 'Admin_panel:menu-create' %}" class="createLink">ساخت منوی جدید</a>
+                <a href="{% url 'Admin_panel:menu-create' %}" class="createLink">{% translate "Create a new menu" %}</a>
             {% endif %}
         </header>
         <div class="filter-form mb-4">
@@ -36,16 +36,16 @@
                     {{ filter_form.status.label_tag }}
                     {{ filter_form.status }}
                 </div>
-                <button type="submit" class="btn btn-primary">فیلتر کردن</button>
-                <a href="{% url 'Admin_panel:menu' %}" class="btn btn-secondary">پاک کردن فیلتر</a>
+                <button type="submit" class="btn btn-primary">{% translate "Filtering" %}</button>
+                <a href="{% url 'Admin_panel:menu' %}" class="btn btn-secondary">{% translate "Clear filter" %}</a>
             </form>
         </div>
         <div class="responsiverTable">
             <table class="table table-bordered table-striped m-0 mb-3">
                 <thead>
-                <th scope="col">عنوان</th>
-                <th scope="col">فعال/غیرفعال</th>
-                <th scope="col">تنظیمات</th>
+                <th scope="col">{% translate "Title" %}</th>
+                <th scope="col">{% translate "Status" %}</th>
+                <th scope="col">{% translate "Settings" %}</th>
                 </thead>
                 <tbody>
                 {% for menu in menus %}
@@ -54,23 +54,21 @@
                         <td>
                             {% if menu.status == 'active' %}
                                 <a class="btn btn-primary"
-                                   href="{% url 'Admin_panel:menu-active' menu.id %}?next={{ request.get_full_path }}">فعال</a>
+                                   href="{% url 'Admin_panel:menu-active' menu.id %}?next={{ request.get_full_path }}">{% translate "Active" %}</a>
                             {% elif menu.status == 'inactive' %}
                                 <a class="btn btn-dark"
-                                   href="{% url 'Admin_panel:menu-active' menu.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                                   href="{% url 'Admin_panel:menu-active' menu.id %}?next={{ request.get_full_path }}">{% translate "Inactive" %}</a>
                             {% endif %}
                         </td>
                         <td class="d-flex gap-2 align-items-center flex-wrap">
-                            <a href="{% url 'Admin_panel:menu-update' menu.id %}" class="btn btn-primary">ویرایش
-                                اطلاعات</a>
-                            <a href="{% url 'Admin_panel:menu-link' menu.id %}" class="btn btn-primary">لینک های
-                                فهرست</a>
+                            <a href="{% url 'Admin_panel:menu-update' menu.id %}" class="btn btn-primary">{% translate "Update" %}</a>
+                            <a href="{% url 'Admin_panel:menu-link' menu.id %}" class="btn btn-primary">{% translate "Link List" %}</a>
                             {% if request.user|is_admin %}
                                 <form action="{% url 'Admin_panel:menu-delete' menu.id %}" class="Delete-Form"
                                       method="post">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger">
-                                        حذف
+                                        {% translate "Delete" %}
                                     </button>
                                 </form>
                             {% endif %}

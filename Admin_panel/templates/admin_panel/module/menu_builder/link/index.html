@@ -1,8 +1,8 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load pager %}
-{% load permissions %}
+{% load pager permissions i18n %}
+
 {% block meta %}
-    <title>لینک های فهرست</title>
+    <title>{% translate "Link List" %}</title>
 {% endblock %}
 
 {% block content %}
@@ -24,18 +24,18 @@
     {% endif %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>لینک های فهرست</h3>
-            <a href="{% url 'Admin_panel:menu-link-create' menu_obj.id %}" class="createLink">ساخت لینک جدید</a>
+            <h3>{% translate "Link List" %}</h3>
+            <a href="{% url 'Admin_panel:menu-link-create' menu_obj.id %}" class="createLink">{% translate "Create a new link" %}</a>
         </header>
         <div class="responsiverTable">
             <table class="table table-bordered table-striped m-0 mb-3">
                 <thead>
-                <th scope="col">عنوان</th>
-                <th scope="col">نام</th>
-                <th scope="col">والد</th>
-                <th scope="col">ترتیب نمایش</th>
-                <th scope="col">فعال/غیرفعال</th>
-                <th scope="col">تنظیمات</th>
+                <th scope="col">{% translate "Title" %}</th>
+                <th scope="col">{% translate "Name" %}</th>
+                <th scope="col">{% translate "Parent Link" %}</th>
+                <th scope="col">{% translate "Display Order" %}</th>
+                <th scope="col">{% translate "Status" %}</th>
+                <th scope="col">{% translate "Settings" %}</th>
                 </thead>
                 <tbody>
                 {% for link in links %}
@@ -46,11 +46,11 @@
                         <td class="d-flex gap-2 align-items-center justify-content-between">
                             <span>{{ link.order }}</span>
                             <div class="d-flex gap-2 align-items-center">
-                                <a href="{% url "Admin_panel:menu-link-to-up" menu_obj.id link.id %}"
+                                <a href="{% url 'Admin_panel:menu-link-to-up' menu_obj.id link.id %}"
                                    class="btn btn-primary">
                                     <i class="fa-solid fa-chevron-up"></i>
                                 </a>
-                                <a href="{% url "Admin_panel:menu-link-to-down" menu_obj.id link.id %}"
+                                <a href="{% url 'Admin_panel:menu-link-to-down' menu_obj.id link.id %}"
                                    class="btn btn-primary">
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </a>
@@ -59,21 +59,20 @@
                         <td>
                             {% if link.status == 'active' %}
                                 <a class="btn btn-primary"
-                                   href="{% url 'Admin_panel:menu-link-active' menu_obj.id link.id %}?next={{ request.get_full_path }}">فعال</a>
+                                   href="{% url 'Admin_panel:menu-link-active' menu_obj.id link.id %}?next={{ request.get_full_path }}">{% translate "Active" %}</a>
                             {% elif link.status == 'inactive' %}
                                 <a class="btn btn-dark"
-                                   href="{% url 'Admin_panel:menu-link-active' menu_obj.id link.id %}?next={{ request.get_full_path }}">غیرفعال</a>
+                                   href="{% url 'Admin_panel:menu-link-active' menu_obj.id link.id %}?next={{ request.get_full_path }}">{% translate "Inactive" %}</a>
                             {% endif %}
                         </td>
                         <td class="d-flex gap-2 align-items-center flex-wrap">
                             <a href="{% url 'Admin_panel:menu-link-update' menu_obj.id link.id %}"
-                               class="btn btn-primary">ویرایش
-                                اطلاعات</a>
+                               class="btn btn-primary">{% translate "Update" %}</a>
                             <form action="{% url 'Admin_panel:menu-link-delete' menu_obj.id link.id %}" class="Delete-Form"
                                   method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">
-                                    حذف
+                                    {% translate "Delete" %}
                                 </button>
                             </form>
                         </td>

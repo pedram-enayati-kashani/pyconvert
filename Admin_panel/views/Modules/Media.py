@@ -2,6 +2,9 @@ from django.views.generic import UpdateView, CreateView, DeleteView, DetailView
 from django.views.generic.list import ListView
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import get_language
+from django.conf import settings
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
 from Admin_panel.helpers.pager import get_visible_page_numbers
@@ -20,7 +23,11 @@ class Index(AdminRequiredMixin,ModuleActiveRequiredMixin, ListView):
     form_class = FilterForm
 
     def get_queryset(self):
-        return super().get_queryset().order_by('-id')
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        return super().get_queryset().filter(lang=lang).order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,12 +53,22 @@ class Create(AdminRequiredMixin,ModuleActiveRequiredMixin,CreateView):
     form_class = MediaForm
     success_url = reverse_lazy('Admin_panel:media')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
 class Update(AdminRequiredMixin, ModuleActiveRequiredMixin,UpdateView):
     template_name = 'admin_panel/module/media/edit.html'
     model = Media
     module_name = "media"
     form_class = MediaForm
     success_url = reverse_lazy('Admin_panel:media')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
 class Query(AdminRequiredMixin,ModuleActiveRequiredMixin, ListView):
     template_name = 'admin_panel/module/media/index.html'
@@ -64,6 +81,14 @@ class Query(AdminRequiredMixin,ModuleActiveRequiredMixin, ListView):
     def get_queryset(self):
         self.form = self.form_class(self.request.GET)
         queryset = super().get_queryset()
+
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
+            queryset = queryset.filter(lang=lang)
+        else:
+            queryset = queryset.filter(lang='fa')
+
         if self.form.is_valid():
             status_filter = self.form.cleaned_data.get('status', 'all')
             if status_filter != 'all':
@@ -91,12 +116,12 @@ class Active(AdminRequiredMixin,ModuleActiveRequiredMixin,View):
         if item.status == 'active':
             messages.success(
                 request,
-                f"رسانه {item.title}' فعال شد.",
+                _("Media '%(title)s' has been activated.") % {'title': item.title},
             )
         else:
             messages.warning(
                 request,
-                f"رسانه '{item.title}' غیرفعال شد.",
+                _("Media '%(title)s' has been deactivated.") % {'title': item.title},
             )
 
         next_url = request.GET.get('next')

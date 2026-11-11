@@ -5,6 +5,9 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
 from django.db import transaction
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import get_language
+from django.conf import settings
 from Admin_panel.helpers.pager import get_visible_page_numbers
 from Admin_panel.mixin.auth import AdminRequiredMixin,SuperAdminMixin
 from Admin_panel.mixin.module import ModuleActiveRequiredMixin
@@ -22,25 +25,36 @@ class Index(AdminRequiredMixin,ModuleActiveRequiredMixin, ListView):
     form_class = FilterForm
 
     def get_queryset(self):
-        if not self.model.objects.exists():
-            self._seed_default_records()
-        return super().get_queryset().order_by('id')
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        queryset = super().get_queryset().filter(lang=lang).order_by('id')
+        if not queryset.exists():
+            self._seed_default_records(lang=lang)
+            queryset = super().get_queryset().filter(lang=lang).order_by('id')
 
-    def _seed_default_records(self):
-        defaults = [
-            {
-                'title': 'هدر',
-                'name':'header'
-            },
-            {
-                'title': 'فوتر',
-                'name': 'footer'
-            },
-        ]
-        for data in defaults:
+        return queryset
+
+    def _seed_default_records(self, lang):
+        defaults = {
+            'fa': [
+                {'title': 'هدر', 'name': 'header'},
+                {'title': 'فوتر', 'name': 'footer'},
+            ],
+            'en': [
+                {'title': 'header', 'name': 'header'},
+                {'title': 'footer', 'name': 'footer'},
+            ]
+        }
+
+        for data in defaults[lang]:
             self.model.objects.get_or_create(
-                title=data['title'],
                 name=data['name'],
+                lang=lang,
+                defaults={
+                    'title': data['title']
+                }
             )
 
     def get_context_data(self, **kwargs):
@@ -60,6 +74,11 @@ class Create(SuperAdminMixin,ModuleActiveRequiredMixin,CreateView):
     form_class = MenuBuilderForm
     success_url = reverse_lazy('Admin_panel:menu')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
 class Update(AdminRequiredMixin,ModuleActiveRequiredMixin, UpdateView):
     template_name = 'admin_panel/module/menu_builder/edit.html'
     model = Menu
@@ -76,6 +95,11 @@ class Update(AdminRequiredMixin,ModuleActiveRequiredMixin, UpdateView):
 
         return response
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
 class Query(AdminRequiredMixin, ModuleActiveRequiredMixin,ListView):
     template_name = 'admin_panel/module/menu_builder/index.html'
     paginate_by = 15
@@ -87,6 +111,12 @@ class Query(AdminRequiredMixin, ModuleActiveRequiredMixin,ListView):
     def get_queryset(self):
         self.form = self.form_class(self.request.GET)
         queryset = super().get_queryset()
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
+            queryset = queryset.filter(lang=lang)
+        else:
+            queryset = queryset.filter(lang='fa')
         if self.form.is_valid():
             status_filter = self.form.cleaned_data.get('status', 'all')
             if status_filter != 'all':
@@ -115,12 +145,12 @@ class Active(AdminRequiredMixin,ModuleActiveRequiredMixin,View):
         if obj.status == 'active':
             messages.success(
                 request,
-                f"منو '{obj.title}' فعال شد.",
+                _("Menu '%(title)s' has been activated.") % {'title': item.title},
             )
         else:
             messages.warning(
                 request,
-                f"منو '{obj.title}' غیرفعال شد.",
+                _("Menu '%(title)s' has been deactivated.") % {'title': item.title},
             )
 
         next_url = request.GET.get('next')
@@ -171,6 +201,11 @@ class CreateLink(AdminRequiredMixin,ModuleActiveRequiredMixin,CreateView):
     module_name = "Menu_Builder"
     form_class = LinkForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
     def dispatch(self, request, *args, **kwargs):
         self.menu = get_object_or_404(Menu, pk=kwargs['pk'])
         return super().dispatch(request, *args, **kwargs)
@@ -194,6 +229,11 @@ class UpdateLink(AdminRequiredMixin,ModuleActiveRequiredMixin, UpdateView):
     model = Menu_Links
     module_name = "Menu_Builder"
     form_class = LinkForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
     def dispatch(self, request, *args, **kwargs):
         self.menu = get_object_or_404(Menu, pk=kwargs['pk'])
@@ -233,9 +273,15 @@ class ActiveLink(AdminRequiredMixin,ModuleActiveRequiredMixin, View):
         obj.toggle_status()
         cache.delete(f"menu_links_cache_{obj.Menu.name}")
         if obj.status == 'active':
-            messages.success(request, f"لینک '{obj.title}' فعال شد.")
+            messages.success(
+                request,
+                _("Link '%(title)s' has been activated.") % {'title': item.title},
+            )
         else:
-            messages.warning(request, f"لینک '{obj.title}' غیرفعال شد.")
+            messages.warning(
+                request,
+                _("Link '%(title)s' has been deactivated.") % {'title': item.title},
+            )
 
         return redirect('Admin_panel:menu-link', pk=pk)
 

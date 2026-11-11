@@ -1,7 +1,7 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش فرم</title>
+    <title>{% translate "Update link" %}</title>
     {{ form.media }}
 {% endblock %}
 
@@ -9,9 +9,9 @@
     <div class="dashboard-pages">
         <div id="config_info" data-url="{% url 'Admin_panel:link-resolve_target' %}"></div>
         <header class="headerPage">
-            <h3>ویرایش فرم</h3>
+            <h3>{% translate "Update link" %}</h3>
         </header>
-        <form action="{% url "Admin_panel:menu-link-update" menu_obj.id link_obj.id %}" method="post" novalidate>
+        <form action="{% url 'Admin_panel:menu-link-update' menu_obj.id link_obj.id %}" method="post" novalidate>
             {% csrf_token %}
             <div class="form-group-display">
                 <label for="{{ form.title.id_for_label }}">
@@ -129,8 +129,8 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ویرایش</button>
-            <a href="{% url 'Admin_panel:menu-link' menu_obj.id %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Update" %}</button>
+            <a href="{% url 'Admin_panel:menu-link' menu_obj.id %}" class="btn btn-danger">{% translate "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

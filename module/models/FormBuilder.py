@@ -84,17 +84,13 @@ class PostFormAssignment(models.Model):
 
 
 class FormField(models.Model):
-    FIELD_TYPES = (
-        ("text", "متن کوتاه"), ("textarea", "متن بلند"), ("number", "عدد"),
-        ("email", "ایمیل"), ("checkbox", "چک‌باکس"), ("select", "لیست کشویی"), ("radio", "دکمه رادیویی"),
-    )
-    STATUS_CHOICES = [('active', 'فعال'), ('inactive', 'غیرفعال')]
     form = models.ForeignKey(Form, on_delete=models.CASCADE, related_name="fields")
-    status = models.CharField(max_length=10, db_index=True,choices=STATUS_CHOICES, default='active')
+    status = models.CharField(max_length=10, db_index=True, default='active')
     label = models.CharField(max_length=200)
-    name = models.CharField(max_length=60, unique=True,default="unique")
-    field_type = models.CharField(max_length=50, choices=FIELD_TYPES)
+    name = models.CharField(max_length=60,default="unique")
+    field_type = models.CharField(max_length=50,)
     order = models.PositiveIntegerField(default=1, verbose_name="ترتیب نمایش")
+    lang = models.CharField(max_length=2, default='fa', db_index=True, null=True, blank=True)
     required = models.BooleanField(default=False)
     options = models.JSONField(default=list, blank=True, help_text="برای select/radio/checkbox")
     prefix = models.CharField(max_length=50, blank=True, null=True, verbose_name="پیشوند")
@@ -104,6 +100,16 @@ class FormField(models.Model):
 
     def __str__(self):
         return self.label
+
+    class Meta:
+        verbose_name = "فیلد فرم"
+        verbose_name_plural = "فیلد های فرم"
+        constraints = [
+            models.UniqueConstraint(
+                fields=['name', 'lang'],
+                name='unique_form_field_name_per_lang'
+            )
+        ]
 
     def save(self, *args, **kwargs):
         if not self.pk and self.order == 1:

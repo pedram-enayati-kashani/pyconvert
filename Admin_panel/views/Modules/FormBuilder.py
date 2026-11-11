@@ -159,6 +159,11 @@ class CreateField(AdminRequiredMixin,ModuleActiveRequiredMixin,CreateView):
     module_name = "form_builder"
     form_class = FieldBuilderForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
     def dispatch(self, request, *args, **kwargs):
         self.form_obj = get_object_or_404(Form, pk=kwargs['pk'])
         return super().dispatch(request, *args, **kwargs)
@@ -180,6 +185,11 @@ class UpdateField(AdminRequiredMixin,ModuleActiveRequiredMixin, UpdateView):
     model = FormField
     module_name = "form_builder"
     form_class = FieldBuilderForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
     def dispatch(self, request, *args, **kwargs):
         self.form_obj = get_object_or_404(Form, pk=kwargs['pk'])

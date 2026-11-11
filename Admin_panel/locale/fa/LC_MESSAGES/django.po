@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 12:33+0330\n"
+"POT-Creation-Date: 2026-11-11 17:42+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,9 @@ msgstr "مرا به خاطر بسپار"
 #: Admin_panel/forms/Category.py:15 Admin_panel/forms/Filter.py:20
 #: Admin_panel/forms/Module/Advertising.py:13
 #: Admin_panel/forms/Module/Advertising.py:143
-#: Admin_panel/forms/Module/FormBuilder.py:13 Admin_panel/forms/Page.py:13
+#: Admin_panel/forms/Module/FormBuilder.py:13
+#: Admin_panel/forms/Module/MenuBuilder.py:16
+#: Admin_panel/forms/Module/MenuBuilder.py:82 Admin_panel/forms/Page.py:13
 #: Admin_panel/forms/Post.py:19 Admin_panel/forms/Sections.py:22
 #: Admin_panel/forms/SiteInfo.py:9 Admin_panel/forms/Tags.py:13
 #: Admin_panel/templates/admin_panel/categories/index.html:43
@@ -44,6 +46,8 @@ msgstr "مرا به خاطر بسپار"
 #: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:34
 #: Admin_panel/templates/admin_panel/module/form_builder/index.html:45
 #: Admin_panel/templates/admin_panel/module/index.html:31
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:46
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:33
 #: Admin_panel/templates/admin_panel/page/index.html:45
 #: Admin_panel/templates/admin_panel/posts/index.html:46
 #: Admin_panel/templates/admin_panel/posts/show.html:29
@@ -55,7 +59,9 @@ msgstr "عنوان"
 
 #: Admin_panel/forms/Category.py:18 Admin_panel/forms/Module/Advertising.py:16
 #: Admin_panel/forms/Module/Advertising.py:146
-#: Admin_panel/forms/Module/FormBuilder.py:16 Admin_panel/forms/Page.py:16
+#: Admin_panel/forms/Module/FormBuilder.py:16
+#: Admin_panel/forms/Module/MenuBuilder.py:19
+#: Admin_panel/forms/Module/MenuBuilder.py:85 Admin_panel/forms/Page.py:16
 #: Admin_panel/forms/Post.py:22 Admin_panel/forms/Sections.py:25
 #: Admin_panel/forms/SiteInfo.py:12 Admin_panel/forms/Tags.py:16
 msgid "Title is required."
@@ -63,7 +69,9 @@ msgstr "عنوان اجباری می باشد"
 
 #: Admin_panel/forms/Category.py:19 Admin_panel/forms/Module/Advertising.py:17
 #: Admin_panel/forms/Module/Advertising.py:147
-#: Admin_panel/forms/Module/FormBuilder.py:17 Admin_panel/forms/Page.py:17
+#: Admin_panel/forms/Module/FormBuilder.py:17
+#: Admin_panel/forms/Module/MenuBuilder.py:20
+#: Admin_panel/forms/Module/MenuBuilder.py:86 Admin_panel/forms/Page.py:17
 #: Admin_panel/forms/Post.py:23 Admin_panel/forms/Sections.py:26
 #: Admin_panel/forms/SiteInfo.py:13 Admin_panel/forms/Tags.py:17
 #, python-format
@@ -175,7 +183,9 @@ msgstr "رد شد"
 #: Admin_panel/forms/Module/Advertising.py:76
 #: Admin_panel/forms/Module/Advertising.py:212
 #: Admin_panel/forms/Module/FormBuilder.py:41
-#: Admin_panel/forms/Module/FormBuilder.py:124 Admin_panel/forms/Page.py:63
+#: Admin_panel/forms/Module/FormBuilder.py:124
+#: Admin_panel/forms/Module/MenuBuilder.py:49
+#: Admin_panel/forms/Module/MenuBuilder.py:158 Admin_panel/forms/Page.py:63
 #: Admin_panel/forms/Post.py:145 Admin_panel/forms/Sections.py:100
 #: Admin_panel/forms/Tags.py:67
 #: Admin_panel/templates/admin_panel/categories/index.html:44
@@ -187,6 +197,8 @@ msgstr "رد شد"
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:47
 #: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:37
 #: Admin_panel/templates/admin_panel/module/form_builder/index.html:46
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:47
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:37
 #: Admin_panel/templates/admin_panel/posts/index.html:48
 #: Admin_panel/templates/admin_panel/sections/index.html:48
 #: Admin_panel/templates/admin_panel/tags/index.html:45
@@ -238,13 +250,17 @@ msgstr "جستجو در عنوان ..."
 #: Admin_panel/forms/Module/Advertising.py:71
 #: Admin_panel/forms/Module/Advertising.py:207
 #: Admin_panel/forms/Module/FormBuilder.py:36
-#: Admin_panel/forms/Module/FormBuilder.py:119 Admin_panel/forms/Page.py:58
+#: Admin_panel/forms/Module/FormBuilder.py:119
+#: Admin_panel/forms/Module/MenuBuilder.py:44
+#: Admin_panel/forms/Module/MenuBuilder.py:153 Admin_panel/forms/Page.py:58
 #: Admin_panel/forms/Sections.py:95
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:57
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:57
 #: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:61
 #: Admin_panel/templates/admin_panel/module/form_builder/index.html:56
 #: Admin_panel/templates/admin_panel/module/index.html:41
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:57
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:62
 #: Admin_panel/templates/admin_panel/page/index.html:56
 #: Admin_panel/templates/admin_panel/sections/index.html:76
 #: Admin_panel/templates/admin_panel/users/index.html:55
@@ -255,12 +271,16 @@ msgstr "فعال"
 #: Admin_panel/forms/Module/Advertising.py:72
 #: Admin_panel/forms/Module/Advertising.py:208
 #: Admin_panel/forms/Module/FormBuilder.py:37
-#: Admin_panel/forms/Module/FormBuilder.py:120 Admin_panel/forms/Page.py:59
+#: Admin_panel/forms/Module/FormBuilder.py:120
+#: Admin_panel/forms/Module/MenuBuilder.py:45
+#: Admin_panel/forms/Module/MenuBuilder.py:154 Admin_panel/forms/Page.py:59
 #: Admin_panel/forms/Sections.py:96
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:60
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:60
 #: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:64
 #: Admin_panel/templates/admin_panel/module/form_builder/index.html:59
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:60
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:65
 #: Admin_panel/templates/admin_panel/page/index.html:59
 #: Admin_panel/templates/admin_panel/sections/index.html:79
 #: Admin_panel/templates/admin_panel/users/index.html:58
@@ -305,6 +325,7 @@ msgstr "انتخاب بخش اجباری می باشد."
 
 #: Admin_panel/forms/Module/Advertising.py:33
 #: Admin_panel/forms/Module/Advertising.py:169
+#: Admin_panel/forms/Module/MenuBuilder.py:109
 msgid "URL"
 msgstr "آدرس url"
 
@@ -315,46 +336,55 @@ msgstr "آدرس url اجباری می باشد"
 
 #: Admin_panel/forms/Module/Advertising.py:42
 #: Admin_panel/forms/Module/Advertising.py:178
+#: Admin_panel/forms/Module/MenuBuilder.py:133
 msgid "Do not pass SEO credit (nofollow)"
 msgstr "عدم انتقال اعتبار سئو (nofollow)"
 
 #: Admin_panel/forms/Module/Advertising.py:43
 #: Admin_panel/forms/Module/Advertising.py:179
+#: Admin_panel/forms/Module/MenuBuilder.py:134
 msgid "New tab security (noopener)"
 msgstr "امنیت تب جدید (noopener)"
 
 #: Admin_panel/forms/Module/Advertising.py:44
 #: Admin_panel/forms/Module/Advertising.py:180
+#: Admin_panel/forms/Module/MenuBuilder.py:135
 msgid "Do not send referrer (noreferrer)"
 msgstr "عدم ارسال آدرس مبدا (noreferrer)"
 
 #: Admin_panel/forms/Module/Advertising.py:45
 #: Admin_panel/forms/Module/Advertising.py:181
+#: Admin_panel/forms/Module/MenuBuilder.py:136
 msgid "User-generated content link (ugc)"
 msgstr "لینک کاربرساز (ugc)"
 
 #: Admin_panel/forms/Module/Advertising.py:46
 #: Admin_panel/forms/Module/Advertising.py:182
+#: Admin_panel/forms/Module/MenuBuilder.py:137
 msgid "Sponsored/Advertisement link (sponsored)"
 msgstr "لینک تبلیغاتی/اسپانسری (sponsored)"
 
 #: Admin_panel/forms/Module/Advertising.py:49
 #: Admin_panel/forms/Module/Advertising.py:185
+#: Admin_panel/forms/Module/MenuBuilder.py:140
 msgid "Rel Attribute"
 msgstr "ویژگی rel"
 
 #: Admin_panel/forms/Module/Advertising.py:51
 #: Admin_panel/forms/Module/Advertising.py:187
+#: Admin_panel/forms/Module/MenuBuilder.py:142
 msgid "If no option is selected, rel will remain empty (normal mode)."
 msgstr "اگر هیچ گزینه‌ای انتخاب نشود، rel خالی می‌ماند (حالت عادی)."
 
 #: Admin_panel/forms/Module/Advertising.py:57
 #: Admin_panel/forms/Module/Advertising.py:193
+#: Admin_panel/forms/Module/MenuBuilder.py:125
 msgid "Site Pages List"
 msgstr "لیست صفحات سایت"
 
 #: Admin_panel/forms/Module/Advertising.py:60
 #: Admin_panel/forms/Module/Advertising.py:196
+#: Admin_panel/forms/Module/MenuBuilder.py:128
 msgid ""
 "By selecting from the site pages list, the selected page address will be "
 "placed in the URL field."
@@ -364,11 +394,13 @@ msgstr ""
 
 #: Admin_panel/forms/Module/Advertising.py:66
 #: Admin_panel/forms/Module/Advertising.py:202
+#: Admin_panel/forms/Module/MenuBuilder.py:148
 msgid "Open in new tab"
 msgstr "باز شدن در تب جدید"
 
 #: Admin_panel/forms/Module/Advertising.py:107
 #: Admin_panel/forms/Module/Advertising.py:243
+#: Admin_panel/forms/Module/MenuBuilder.py:192
 #, python-format
 msgid "Page - %(title)s"
 msgstr "صفحه - %(title)s"
@@ -381,6 +413,7 @@ msgstr "نوشته - %(title)s"
 
 #: Admin_panel/forms/Module/Advertising.py:117
 #: Admin_panel/forms/Module/Advertising.py:253
+#: Admin_panel/forms/Module/MenuBuilder.py:202
 #, python-format
 msgid "Section - %(title)s"
 msgstr "بخش - %(title)s"
@@ -421,17 +454,24 @@ msgstr "برچسب اجباری می باشد"
 msgid "Label cannot be more than %(limit_value)d characters."
 msgstr "نام نباید بیشتر از %(limit_value)d کاراکتر باشد."
 
-#: Admin_panel/forms/Module/FormBuilder.py:85 Admin_panel/forms/Sections.py:11
+#: Admin_panel/forms/Module/FormBuilder.py:85
+#: Admin_panel/forms/Module/MenuBuilder.py:26
+#: Admin_panel/forms/Module/MenuBuilder.py:92 Admin_panel/forms/Sections.py:11
 #: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:35
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:34
 #: Admin_panel/templates/admin_panel/sections/index.html:45
 msgid "Name"
 msgstr "نام"
 
-#: Admin_panel/forms/Module/FormBuilder.py:88 Admin_panel/forms/Sections.py:15
+#: Admin_panel/forms/Module/FormBuilder.py:88
+#: Admin_panel/forms/Module/MenuBuilder.py:29
+#: Admin_panel/forms/Module/MenuBuilder.py:95 Admin_panel/forms/Sections.py:15
 msgid "Name is required."
 msgstr "نام اجباری می باشد"
 
-#: Admin_panel/forms/Module/FormBuilder.py:89 Admin_panel/forms/Sections.py:16
+#: Admin_panel/forms/Module/FormBuilder.py:89
+#: Admin_panel/forms/Module/MenuBuilder.py:30
+#: Admin_panel/forms/Module/MenuBuilder.py:96 Admin_panel/forms/Sections.py:16
 #, python-format
 msgid "Name cannot be more than %(limit_value)d characters."
 msgstr "نام نباید بیشتر از %(limit_value)d کاراکتر باشد."
@@ -515,10 +555,49 @@ msgstr "گزینه ۱، گزینه ۲، گزینه ۳"
 msgid "Used only for dropdown list, radio, and checkbox."
 msgstr "فقط برای لیست کشویی، دکمه رادیویی و چک‌باکس استفاده می‌شود."
 
-#: Admin_panel/forms/Module/FormBuilder.py:176
+#: Admin_panel/forms/Module/FormBuilder.py:186
+#: Admin_panel/forms/Module/MenuBuilder.py:248
 #: Admin_panel/forms/Sections.py:190
 msgid "This name already exists."
 msgstr "این نام در حاظر وجود دارد"
+
+#: Admin_panel/forms/Module/MenuBuilder.py:35
+#: Admin_panel/forms/Module/MenuBuilder.py:101
+msgid "The value was not entered correctly!"
+msgstr "مقدار به درستی وارد نشده است!"
+
+#: Admin_panel/forms/Module/MenuBuilder.py:38
+#: Admin_panel/forms/Module/MenuBuilder.py:104
+msgid ""
+"Only English letters, no spaces, and separate words with \"_\". Example: "
+"first_text"
+msgstr "فقط با حروف انگلیسی و کلمات با _ جدا شود. به عنوان مثال (first_text)"
+
+#: Admin_panel/forms/Module/MenuBuilder.py:112
+msgid ""
+"If this is an external link, enter the URL. Otherwise, select the target "
+"from the list."
+msgstr ""
+"اگر این یک لینک خارجی است، آدرس را وارد کنید. در غیر این صورت، هدف را از "
+"لیست انتخاب کنید."
+
+#: Admin_panel/forms/Module/MenuBuilder.py:117
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:35
+msgid "Parent Link"
+msgstr "والد لینک"
+
+#: Admin_panel/forms/Module/MenuBuilder.py:197
+#, python-format
+msgid "Category - %(title)s"
+msgstr "دسته بندی - %(title)s"
+
+#: Admin_panel/forms/Module/MenuBuilder.py:233
+msgid "A valid URL could not be generated for the selected page."
+msgstr "برای صفحه انتخاب‌ شده، آدرس معتبری ساخته نشد."
+
+#: Admin_panel/forms/Module/MenuBuilder.py:238
+msgid "Either enter a URL or select one from the site pages list."
+msgstr "یا آدرس را وارد کنید یا یکی از لیست صفحات سایت را انتخاب کنید."
 
 #: Admin_panel/forms/Post.py:39
 #: Admin_panel/templates/admin_panel/posts/show.html:31
@@ -893,6 +972,8 @@ msgstr "%(username)s خوش آمدی"
 #: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:38
 #: Admin_panel/templates/admin_panel/module/form_builder/index.html:47
 #: Admin_panel/templates/admin_panel/module/index.html:33
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:48
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:38
 #: Admin_panel/templates/admin_panel/page/index.html:47
 #: Admin_panel/templates/admin_panel/posts/index.html:51
 #: Admin_panel/templates/admin_panel/sections/index.html:49
@@ -975,6 +1056,8 @@ msgid "Form Builder"
 msgstr "فرم ساز"
 
 #: Admin_panel/templates/admin_layouts/sidebar_module.html:23
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:5
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:27
 #: Admin_panel/views/Module.py:27
 msgid "Menu Builder"
 msgstr "منو ساز"
@@ -1031,6 +1114,8 @@ msgstr "ایجاد دسته بندی جدید"
 #: Admin_panel/templates/admin_panel/module/Adv_text/create.html:116
 #: Admin_panel/templates/admin_panel/module/form_builder/create.html:58
 #: Admin_panel/templates/admin_panel/module/form_builder/field/create.html:129
+#: Admin_panel/templates/admin_panel/module/menu_builder/create.html:58
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/create.html:132
 #: Admin_panel/templates/admin_panel/page/create.html:118
 #: Admin_panel/templates/admin_panel/posts/create.html:257
 #: Admin_panel/templates/admin_panel/sections/create.html:160
@@ -1051,6 +1136,10 @@ msgstr "ثبت"
 #: Admin_panel/templates/admin_panel/module/form_builder/edit.html:58
 #: Admin_panel/templates/admin_panel/module/form_builder/field/create.html:130
 #: Admin_panel/templates/admin_panel/module/form_builder/field/edit.html:130
+#: Admin_panel/templates/admin_panel/module/menu_builder/create.html:59
+#: Admin_panel/templates/admin_panel/module/menu_builder/edit.html:59
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/create.html:133
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/edit.html:133
 #: Admin_panel/templates/admin_panel/page/create.html:119
 #: Admin_panel/templates/admin_panel/page/edit.html:121
 #: Admin_panel/templates/admin_panel/posts/create.html:258
@@ -1085,6 +1174,10 @@ msgstr "ویرایش دسته بندی"
 #: Admin_panel/templates/admin_panel/module/form_builder/field/edit.html:129
 #: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:69
 #: Admin_panel/templates/admin_panel/module/form_builder/index.html:63
+#: Admin_panel/templates/admin_panel/module/menu_builder/edit.html:58
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:64
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/edit.html:132
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:70
 #: Admin_panel/templates/admin_panel/page/edit.html:120
 #: Admin_panel/templates/admin_panel/page/index.html:63
 #: Admin_panel/templates/admin_panel/posts/edit.html:315
@@ -1111,6 +1204,7 @@ msgstr "بروزرسانی"
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:39
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:39
 #: Admin_panel/templates/admin_panel/module/form_builder/index.html:38
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:39
 #: Admin_panel/templates/admin_panel/page/index.html:38
 #: Admin_panel/templates/admin_panel/posts/index.html:39
 #: Admin_panel/templates/admin_panel/sections/index.html:38
@@ -1125,6 +1219,7 @@ msgstr "فیلتر کردن"
 #: Admin_panel/templates/admin_panel/module/Adv_image/index.html:40
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:40
 #: Admin_panel/templates/admin_panel/module/form_builder/index.html:39
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:40
 #: Admin_panel/templates/admin_panel/page/index.html:39
 #: Admin_panel/templates/admin_panel/posts/index.html:40
 #: Admin_panel/templates/admin_panel/sections/index.html:39
@@ -1140,6 +1235,8 @@ msgstr "برداشتن فیلتر"
 #: Admin_panel/templates/admin_panel/module/Adv_text/index.html:70
 #: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:74
 #: Admin_panel/templates/admin_panel/module/form_builder/index.html:70
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:71
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:75
 #: Admin_panel/templates/admin_panel/posts/create.html:236
 #: Admin_panel/templates/admin_panel/posts/index.html:78
 #: Admin_panel/templates/admin_panel/posts/show.html:17
@@ -1327,6 +1424,7 @@ msgid "Field Builder"
 msgstr "فیلد ساز"
 
 #: Admin_panel/templates/admin_panel/module/form_builder/field/index.html:36
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:36
 msgid "Display Order"
 msgstr "ترتیب نمایش"
 
@@ -1343,6 +1441,34 @@ msgstr "فعال/غیرفعال"
 #: Admin_panel/templates/admin_panel/module/index.html:45
 msgid "Edit module"
 msgstr "ویرایش ماژول"
+
+#: Admin_panel/templates/admin_panel/module/menu_builder/create.html:4
+#: Admin_panel/templates/admin_panel/module/menu_builder/create.html:11
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:29
+msgid "Create a new menu"
+msgstr "ایجاد منو جدید"
+
+#: Admin_panel/templates/admin_panel/module/menu_builder/edit.html:4
+#: Admin_panel/templates/admin_panel/module/menu_builder/edit.html:11
+msgid "Update menu"
+msgstr "ویرایش منو"
+
+#: Admin_panel/templates/admin_panel/module/menu_builder/index.html:65
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:5
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:27
+msgid "Link List"
+msgstr "لیست لینک ها"
+
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/create.html:4
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/create.html:12
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/index.html:28
+msgid "Create a new link"
+msgstr "ایجاد لینک جدید جدید"
+
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/edit.html:4
+#: Admin_panel/templates/admin_panel/module/menu_builder/link/edit.html:12
+msgid "Update link"
+msgstr "ویرایش لینک"
 
 #: Admin_panel/templates/admin_panel/page/create.html:4
 #: Admin_panel/templates/admin_panel/page/create.html:15
@@ -1515,15 +1641,47 @@ msgid "Form '%(title)s' has been deactivated."
 msgstr "فرم '%(title)s' غیرفعال شد"
 
 # python-format
-#: Admin_panel/views/Modules/FormBuilder.py:211
+#: Admin_panel/views/Modules/FormBuilder.py:221
 #, python-format
 msgid "Field '%(label)s' has been activated."
 msgstr "پیام '%(label)s' فعال شد"
 
-#: Admin_panel/views/Modules/FormBuilder.py:216
+#: Admin_panel/views/Modules/FormBuilder.py:226
 #, python-format
 msgid "Field '%(label)s' has been deactivated."
 msgstr "فیلد '%(label)s' غیرفعال شد"
+
+# python-format
+#: Admin_panel/views/Modules/Media.py:119
+#, python-format
+msgid "Media '%(title)s' has been activated."
+msgstr "مدیا '%(title)s' فعال شد"
+
+#: Admin_panel/views/Modules/Media.py:124
+#, python-format
+msgid "Media '%(title)s' has been deactivated."
+msgstr "مدیا '%(title)s' غیرفعال شد"
+
+# python-format
+#: Admin_panel/views/Modules/MenuBuilder.py:148
+#, python-format
+msgid "Menu '%(title)s' has been activated."
+msgstr "منو '%(title)s' فعال شد"
+
+#: Admin_panel/views/Modules/MenuBuilder.py:153
+#, python-format
+msgid "Menu '%(title)s' has been deactivated."
+msgstr "منو '%(title)s' غیرفعال شد"
+
+#: Admin_panel/views/Modules/MenuBuilder.py:278
+#, python-format
+msgid "Link '%(title)s' has been activated."
+msgstr "لینک '%(title)s' فعال شد"
+
+#: Admin_panel/views/Modules/MenuBuilder.py:283
+#, python-format
+msgid "Link '%(title)s' has been deactivated."
+msgstr "لینک '%(title)s' غیرفعال شد"
 
 #: Admin_panel/views/Sections.py:73
 #, python-format
@@ -1542,6 +1700,11 @@ msgstr ""
 #: config/settings.py:146
 msgid "English"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Parent Link"
+#~ msgid "Parent"
+#~ msgstr "والد لینک"
 
 #~ msgid "Register"
 #~ msgstr "ثبت نام"

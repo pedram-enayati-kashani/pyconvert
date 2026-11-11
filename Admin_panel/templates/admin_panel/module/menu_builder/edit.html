@@ -1,16 +1,16 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش منو</title>
+    <title>{% translate "Update menu" %}</title>
     {{ form.media }}
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
             <header class="headerPage">
-                <h3>ویرایش منو</h3>
+                <h3>{% translate "Update menu" %}</h3>
             </header>
-            <form action="{% url "Admin_panel:menu-update" menu.id %}" method="post" novalidate>
+            <form action="{% url 'Admin_panel:menu-update' menu.id %}" method="post" novalidate>
                 {% csrf_token %}
                <div class="form-group-display">
                     <label for="{{ form.title.id_for_label }}">
@@ -55,8 +55,8 @@
                         </small>
                     {% endif %}
                 </div>
-                <button class="btn btn-success">ویرایش</button>
-                <a href="{% url 'Admin_panel:menu' %}" class="btn btn-danger">انصراف</a>
+                <button class="btn btn-success">{% translate "Update" %}</button>
+                <a href="{% url 'Admin_panel:menu' %}" class="btn btn-danger">{% translate "Cancel" %}</a>
             </form>
         </div>
 {% endblock %}

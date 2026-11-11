@@ -162,6 +162,16 @@ class FieldBuilderForm(forms.ModelForm):
         help_text=_("Used only for dropdown list, radio, and checkbox.")
     )
 
+    def __init__(self, *args, user=None, request=None, **kwargs):
+        self.request = request
+
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
+
+        super().__init__(*args, **kwargs)
+
     # endregion
     class Meta:
         model = FormField
@@ -176,3 +186,14 @@ class FieldBuilderForm(forms.ModelForm):
             raise forms.ValidationError(_("This name already exists."))
 
         return name
+
+    def save(self, commit=True):
+        """Save with automatic language setting."""
+        instance = super().save(commit=False)
+        instance.lang = self.lang
+
+        if commit:
+            instance.save()
+            self.save_m2m()
+
+        return instance
