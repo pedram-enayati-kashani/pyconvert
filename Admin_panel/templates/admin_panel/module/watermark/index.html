@@ -1,73 +1,75 @@
 {% extends "admin_layouts/layouts.html" %}
-{% load thumbnail watermark_tags %}
+{% load thumbnail watermark_tags i18n %}
+
 {% block meta %}
-    <title>واترمارک</title>
+    <title>{% translate "Watermark" %}</title>
 {% endblock %}
+
 {% block content %}
     <div class="dashboard-pages">
         <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>واترمارک</h3>
+            <h3>{% translate "Watermark" %}</h3>
         </header>
         <div class="responsiverTable">
             <table class="table table-bordered m-0 mb-3">
                 <tbody>
                 <tr>
                     <td>
-                        حالت عرض :
+                        {% translate "Width Mode" %}:
                         {% if watermark.width_mode == 'auto' %}
-                            اتوماتیک
+                            {% translate "Automatic" %}
                         {% elif watermark.width_mode == 'manual' %}
-                            دستی
+                            {% translate "Manual" %}
                         {% elif watermark.width_mode == 'self-wh' %}
-                            عرض خود سایت
+                            {% translate "Original width" %}
                         {% endif %}
                     </td>
                     <td>
-                        حالت ارتفاع :
+                        {% translate "Height Mode" %}:
                         {% if watermark.height_mode == 'auto' %}
-                            اتوماتیک
+                            {% translate "Automatic" %}
                         {% elif watermark.height_mode == 'manual' %}
-                            دستی
+                            {% translate "Manual" %}
                         {% elif watermark.height_mode == 'self-wh' %}
-                            ارتفاع خود سایت
+                            {% translate "Original height" %}
                         {% endif %}
                     </td>
                     <td>
-                        اندازه اتوماتیک عرض به درصد :
-                        %{{ watermark.width_percent }}
+                        {% translate "Automatic width size (percentage)" %}:
+                        {{ watermark.width_percent }}%
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        اندازه اتوماتیک ارتفاع به درصد :
-                        %{{ watermark.height_percent }}
+                        {% translate "Automatic height size (percentage)" %}:
+                        {{ watermark.height_percent }}%
                     </td>
                     <td>
-                        اندازه دستی عرض :
+                        {% translate "Manual width size" %}:
                         {{ watermark.manual_width }}
                     </td>
                     <td>
-                        اندازه دستی ارتفاع :
+                        {% translate "Manual height size" %}:
                         {{ watermark.manual_height }}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        مکان روی عکس :
+                        {% translate "Position on image" %}:
                         {{ watermark.position }}
                     </td>
                     <td>
-                        میزان شفافیت :
+                        {% translate "Opacity" %}:
                         {{ watermark.opacity }}
                     </td>
                     <td>
-                        فاصله از لبه تصویر :
+                        {% translate "Padding from image edge" %}:
                         {{ watermark.padding }}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span class="d-block mb-3">عکس واترمارک :</span>
+                        <span class="d-block mb-3">{% translate "Watermark Image" %}:</span>
                         <span class="d-block text-center">
                                 {% if watermark.image %}
                                     <img src="{{ watermark.image.url }}" style="max-width: 150px" decoding="async"/>
@@ -76,12 +78,12 @@
                     </td>
                     <td>
                             <span class="d-block mb-3">
-                                نحوه قرار گیری واترمارک روی عکس :
+                                {% translate "Watermark placement on image" %}:
                             </span>
                         <span class="d-block text-center">
                                 {% wm_version as wm_v %}
                             {% thumbnail "defaults/demo-cart-image.jpg" "309x206" format="WEBP" watermark=True wm_version=wm_v quality=95 as im %}
-                                <img src="{{ im.url }}" alt="{{ post.title }}" title="{{ post.title }}" decoding="async"
+                                <img src="{{ im.url }}" alt="{{ post.title|default:'' }}" title="{{ post.title|default:'' }}" decoding="async"
                                      width="309" height="206">
                             {% endthumbnail %}
                             </span>
@@ -92,9 +94,9 @@
             </table>
         </div>
         {% if watermark != null %}
-            <a href="{% url "Admin_panel:watermark-update" %}" class="btn btn-primary">ویرایش اطلاعات</a>
+            <a href="{% url 'Admin_panel:watermark-update' %}" class="btn btn-primary">{% translate "Update" %}</a>
         {% else %}
-            <a href="{% url "Admin_panel:watermark-create" %}" class="btn btn-primary">ایجاد</a>
+            <a href="{% url 'Admin_panel:watermark-create' %}" class="btn btn-primary">{% translate "Create" %}</a>
         {% endif %}
     </div>
 {% endblock %}

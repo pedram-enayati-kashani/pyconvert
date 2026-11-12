@@ -1,11 +1,12 @@
 {% extends "admin_layouts/layouts.html" %}
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش واترمارک</title>
+    <title>{% translate "Update watermark" %}</title>
 {% endblock %}
 {% block content %}
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ویرایش واترمارک</h3>
+            <h3>{% translate "Update watermark" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:watermark-update' %}" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
@@ -172,8 +173,8 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ویرایش</button>
-            <a href="{% url 'Admin_panel:watermark' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% trans "Update" %}</button>
+            <a href="{% url 'Admin_panel:watermark' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

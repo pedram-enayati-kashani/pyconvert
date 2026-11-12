@@ -4,6 +4,9 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import get_language
+from django.conf import settings
 from Admin_panel.helpers.pager import get_visible_page_numbers
 from Admin_panel.mixin.auth import AdminRequiredMixin,SuperAdminMixin
 from Admin_panel.mixin.module import ModuleActiveRequiredMixin
@@ -20,50 +23,34 @@ class Index(AdminRequiredMixin,ModuleActiveRequiredMixin, ListView):
     form_class = FilterForm
 
     def get_queryset(self):
-        if not self.model.objects.exists():
-            self._seed_default_records()
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang not in available_langs:
+            lang = 'fa'
+        queryset = super().get_queryset().filter(lang=lang).order_by('id')
+        if not queryset.exists():
+            self._seed_default_records(lang=lang)
+            queryset = super().get_queryset().filter(lang=lang).order_by('id')
 
-        return super().get_queryset().order_by('-id')
+        return queryset
 
-    def _seed_default_records(self):
-        defaults = [
-            {
-                'title': 'اینستاگرام',
-                'name':'instagram'
-            },
-            {
-                'title': 'تلگرام',
-                'name': 'telegram'
-            },
-            {
-                'title': 'واتساپ',
-                'name': 'whatsapp'
-            },
-            {
-                'title': 'x',
-                'name': 'x'
-            },
-            {
-                'title': 'ایتا',
-                'name': 'eitta'
-            },
-            {
-                'title': 'روبیکا',
-                'name': 'rubika'
-            },
-            {
-                'title': 'بله',
-                'name': 'bale'
-            },
-            {
-                'title': 'سروش',
-                'name': 'soroush'
-            },
-        ]
-        for data in defaults:
+
+    def _seed_default_records(self,lang):
+        defaults = {
+            'fa':[{'title': 'اینستاگرام','name':'instagram'},{'title': 'تلگرام','name': 'telegram'},
+                {'title': 'واتساپ','name': 'whatsapp'},{'title': 'x','name': 'x'},
+                {'title': 'ایتا','name': 'eitta'},{'title': 'روبیکا','name': 'rubika'},
+                {'title': 'بله','name': 'bale'},{'title': 'سروش','name': 'soroush'}],
+            'en':[{'title': 'instagram','name':'instagram'},{'title': 'telegram','name': 'telegram'},
+                {'title': 'whatsapp','name': 'whatsapp'},{'title': 'x','name': 'x'}]
+        }
+        for data in defaults[lang]:
             self.model.objects.get_or_create(
-                title=data['title'],
                 name=data['name'],
+                lang=lang,
+                defaults={
+                    'title': data['title']
+                }
             )
 
     def get_context_data(self, **kwargs):
@@ -83,12 +70,22 @@ class Create(SuperAdminMixin,ModuleActiveRequiredMixin,CreateView):
     form_class = SocialMediaForm
     success_url = reverse_lazy('Admin_panel:social-media')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
+
 class Update(AdminRequiredMixin, ModuleActiveRequiredMixin,UpdateView):
     template_name = 'admin_panel/module/socialMedia/edit.html'
     model = SocialMedia
     module_name = "social_media"
     form_class = SocialMediaForm
     success_url = reverse_lazy('Admin_panel:social-media')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["request"] = self.request
+        return kwargs
 
 class Query(AdminRequiredMixin,ModuleActiveRequiredMixin, ListView):
     template_name = 'admin_panel/module/socialMedia/index.html'
@@ -101,6 +98,14 @@ class Query(AdminRequiredMixin,ModuleActiveRequiredMixin, ListView):
     def get_queryset(self):
         self.form = self.form_class(self.request.GET)
         queryset = super().get_queryset()
+
+        lang = get_language()
+        available_langs = [code for code, name in settings.LANGUAGES]
+        if lang in available_langs:
+            queryset = queryset.filter(lang=lang)
+        else:
+            queryset = queryset.filter(lang='fa')
+
         if self.form.is_valid():
             status_filter = self.form.cleaned_data.get('status', 'all')
             if status_filter != 'all':
@@ -128,12 +133,12 @@ class Active(AdminRequiredMixin,ModuleActiveRequiredMixin,View):
         if page.status == 'active':
             messages.success(
                 request,
-                f"شبکه اجتماعی '{page.title}' فعال شد.",
+                _("Social network '%(title)s' has been activated.") % {'title': page.title},
             )
         else:
             messages.warning(
                 request,
-                f"شبکه اجتماعی '{page.title}' غیرفعال شد.",
+                _("Social network '%(title)s' has been deactivated.") % {'title': page.title},
             )
 
         next_url = request.GET.get('next')

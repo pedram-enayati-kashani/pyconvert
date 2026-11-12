@@ -1,16 +1,11 @@
 from django.db import models
 
 class RedirectRule(models.Model):
-    LANG_CHOICES = (
-        ('fa', 'قارسی'),
-        ('en', 'انگلیسی'),
-    )
-    STATUS_CHOICES = [('active', 'فعال'), ('inactive', 'غیرفعال')]
     old_url = models.CharField(max_length=255, unique=True)
     new_url = models.CharField(max_length=255)
     is_permanent = models.BooleanField(default=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='inactive')
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
+    status = models.CharField(max_length=10, default='inactive')
+    lang = models.CharField(max_length=2, default='fa', db_index=True,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -283,6 +283,29 @@ form .form-group-display{
     font: 500 13px var(--fontName);
 }
 
+.tab-setting-link{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.tab-setting-link a{
+    display: block;
+    padding: 8px 15px;
+    border-radius: 5px 5px 0 0;
+    border-right: 2px solid var(--c-dark-blue);
+    border-left: 2px solid var(--c-dark-blue);
+    border-top: 2px solid var(--c-dark-blue);
+    font: 500 15px var(--fontName);
+    color: var(--c-dark-blue);
+}
+
+.tab-setting-link a:hover,
+.tab-setting-link a.active{
+    color: var(--c-DarkOrange);
+    border-color: var(--c-DarkOrange);
+}
+
 /* set class*/
 
 .panelLink{

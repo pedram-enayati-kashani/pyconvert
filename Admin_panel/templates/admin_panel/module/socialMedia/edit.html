@@ -1,14 +1,14 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ویرایش شبکه اجتماعی</title>
+    <title>{% translate "Update social media" %}</title>
     {{ form.media }}
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ویرایش شبکه اجتماعی</h3>
+            <h3>{% translate "Update social media" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:social-media-update' object.id %}" method="post" enctype="multipart/form-data"
               novalidate>
@@ -63,8 +63,7 @@
                     {% endif %}
                 </label>
                 {% if object.icon %}
-                    <img src="{{ object.icon.url }}" alt="عکس فعلی بخش"
-                         style="max-width:200px; height:auto; margin-bottom:10px;">
+                    <img src="{{ object.icon.url }}" style="max-width:200px; height:auto; margin-bottom:10px;">
                 {% endif %}
                 {{ form.icon }}
                 {% if form.icon.errors %}
@@ -114,8 +113,8 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ویرایش</button>
-            <a href="{% url 'Admin_panel:social-media' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Update" %}</button>
+            <a href="{% url 'Admin_panel:social-media' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}

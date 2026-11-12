@@ -24,11 +24,6 @@ class Media(models.Model):
         (TYPE_MUSIC, "صوت"),
     ]
 
-    LANG_CHOICES = (
-        ('fa', 'قارسی'),
-        ('en', 'انگلیسی'),
-    )
-
     ALLOWED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"}
     ALLOWED_VIDEO_EXTENSIONS = {".mp4", ".webm", ".mkv"}
     ALLOWED_MUSIC_EXTENSIONS = {".mp3", ".wav", ".ogg"}
@@ -84,7 +79,7 @@ class Media(models.Model):
         db_index=True,
         verbose_name="وضعیت",
     )
-    lang = models.CharField(max_length=2, choices=LANG_CHOICES, default='fa', db_index=True,null=True, blank=True)
+    lang = models.CharField(max_length=2, default='fa', db_index=True,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="آخرین بروزرسانی")
 

@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from module.models.WaterMarkModel import WaterMark
 
 
@@ -7,10 +8,10 @@ class WaterMarkForm(forms.ModelForm):
     # region fields
 
     image = forms.ImageField(
-        label="تصویر واترمارک",
+        label=_("Image"),
         required=True,
         error_messages={
-            "required": "تصویر واترمارک الزامی است."
+            "required": _("image is required.")
         },
         widget=forms.ClearableFileInput(attrs={
             "class": "form-control"
@@ -18,10 +19,10 @@ class WaterMarkForm(forms.ModelForm):
     )
 
     status = forms.TypedChoiceField(
-        label="وضعیت",
+        label=_("Status"),
         choices=[
-            ("active", "فعال"),
-            ("inactive", "غیرفعال"),
+            ("active", _("Active")),
+            ("inactive", _("Inactive")),
         ],
         coerce=str,
         initial="active",
@@ -31,11 +32,11 @@ class WaterMarkForm(forms.ModelForm):
     )
 
     width_mode = forms.TypedChoiceField(
-        label="حالت عرض واترمارک",
+        label=_("Width Mode"),
         choices=[
-            ("auto", "اتوماتیک (درصدی)"),
-            ("manual", "دستی (پیکسل)"),
-            ("self-wh", "عرض خود عکس"),
+            ("auto", _("Automatic (Percentage)")),
+            ("manual", _("Manual (Pixel)")),
+            ("self-wh", _("Image's own width")),
         ],
         coerce=str,
         initial="auto",
@@ -45,11 +46,11 @@ class WaterMarkForm(forms.ModelForm):
     )
 
     height_mode = forms.TypedChoiceField(
-        label="حالت ارتفاع واترمارک",
+        label=_("Height Mode"),
         choices=[
-            ("auto", "اتوماتیک (درصدی)"),
-            ("manual", "دستی (پیکسل)"),
-            ("self-wh", "ارتفاع خود عکس"),
+            ("auto", _("Automatic (Percentage)")),
+            ("manual", _("Manual (Pixel)")),
+            ("self-wh", _("Image's own height")),
         ],
         coerce=str,
         initial="auto",
@@ -59,29 +60,29 @@ class WaterMarkForm(forms.ModelForm):
     )
 
     width_percent = forms.IntegerField(
-        label="درصد عرض واترمارک",
+        label=_("Width Percentage"),
         required=False,
         min_value=1,
         max_value=100,
-        help_text="اگر حالت عرض روی اتوماتیک باشد استفاده می‌شود.",
+        help_text=_("Used if width mode is set to automatic."),
         widget=forms.NumberInput(attrs={
             "class": "form-control"
         })
     )
 
     height_percent = forms.IntegerField(
-        label="درصد ارتفاع واترمارک",
+        label=_("Height Percentage"),
         required=False,
         min_value=1,
         max_value=100,
-        help_text="اگر حالت ارتفاع روی اتوماتیک باشد استفاده می‌شود.",
+        help_text=_("Used if height mode is set to automatic."),
         widget=forms.NumberInput(attrs={
             "class": "form-control"
         })
     )
 
     manual_width = forms.IntegerField(
-        label="عرض واترمارک (پیکسل)",
+        label=_("Width (Pixel)"),
         required=False,
         min_value=1,
         widget=forms.NumberInput(attrs={
@@ -90,7 +91,7 @@ class WaterMarkForm(forms.ModelForm):
     )
 
     manual_height = forms.IntegerField(
-        label="ارتفاع واترمارک (پیکسل)",
+        label=_("Height (Pixel)"),
         required=False,
         min_value=1,
         widget=forms.NumberInput(attrs={
@@ -99,17 +100,17 @@ class WaterMarkForm(forms.ModelForm):
     )
 
     position = forms.TypedChoiceField(
-        label="موقعیت واترمارک",
+        label=_("Position"),
         choices=[
-            ('top-left', 'بالا چپ'),
-            ('top-center', 'بالا وسط'),
-            ('top-right', 'بالا راست'),
-            ('center-left', 'وسط چپ'),
-            ('center', 'وسط'),
-            ('center-right', 'وسط راست'),
-            ('bottom-left', 'پایین چپ'),
-            ('bottom-center', 'پایین وسط'),
-            ('bottom-right', 'پایین راست'),
+            ('top-left', _('Top Left')),
+            ('top-center', _('Top Center')),
+            ('top-right', _('Top Right')),
+            ('center-left', _('Center Left')),
+            ('center', _('Center')),
+            ('center-right', _('Center Right')),
+            ('bottom-left', _('Bottom Left')),
+            ('bottom-center', _('Bottom Center')),
+            ('bottom-right', _('Bottom Right')),
         ],
         coerce=str,
         initial="bottom-right",
@@ -119,18 +120,18 @@ class WaterMarkForm(forms.ModelForm):
     )
 
     opacity = forms.IntegerField(
-        label="شفافیت واترمارک",
+        label=_("Opacity"),
         min_value=0,
         max_value=100,
         initial=70,
-        help_text="عدد بین 0 تا 100",
+        help_text=_("Number between 0 and 100"),
         widget=forms.NumberInput(attrs={
             "class": "form-control"
         })
     )
 
     padding = forms.IntegerField(
-        label="فاصله از لبه تصویر",
+        label=_("Padding from Image Edge"),
         min_value=0,
         initial=10,
         widget=forms.NumberInput(attrs={
@@ -156,6 +157,25 @@ class WaterMarkForm(forms.ModelForm):
             "padding",
         ]
 
+    def __init__(self, *args, request=None, **kwargs):
+
+        if request and getattr(request, 'LANGUAGE_CODE', None):
+            self.lang = request.LANGUAGE_CODE
+        else:
+            self.lang = translation.get_language() or 'fa'
+
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        """Save with automatic language setting."""
+        instance = super().save(commit=False)
+        instance.lang = self.lang
+
+        if commit:
+            instance.save()
+
+        return instance
+
     def clean(self):
         cleaned_data = super().clean()
 
@@ -168,16 +188,16 @@ class WaterMarkForm(forms.ModelForm):
         manual_height = cleaned_data.get("manual_height")
 
         if width_mode == "auto" and not width_percent:
-            self.add_error("width_percent", "در حالت اتوماتیک باید درصد عرض واترمارک مشخص شود.")
+            self.add_error("width_percent", _("In automatic mode, the width percentage must be specified."))
         if width_mode == "manual" and not manual_width:
-            self.add_error("manual_width", "در حالت دستی باید عرض واترمارک مشخص شود.")
+            self.add_error("manual_width", _("In manual mode, the width must be specified."))
 
         if height_mode == "auto" and not height_percent:
-            self.add_error("height_percent", "در حالت اتوماتیک باید درصد ارتفاع واترمارک مشخص شود.")
+            self.add_error("height_percent", _("In automatic mode, the height percentage must be specified."))
         if height_mode == "manual" and not manual_height:
-            self.add_error("manual_height", "در حالت دستی باید ارتفاع واترمارک مشخص شود.")
+            self.add_error("manual_height", _("In manual mode, the height must be specified."))
 
         if width_mode == "self-wh" and height_mode == "self-wh":
-            self.add_error("width_mode","نمی‌توانید همزمان عرض و ارتفاع را بر اساس ابعاد اصلی عکس تنظیم کنید (واترمارک تغییر شکل می‌دهد).")
+            self.add_error("width_mode", _("You cannot set both width and height based on the original image dimensions at the same time (the watermark will be distorted)."))
 
         return cleaned_data

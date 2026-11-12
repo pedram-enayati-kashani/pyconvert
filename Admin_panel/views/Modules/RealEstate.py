@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, RedirectView
 from Admin_panel.helpers.pager import get_visible_page_numbers
 from Admin_panel.mixin.auth import AdminRequiredMixin,SuperAdminMixin
 from Admin_panel.mixin.module import ModuleActiveRequiredMixin
@@ -12,19 +12,9 @@ from Admin_panel.forms.Module.Real_Estate import SellBuyForm, RentForm, FilterSe
 from module.models.Real_EstateModel import SellBuy, Rent
 
 
-class Index(AdminRequiredMixin, ModuleActiveRequiredMixin, ListView):
-    template_name = 'admin_panel/module/RealEstate/index.html'
-    module_name = "Real_Estate"
-    model = SellBuy
-
-    def get_queryset(self):
-        return SellBuy.objects.all().order_by('-created_at')[:15]
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['rent_list'] = Rent.objects.all().order_by('-created_at')[:15]
-        context['sell_buy_list'] = context['object_list']
-        return context
+class Index(AdminRequiredMixin, RedirectView):
+    url = reverse_lazy('Admin_panel:real-estate-sell-buy')
+    permanent = False
 
 class SellIndex(AdminRequiredMixin, ModuleActiveRequiredMixin, ListView):
     template_name = 'admin_panel/module/RealEstate/SellBuy/index.html'

@@ -1,14 +1,14 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ساخت شبکه اجتماعی جدید</title>
+    <title>{% translate "Create a new social media" %}</title>
     {{ form.media }}
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
             <header class="headerPage">
-                <h3>ساخت شبکه اجتماعی جدید</h3>
+                <h3>{% translate "Create a new social media" %}</h3>
             </header>
             <form action="{% url 'Admin_panel:social-media-create' %}" method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
@@ -111,8 +111,8 @@
                         </small>
                     {% endif %}
                 </div>
-                <button class="btn btn-success">ثبت</button>
-                <a href="{% url 'Admin_panel:social-media' %}" class="btn btn-danger">انصراف</a>
+                <button class="btn btn-success">{% trans "Submit" %}</button>
+                <a href="{% url 'Admin_panel:social-media' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
             </form>
         </div>
 {% endblock %}

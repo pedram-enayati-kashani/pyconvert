@@ -23,8 +23,12 @@
         {% endfor %}
     {% endif %}
     <div class="dashboard-pages">
-        <header class="headerPage d-flex justify-content-between align-items-center">
-            <h3>املاک - خرید و فروش</h3>
+        <header class="headerPage p-0">
+            <h3>املاک</h3>
+            <div class="tab-setting-link">
+                <a class="{% if request.resolver_match.view_name == 'Admin_panel:real-estate-sell-buy' %}active{% endif %}" href="{% url 'Admin_panel:real-estate-sell-buy' %}">خرید و فروش</a>
+                <a class="{% if request.resolver_match.view_name == 'Admin_panel:real-estate-rent' %}active{% endif %}" href="{% url 'Admin_panel:real-estate-rent' %}">رهن و اجاره</a>
+            </div>
         </header>
         <div class="filter-form mb-4">
             <form class="d-flex align-items-center gap-1 flex-wrap" method="GET" action="{% url 'Admin_panel:real-estate-sell-buy-query' %}">

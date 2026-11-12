@@ -1,14 +1,13 @@
 {% extends "admin_layouts/layouts.html" %}
-
+{% load i18n %}
 {% block meta %}
-    <title>ساخت آدرس‌ جدید</title>
-    {{ form.media }}
+    <title>{% translate "Create a new address" %}</title>
 {% endblock %}
 
 {% block content %}
     <div class="dashboard-pages">
         <header class="headerPage">
-            <h3>ساخت آدرس‌ جدید</h3>
+            <h3>{% translate "Create a new address" %}</h3>
         </header>
         <form action="{% url 'Admin_panel:redirect-create' %}" method="post" novalidate>
             {% csrf_token %}
@@ -70,8 +69,8 @@
                     </small>
                 {% endif %}
             </div>
-            <button class="btn btn-success">ثبت</button>
-            <a href="{% url 'Admin_panel:redirect' %}" class="btn btn-danger">انصراف</a>
+            <button class="btn btn-success">{% translate "Submit" %}</button>
+            <a href="{% url 'Admin_panel:redirect' %}" class="btn btn-danger">{% trans "Cancel" %}</a>
         </form>
     </div>
 {% endblock %}
