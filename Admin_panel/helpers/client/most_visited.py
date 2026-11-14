@@ -1,5 +1,6 @@
 import hashlib
 from django_redis import get_redis_connection
+from Admin_panel.helpers.lang import getLang
 from App_panel.models.PostModel import Post
 from django.utils import timezone
 from django.db.models import Case, When
@@ -45,17 +46,17 @@ def increase_post_views(request, post_id):
         viewer_id = f"anon:{session_key}:{ip_hash}"
 
     prefix = settings.REDIS_KEY_PREFIX
-    viewer_key = f"{prefix}:most_visited_post:viewed:{post_id}:{viewer_id}"
+    viewer_key = f"{prefix}:most_visited_post:{getLang()}:viewed:{post_id}:{viewer_id}"
 
     was_set = redis_conn.set(viewer_key, 1, ex=60 * 30, nx=True)
 
     if not was_set:
         return False
 
-    redis_conn.zincrby(f"{prefix}:most_visited_post:views:total", 1, post_id)
+    redis_conn.zincrby(f"{prefix}:most_visited_post:{getLang()}:views:total", 1, post_id)
 
     today = timezone.now().strftime("%Y-%m-%d")
-    daily_key = f"{prefix}:most_visited_post:views:daily:{today}"
+    daily_key = f"{prefix}:most_visited_post:{getLang()}:views:daily:{today}"
 
     redis_conn.zincrby(daily_key, 1, post_id)
     redis_conn.expire(daily_key, 60 * 60 * 24 * 45)
@@ -72,12 +73,12 @@ def get_popular_by_days(days=1, limit=5):
 
     for i in range(days):
         date = (today - timedelta(days=i)).strftime("%Y-%m-%d")
-        keys.append(f"{settings.REDIS_KEY_PREFIX}:most_visited_post:views:daily:{date}")
+        keys.append(f"{settings.REDIS_KEY_PREFIX}:most_visited_post:{getLang()}:views:daily:{date}")
 
     if not keys:
         return []
 
-    temp_key = f"{settings.REDIS_KEY_PREFIX}:most_visited_post:views:temp:{days}:limit:{limit}"
+    temp_key = f"{settings.REDIS_KEY_PREFIX}:most_visited_post:{getLang()}:views:temp:{days}:limit:{limit}"
 
     redis_conn.zunionstore(temp_key, keys)
     redis_conn.expire(temp_key, 10)
@@ -117,7 +118,7 @@ def get_popular_by_days(days=1, limit=5):
 
 def get_posts_total_views(post_ids):
     redis_conn = get_redis()
-    key = f"{settings.REDIS_KEY_PREFIX}:most_visited_post:views:total"
+    key = f"{settings.REDIS_KEY_PREFIX}:most_visited_post:{getLang()}:views:total"
 
     if not post_ids:
         return {}

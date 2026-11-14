@@ -1,11 +1,12 @@
 from App_panel.models.PostModel import Post
 from module.models.FormBuilder import FieldValue, PostFormAssignment, FormField
 from django.core.cache import cache
+from Admin_panel.helpers.lang import getLang
 from django.utils import timezone
 
 def get_post_form_fields_and_values(post_id):
     try:
-        cache_key = f"post_form_fields_{post_id}"
+        cache_key = f"post_form_fields_{getLang()}_{post_id}"
         results = cache.get(cache_key)
 
         if results is not None:

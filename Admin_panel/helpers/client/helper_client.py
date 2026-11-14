@@ -1,21 +1,17 @@
 from django.db.models import Q
 from django.core.cache import cache
+from Admin_panel.helpers.lang import getLang
 from App_panel.models.SiteInfoModel import SiteInfo
 from App_panel.models.Modules import Modules
 from module.models.MenuBuilder import Menu ,Menu_Links
 from module.models.SocialMediaModel import SocialMedia
-from django.utils.translation import get_language
 
 def get_site_info_value(key):
     """
     get site info
     key = title, logo, favicon, description_seo
     """
-    site_info = cache.get("site_info")
-
-
-
-    
+    site_info = cache.get(f"site_info:{getLang()}")
     if not isinstance(site_info, dict):
         obj = SiteInfo.objects.filter().only(
             "title","title_seo", "logo", "description_seo","favicon","favicon_16","favicon_32","apple_touch_icon",
@@ -54,12 +50,10 @@ def Get_menu_builder_links(menu_name,link_name=None):
     if not module_active:
         return {}
 
-    # ۲. مدیریت کش
-    cache_key = f"menu_links_cache_{menu_name}"
+    cache_key = f"menu_links_cache_{getLang()}_{menu_name}"
     result = cache.get(cache_key)
 
     if result is None:
-        # ۳. پیدا کردن منو
         menu = Menu.objects.filter(name=menu_name, status='active').first()
         if not menu:
             return {}
@@ -94,7 +88,7 @@ def Get_social_media():
     """
     get social media
     """
-    cache_key = "social_media:v1"
+    cache_key = f"social_media_{getLang()}:v1"
     data = cache.get(cache_key)
 
     if data is not None:

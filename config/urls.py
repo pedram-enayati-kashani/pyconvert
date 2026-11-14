@@ -20,7 +20,7 @@ urlpatterns = [
     path("captcha/", include("captcha.urls")),
 ]
 
-urlpatterns += i18n_patterns(
+urlpatterns += (
     path('', include("Client.urls")),
     path('admin/', include('Admin_panel.urls')),
     path('app/', include("App_panel.urls")),

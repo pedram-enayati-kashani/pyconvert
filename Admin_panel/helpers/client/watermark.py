@@ -1,8 +1,9 @@
 from django.core.cache import cache
 from module.models.WaterMarkModel import WaterMark
+from Admin_panel.helpers.lang import getLang
 
 def get_watermark():
-    cache_key = "active_watermark_settings"
+    cache_key = f"active_watermark_settings_{getLang()}"
     watermark_setting = cache.get(cache_key)
 
     if watermark_setting is None:

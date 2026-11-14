@@ -87,12 +87,7 @@ class Update(AdminRequiredMixin,ModuleActiveRequiredMixin, UpdateView):
     success_url = reverse_lazy('Admin_panel:menu')
 
     def form_valid(self, form):
-        old_name = self.get_object().name
         response = super().form_valid(form)
-        new_name = self.object.name
-        cache.delete(f"menu_links_cache_{old_name}")
-        cache.delete(f"menu_links_cache_{new_name}")
-
         return response
 
     def get_form_kwargs(self):
@@ -141,7 +136,6 @@ class Active(AdminRequiredMixin,ModuleActiveRequiredMixin,View):
     def get(self, request, pk, *args, **kwargs):
         obj = get_object_or_404(self.model, pk=pk)
         obj.toggle_status()
-        cache.delete(f"menu_links_cache_{obj.name}")
         if obj.status == 'active':
             messages.success(
                 request,
@@ -168,7 +162,6 @@ class Delete(SuperAdminMixin,ModuleActiveRequiredMixin, DeleteView):
         self.object = self.get_object()
         menu_name = self.object.name
         response = super().delete(request, *args, **kwargs)
-        cache.delete(f"menu_links_cache_{menu_name}")
         return response
 
 
@@ -218,7 +211,6 @@ class CreateLink(AdminRequiredMixin,ModuleActiveRequiredMixin,CreateView):
     def form_valid(self, form):
         form.instance.Menu = self.menu
         response = super().form_valid(form)
-        cache.delete(f"menu_links_cache_{self.menu.name}")
         return response
 
     def get_success_url(self):
@@ -249,15 +241,7 @@ class UpdateLink(AdminRequiredMixin,ModuleActiveRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        old_menu = self.get_object().Menu
         response = super().form_valid(form)
-        new_menu = self.object.Menu
-
-        if old_menu:
-            cache.delete(f"menu_links_cache_{old_menu.name}")
-        if new_menu:
-            cache.delete(f"menu_links_cache_{new_menu.name}")
-
         return response
 
     def get_success_url(self):
@@ -271,7 +255,6 @@ class ActiveLink(AdminRequiredMixin,ModuleActiveRequiredMixin, View):
     def get(self, request, pk, link_pk, *args, **kwargs):
         obj = get_object_or_404(self.model, pk=link_pk, Menu_id=pk)
         obj.toggle_status()
-        cache.delete(f"menu_links_cache_{obj.Menu.name}")
         if obj.status == 'active':
             messages.success(
                 request,
@@ -295,12 +278,7 @@ class DeleteLink(AdminRequiredMixin,ModuleActiveRequiredMixin, DeleteView):
         return super().get_queryset().filter(Menu_id=self.kwargs['pk'])
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        menu = self.object.Menu
-
         response = super().delete(request, *args, **kwargs)
-
-        cache.delete(f"menu_links_cache_{menu.name}")
         return response
 
     def get_success_url(self):
@@ -312,7 +290,6 @@ class ChangeFieldOrder(AdminRequiredMixin, ModuleActiveRequiredMixin, View):
 
     def get(self, request, pk, link_pk, direction):
         obj = get_object_or_404(Menu_Links.objects.select_related('Menu'), pk=link_pk, Menu_id=pk)
-        menu_name = obj.Menu.name
 
         with transaction.atomic():
             if direction == 'up':
@@ -338,9 +315,5 @@ class ChangeFieldOrder(AdminRequiredMixin, ModuleActiveRequiredMixin, View):
                 obj.save(update_fields=["order"])
                 target.save(update_fields=["order"])
 
-                transaction.on_commit(lambda: cache.delete(f"menu_links_cache_{menu_name}"))
-
         return redirect('Admin_panel:menu-link', pk=pk)
-
-
 

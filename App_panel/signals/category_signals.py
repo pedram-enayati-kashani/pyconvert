@@ -1,7 +1,8 @@
 from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.dispatch import receiver
 from django.core.cache import cache
-
+from django.utils.translation import get_language
+from django.conf import settings
 from App_panel.models.CategoriesModel import Category
 from App_panel.models.PostModel import Post
 from Admin_panel.helpers.client.Post import _invalidate_related_posts_cache_for_post, invalidate_post_cache
@@ -10,7 +11,11 @@ def bump_category_posts_version(slug):
     """
     بالا بردن ورژن کش لیست پست‌های یک دسته خاص
     """
-    version_key = f"category_posts_version:{slug}"
+    lang = get_language()
+    available_langs = [code for code, name in settings.LANGUAGES]
+    if lang not in available_langs:
+        lang = 'fa'
+    version_key = f"category_posts_version:{lang}:{slug}"
     ONE_MONTH = 2592000
     try:
         cache.incr(version_key)

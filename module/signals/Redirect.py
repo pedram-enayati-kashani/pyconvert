@@ -1,12 +1,12 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.core.cache import cache
-
+from Admin_panel.helpers.lang import getLang
 from module.models import RedirectRule
 
 
 def get_redirect_cache_key(path):
-    return f"redirect_rule:{path}"
+    return f"redirect_rule:{getLang()}:{path}"
 
 
 @receiver(post_save, sender=RedirectRule)

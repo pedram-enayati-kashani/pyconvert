@@ -1,8 +1,7 @@
 from django.core.cache import cache
 from melipayamak import Api
 import random, requests
-from django.conf import settings
-from django.utils.translation import get_language
+from Admin_panel.helpers.lang import getLang
 from App_panel.models.SMSModel import SMSSettings
 
 
@@ -74,9 +73,7 @@ from App_panel.models.SMSModel import SMSSettings
 #         }
 
 def send_otp_sms_pattern(phone_number, otp_code):
-    lang = get_language()
-    target_lang = lang if lang in ['fa', 'en'] else 'fa'
-    sms_config = SMSSettings.objects.filter(status='active', lang=target_lang).first()
+    sms_config = SMSSettings.objects.filter(status='active', lang=getLang()).first()
 
     if not sms_config:
         return {

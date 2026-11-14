@@ -1,13 +1,14 @@
 from App_panel.models.PostModel import Post
 from django.db.models import Q
 from django.core.cache import cache
+from Admin_panel.helpers.lang import getLang
 import urllib.parse
 
 def get_result_query(query):
     if not query:
         return Post.objects.none()
 
-    cache_key = f"search_results:{urllib.parse.quote(query)}"
+    cache_key = f"search_results:{getLang()}:{urllib.parse.quote(query)}"
     cached_data = cache.get(cache_key)
     if cached_data is not None:
         return cached_data

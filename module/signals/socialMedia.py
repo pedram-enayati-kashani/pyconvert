@@ -1,11 +1,12 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.core.cache import cache
+from Admin_panel.helpers.lang import getLang
 from module.models.SocialMediaModel import SocialMedia
 
 
 CACHE_INVALIDATION = {
-    SocialMedia: ["social_media:v1"],
+    SocialMedia: [f"social_media_{getLang()}:v1"],
 }
 
 

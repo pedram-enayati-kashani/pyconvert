@@ -2,20 +2,14 @@ from django.core.mail import EmailMessage, get_connection
 from App_panel.models.EmailModel import EmailSettings
 from django.utils.html import strip_tags
 from django.template.loader import render_to_string
-from django.utils.translation import get_language
-from django.conf import settings
+from Admin_panel.helpers.lang import getLang
 from django.utils.translation import gettext_lazy as _
 from Admin_panel.helpers.client.helper_client import get_site_info_value
 from email.utils import formataddr
 
 class EmailService:
     def __init__(self):
-        lang = get_language()
-        available_langs = [code for code, name in settings.LANGUAGES]
-        if lang in available_langs:
-            self.config = EmailSettings.objects.filter(status='active',lang=lang).first()
-        else:
-            self.config = EmailSettings.objects.filter(status='active', lang='fa').first()
+        self.config = EmailSettings.objects.filter(status='active', lang=getLang()).first()
         if not self.config:
             raise ValueError(_("Email settings not found."))
 

@@ -1,7 +1,7 @@
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from django.core.cache import cache
-
+from Admin_panel.helpers.lang import getLang
 from App_panel.models.SectionModel import Section
 from App_panel.models.PostModel import Post
 from Admin_panel.helpers.client.Post import _invalidate_related_posts_cache_for_section
@@ -11,7 +11,7 @@ def bump_section_posts_version(section_slug):
     """
     بالا بردن ورژن کش لیست پست‌های یک سکشن خاص
     """
-    version_key = f"section_posts_version:{section_slug}"
+    version_key = f"section_posts_version:{getLang()}:{section_slug}"
     ONE_MONTH = 2592000
 
     try:
@@ -28,17 +28,17 @@ def clear_most_visited_section_cache(slug=None):
     section_mostVisited:{slug}:days:{days}
     """
     if slug:
-        cache.delete_pattern(f"*section_mostVisited:{slug}:days:*")
+        cache.delete_pattern(f"*section_mostVisited:{getLang()}:{slug}:days:*")
     else:
-        cache.delete_pattern("*section_mostVisited:*:days:*")
+        cache.delete_pattern(f"*section_mostVisited:{getLang()}:*:days:*")
 
 
 @receiver([post_save, post_delete], sender=Section)
 def section_changed_handler(sender, instance, **kwargs):
     _invalidate_related_posts_cache_for_section(instance.id)
 
-    cache.delete(f"section_posts:{instance.slug}")
-    cache.delete(f"section:{instance.slug}")
+    cache.delete(f"section_posts:{getLang()}:{instance.slug}")
+    cache.delete(f"section:{getLang()}:{instance.slug}")
     bump_section_posts_version(instance.slug)
 
     clear_most_visited_section_cache(instance.slug)
@@ -59,13 +59,13 @@ def store_old_section(sender, instance, **kwargs):
 @receiver(post_save, sender=Post)
 def clear_section_posts_cache(sender, instance, **kwargs):
     if instance.section:
-        cache.delete(f"section_posts:{instance.section.slug}")
+        cache.delete(f"section_posts:{getLang()}:{instance.section.slug}")
         bump_section_posts_version(instance.section.slug)
 
     old_section = getattr(instance, "_old_section", None)
 
     if old_section and old_section != instance.section:
-        cache.delete(f"section_posts:{old_section.slug}")
+        cache.delete(f"section_posts:{getLang()}:{old_section.slug}")
         bump_section_posts_version(old_section.slug)
 
     # چون پست جدید/ویرایش‌شده می‌تواند لیست پربازدیدها را تغییر دهد
@@ -75,7 +75,7 @@ def clear_section_posts_cache(sender, instance, **kwargs):
 @receiver(post_delete, sender=Post)
 def clear_section_posts_on_delete(sender, instance, **kwargs):
     if instance.section:
-        cache.delete(f"section_posts:{instance.section.slug}")
+        cache.delete(f"section_posts:{getLang()}:{instance.section.slug}")
         bump_section_posts_version(instance.section.slug)
 
     # حذف پست هم می‌تواند لیست پربازدیدها را تغییر دهد

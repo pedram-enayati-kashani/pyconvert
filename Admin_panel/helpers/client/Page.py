@@ -2,10 +2,11 @@ from django.shortcuts import get_object_or_404
 from django.core.cache import cache
 from App_panel.models import Post
 from App_panel.models.PageModel import Page
+from Admin_panel.helpers.lang import getLang
 
 
 def getPage(slug):
-    cache_key = f"page:{slug}"
+    cache_key = f"page:{getLang()}:{slug}"
 
     page = cache.get(cache_key)
     if page:
@@ -23,7 +24,7 @@ def getPage(slug):
     return page
 
 def getPostPage(slug, limit=None):
-    cache_key = f"page_posts:{slug}"
+    cache_key = f"page_posts:{getLang()}:{slug}"
     cached_data = cache.get(cache_key)
     if cached_data:
         return cached_data

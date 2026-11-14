@@ -1,13 +1,14 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.core.cache import cache
+from Admin_panel.helpers.lang import getLang
 from module.models.FormBuilder import FormField, FieldValue, Form, PostFormAssignment
 
 
 def clear_cache_for_post_ids(post_ids):
     """Remove cached form data for the given post IDs."""
     for post_id in post_ids:
-        cache_key = f"post_form_fields_{post_id}"
+        cache_key = f"post_form_fields_{getLang()}_{post_id}"
         cache.delete(cache_key)
 
 

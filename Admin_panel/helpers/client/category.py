@@ -2,11 +2,13 @@ from App_panel.models import Post, Category
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
+from Admin_panel.helpers.lang import getLang
+
 
 def get_category_posts_all(slug, page, per_page=15):
-    version_key = f"category_posts_version:{slug}"
+    version_key = f"category_posts_version:{getLang()}:{slug}"
     version = cache.get(version_key, 1)
-    cache_key = f"category_posts:{slug}:v{version}:page:{page}"
+    cache_key = f"category_posts:{getLang()}:{slug}:v{version}:page:{page}"
 
     data = cache.get(cache_key)
     if data:

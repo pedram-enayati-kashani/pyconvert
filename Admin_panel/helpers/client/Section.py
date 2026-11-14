@@ -2,12 +2,13 @@ from App_panel.models import Post, Section
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
+from Admin_panel.helpers.lang import getLang
 from Admin_panel.helpers.client.most_visited import get_popular_by_days
 
 def GetSecPosts(slug):
     """get posts of section"""
 
-    cache_key = f"section_posts:{slug}"
+    cache_key = f"section_posts:{getLang()}:{slug}"
     data = cache.get(cache_key)
     if data:
         return data
@@ -32,9 +33,9 @@ def GetSecPosts(slug):
     return data
 
 def get_section_posts_all(section_slug, page, per_page=15):
-    version_key = f"section_posts_version:{section_slug}"
+    version_key = f"section_posts_version:{getLang()}:{section_slug}"
     version = cache.get(version_key, 1)
-    cache_key = f"section_posts:{section_slug}:v{version}:page:{page}"
+    cache_key = f"section_posts:{getLang()}:{section_slug}:v{version}:page:{page}"
 
     data = cache.get(cache_key)
     if data:
@@ -72,7 +73,7 @@ def get_section_posts_all(section_slug, page, per_page=15):
 
 
 def GetSection(slug):
-    cache_key = f"section:{slug}"
+    cache_key = f"section:{getLang()}:{slug}"
     data = cache.get(cache_key)
     if data:
         return data
@@ -86,7 +87,7 @@ def GetSection(slug):
     return data
 
 def GetMostVisitedSection(slug, days=30):
-    cache_key = f"section_mostVisited:{slug}:days:{days}"
+    cache_key = f"section_mostVisited:{getLang()}:{slug}:days:{days}"
     data = cache.get(cache_key)
     if data is not None:
         return data

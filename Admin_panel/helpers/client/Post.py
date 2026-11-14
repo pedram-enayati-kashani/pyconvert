@@ -5,6 +5,7 @@ from App_panel.models.PostModel import Post
 from App_panel.models.CommentsModel import Comments
 from django.utils.safestring import mark_safe
 from module.models.MediaModel import Media
+from Admin_panel.helpers.lang import getLang
 
 
 def get_approved_comments_qs():
@@ -24,11 +25,11 @@ def get_approved_comments_qs():
 
 
 def get_post_cache_version(slug):
-    return cache.get(f"post_version:{slug}", 1)
+    return cache.get(f"post_version:{getLang()}:{slug}", 1)
 
 
 def invalidate_post_cache(slug):
-    key = f"post_version:{slug}"
+    key = f"post_version:{getLang()}:{slug}"
     try:
         cache.incr(key)
     except ValueError:
@@ -41,7 +42,7 @@ def get_post_details_with_relations(slug):
     Fetch a published post by slug with related objects and approved comments.
     """
     version = get_post_cache_version(slug)
-    cache_key = f"post:{slug}:v{version}"
+    cache_key = f"post:{getLang()}:{slug}:v{version}"
 
     post = cache.get(cache_key)
     if post is not None:
@@ -73,7 +74,7 @@ def get_related_posts(slug):
     Fetch related posts based on the first category of the current post.
     Results are cached.
     """
-    cache_key = f"post_related:{slug}"
+    cache_key = f"post_related:{getLang()}:{slug}"
     related_posts = cache.get(cache_key)
     if related_posts is not None:
         return related_posts
@@ -107,7 +108,7 @@ def get_related_posts(slug):
 
 def _invalidate_related_posts_cache_for_post(post_slug):
     """Clear post_related cache for a specific post."""
-    cache.delete(f"post_related:{post_slug}")
+    cache.delete(f"post_related:{getLang()}:{post_slug}")
     # print(f"Invalidated post_related cache for slug: {post_slug}") # برای دیباگ
 
 def _invalidate_related_posts_cache_for_section(section_id):

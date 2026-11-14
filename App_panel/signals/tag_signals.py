@@ -1,10 +1,9 @@
 from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.dispatch import receiver
 from django.core.cache import cache
-
+from Admin_panel.helpers.lang import getLang
 from App_panel.models.TagModel import Tag
 from App_panel.models.PostModel import Post
-
 from Admin_panel.helpers.client.Post import (
     _invalidate_related_posts_cache_for_post,
     invalidate_post_cache
@@ -15,7 +14,7 @@ def bump_tag_posts_version(tag_slug):
     """
     بالا بردن ورژن کش لیست پست‌های یک برچسب خاص
     """
-    version_key = f"tag_posts_version:{tag_slug}"
+    version_key = f"tag_posts_version:{getLang()}:{tag_slug}"
     ONE_MONTH = 2592000
     try:
         cache.incr(version_key)

@@ -8,8 +8,9 @@ class ModuleConfig(AppConfig):
     def ready(self):
         import module.signals.delete_image
         import module.signals.link_update_cache
-        import module.signals.cache
+        import module.signals.socialMedia
         import module.signals.cache_formbuilder
         import module.signals.adv_signals
         import module.signals.Redirect
         import module.signals.cache_watermark
+        import module.signals.MenuBuilder

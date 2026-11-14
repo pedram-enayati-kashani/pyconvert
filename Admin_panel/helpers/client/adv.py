@@ -1,10 +1,11 @@
 from module.models.Advertising import AdvImage, AdvText
 from App_panel.models.SectionModel import Section
 from django.core.cache import cache
+from Admin_panel.helpers.lang import getLang
 
 
 def get_adv_banners(section_slug):
-    cache_key = f"adv_banners:{section_slug}"
+    cache_key = f"adv_banners:{getLang()}:{section_slug}"
     banners = cache.get(cache_key)
 
     if banners is None:
@@ -16,7 +17,7 @@ def get_adv_banners(section_slug):
 
 
 def get_adv_text_with_section(section_slug):
-    cache_key = f"adv_text:{section_slug}"
+    cache_key = f"adv_text:{getLang()}:{section_slug}"
     data = cache.get(cache_key)
 
     if data is None:

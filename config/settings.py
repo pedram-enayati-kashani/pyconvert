@@ -143,7 +143,7 @@ LANGUAGE_CODE = "fa"
 
 LANGUAGES = [
     ("fa", _("فارسی")),
-    ("en", _("English")),
+    # ("en", _("English")),
 ]
 
 LOCALE_PATHS = [

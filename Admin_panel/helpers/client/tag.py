@@ -2,11 +2,12 @@ from App_panel.models import Post, Tag
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
+from Admin_panel.helpers.lang import getLang
 
 def get_tag_posts_all(slug, page, per_page=15):
-    version_key = f"tag_posts_version:{slug}"
+    version_key = f"tag_posts_version:{getLang()}:{slug}"
     version = cache.get(version_key, 1)
-    cache_key = f"tag_posts:{slug}:v{version}:page:{page}"
+    cache_key = f"tag_posts:{getLang()}:{slug}:v{version}:page:{page}"
 
     data = cache.get(cache_key)
     if data:
